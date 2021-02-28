@@ -33,7 +33,9 @@ int32 ArkanoidGame::Exec()
 {
 	while (MainWindow->HandleEvents())
 	{
-
+		MainWindow->PrepareUpdate();
+		
+		MainWindow->FinishUpdate();
 	}
 
 	return 0;

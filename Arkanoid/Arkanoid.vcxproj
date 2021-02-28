@@ -149,12 +149,15 @@
     <ClCompile Include="ArkanoidGame.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SDL\SDLContext.cpp" />
+    <ClCompile Include="SDL\SDLRenderer.cpp" />
     <ClCompile Include="SDL\SDLWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArkanoidGame.h" />
     <ClInclude Include="Interfaces\IWindow.h" />
+    <ClInclude Include="Interfaces\IRenderer.h" />
     <ClInclude Include="SDL\SDLContext.h" />
+    <ClInclude Include="SDL\SDLRenderer.h" />
     <ClInclude Include="SDL\SDLWindow.h" />
     <ClInclude Include="CoreMinimal.h" />
   </ItemGroup>

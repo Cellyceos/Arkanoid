@@ -14,15 +14,17 @@
 class SDLWindow : public IWindow
 {
 public:
-	SDLWindow();
-	~SDLWindow();
+	SDLWindow() = default;
+	virtual ~SDLWindow();
 
 	virtual bool Init(const StringView Title, int32 Width, int32 Height) override;
-	virtual void Deinit() override;
 	virtual void Show() override;
 
 	virtual bool HandleEvents() override;
 
+	virtual void PrepareUpdate() override;
+	virtual void FinishUpdate() override;
+
 private:
-	struct SDL_Window* Window = nullptr;
+	struct SDL_Window* NativeWindow = nullptr;
 };

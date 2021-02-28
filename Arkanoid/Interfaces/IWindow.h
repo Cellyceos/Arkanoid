@@ -17,8 +17,20 @@ public:
 	virtual ~IWindow() = default;
 
 	virtual bool Init(const StringView Title, int32 Width, int32 Height) = 0;
-	virtual void Deinit() = 0;
 	virtual void Show() = 0;
 
 	virtual bool HandleEvents() = 0;
+
+	virtual void PrepareUpdate() = 0;
+	virtual void FinishUpdate() = 0;
+
+	virtual const SharedPtr<class IRenderer> GetRenderer() const { return Renderer; }
+
+	virtual void SetBackgroundColor(const FColor& Color) { BackgroundColor = Color; }
+	virtual FColor GetBackgroundColor() const { return BackgroundColor; }
+
+protected:
+	SharedPtr<class IRenderer> Renderer = nullptr;
+
+	FColor BackgroundColor;
 };
