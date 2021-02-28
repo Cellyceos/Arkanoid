@@ -9,8 +9,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Interfaces">
+      <UniqueIdentifier>{997d3356-5124-4d34-bb47-6e25945648e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SDL">
+      <UniqueIdentifier>{1b5aa68e-6273-407e-b62d-fd3e4fd1baf5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArkanoidGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL\SDLWindow.cpp">
+      <Filter>Source Files\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL\SDLContext.cpp">
+      <Filter>Source Files\SDL</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ArkanoidGame.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreMinimal.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IWindow.h">
+      <Filter>Source Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL\SDLWindow.h">
+      <Filter>Source Files\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL\SDLContext.h">
+      <Filter>Source Files\SDL</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
