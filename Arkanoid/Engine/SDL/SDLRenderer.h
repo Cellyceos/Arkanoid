@@ -22,6 +22,8 @@ public:
 	virtual void Clear(const FColor& Color) override;
 	virtual void Present() override;
 
+	virtual void* GetNativeRenderer() const override { return NativeRenderer; }
+
 private:
 	struct SDL_Renderer* NativeRenderer = nullptr;
 };

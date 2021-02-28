@@ -25,6 +25,8 @@ public:
 	virtual void PrepareUpdate() override;
 	virtual void FinishUpdate() override;
 
+	virtual void* GetNativeWindowHandle() const { return NativeWindow; }
+
 private:
 	struct SDL_Window* NativeWindow = nullptr;
 };

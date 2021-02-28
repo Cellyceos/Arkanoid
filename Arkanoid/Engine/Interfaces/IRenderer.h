@@ -18,4 +18,6 @@ public:
 
 	virtual void Clear(const FColor& Color) = 0;
 	virtual void Present() = 0;
+
+	virtual void* GetNativeRenderer() const { return nullptr; }
 };

@@ -30,6 +30,8 @@ public:
 	virtual void SetBackgroundColor(const FColor& Color) { BackgroundColor = Color; }
 	virtual FColor GetBackgroundColor() const { return BackgroundColor; }
 
+	virtual void* GetNativeWindowHandle() const { return nullptr; }
+
 protected:
 	SharedPtr<class IInputManager> InputManager = nullptr;
 	SharedPtr<class IRenderer> Renderer = nullptr;
