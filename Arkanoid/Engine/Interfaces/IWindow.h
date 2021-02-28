@@ -25,11 +25,13 @@ public:
 	virtual void FinishUpdate() = 0;
 
 	virtual const SharedPtr<class IRenderer> GetRenderer() const { return Renderer; }
+	virtual const SharedPtr<class IInputManager> GetInputManager() const { return InputManager; }
 
 	virtual void SetBackgroundColor(const FColor& Color) { BackgroundColor = Color; }
 	virtual FColor GetBackgroundColor() const { return BackgroundColor; }
 
 protected:
+	SharedPtr<class IInputManager> InputManager = nullptr;
 	SharedPtr<class IRenderer> Renderer = nullptr;
 
 	FColor BackgroundColor;

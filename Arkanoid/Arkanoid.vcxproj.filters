@@ -41,6 +41,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\SDL\SDLInputManager.cpp">
+      <Filter>Source Files\Engine\SDL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Interfaces\IWindow.h">
@@ -63,6 +66,12 @@
     </ClInclude>
     <ClInclude Include="Game\ArkanoidGame.h">
       <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Interfaces\IInputManager.h">
+      <Filter>Source Files\Engine\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDL\SDLInputManager.h">
+      <Filter>Source Files\Engine\SDL</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

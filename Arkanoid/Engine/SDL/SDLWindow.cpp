@@ -8,6 +8,7 @@
 
 #include "SDL/SDLWindow.h"
 #include "SDL/SDLRenderer.h"
+#include "SDL/SDLInputManager.h"
 
 #include "SDL.h"
 
@@ -33,6 +34,8 @@ bool SDLWindow::Init(const StringView Title, int32 Width, int32 Height)
 	}
 
 	Renderer = SDLRenderer::Construct(NativeWindow);
+	InputManager = MakeShared<SDLInputManager>();
+
 	BackgroundColor = { 1, 50, 32, 255 };
 	return Renderer != nullptr;
 }
@@ -47,7 +50,19 @@ bool SDLWindow::HandleEvents()
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
-		if (event.type == SDL_QUIT) {
+		switch (event.type) {
+		case SDL_KEYDOWN:
+		case SDL_KEYUP:
+			InputManager->KeyboardEvent({event.key.state, event.key.repeat > 0, event.key.keysym.sym});
+			break;
+		case SDL_MOUSEMOTION:
+			InputManager->MouseMotionEvent({ event.motion.state, event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel });
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEBUTTONUP:
+			InputManager->MouseButtonEvent({ event.button.button, event.button.state, event.button.clicks, event.button.x, event.button.y });
+			break;
+		case SDL_QUIT:
 			return false;
 		}
 	}
