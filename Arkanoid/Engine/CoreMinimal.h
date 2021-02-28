@@ -46,14 +46,14 @@ struct FColor
 
 struct FPoint
 {
-	int32 X = 0;
-	int32 Y = 0;
+	float X = 0.0f;
+	float Y = 0.0f;
 };
 
 struct FRect
 {
-	int32 X = 0;
-	int32 Y = 0;
-	int32 Width = 0;
-	int32 Height = 0;
+	float X = 0.0f;
+	float Y = 0.0f;
+	float Width = 0.0f;
+	float Height = 0.0f;
 };

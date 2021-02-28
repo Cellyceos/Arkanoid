@@ -47,80 +47,80 @@ void SDLRenderer::SetColor(const FColor& Color)
 
 void SDLRenderer::DrawRect(const FRect& Rect)
 {	
-	const SDL_Rect NativeRect{Rect.X, Rect.Y, Rect.Width, Rect.Height};
-	SDL_RenderDrawRect(NativeRenderer, &NativeRect);
+	const SDL_FRect NativeRect{Rect.X, Rect.Y, Rect.Width, Rect.Height};
+	SDL_RenderDrawRectF(NativeRenderer, &NativeRect);
 }
 
 void SDLRenderer::FillRect(const FRect& Rect)
 {	
-	const SDL_Rect NativeRect{Rect.X, Rect.Y, Rect.Width, Rect.Height};
-	SDL_RenderFillRect(NativeRenderer, &NativeRect);
+	const SDL_FRect NativeRect{Rect.X, Rect.Y, Rect.Width, Rect.Height};
+	SDL_RenderFillRectF(NativeRenderer, &NativeRect);
 }
 
-void SDLRenderer::DrawCircle(const FPoint& Center, int32 Radius)
+void SDLRenderer::DrawCircle(const FPoint& Center, float Radius)
 {
-	int32 OffsetX = 0;
-	int32 OffsetY = Radius;
-	int32 RadiusError = Radius - 1;
+	float OffsetX = 0.0f;
+	float OffsetY = Radius;
+	float RadiusError = Radius - 1.0f;
 
 	while (OffsetY >= OffsetX)
 	{
-		SDL_RenderDrawPoint(NativeRenderer, Center.X + OffsetX, Center.Y + OffsetY);
-		SDL_RenderDrawPoint(NativeRenderer, Center.X + OffsetY, Center.Y + OffsetX);
-		SDL_RenderDrawPoint(NativeRenderer, Center.X - OffsetX, Center.Y + OffsetY);
-		SDL_RenderDrawPoint(NativeRenderer, Center.X - OffsetY, Center.Y + OffsetX);
-		SDL_RenderDrawPoint(NativeRenderer, Center.X + OffsetX, Center.Y - OffsetY);
-		SDL_RenderDrawPoint(NativeRenderer, Center.X + OffsetY, Center.Y - OffsetX);
-		SDL_RenderDrawPoint(NativeRenderer, Center.X - OffsetX, Center.Y - OffsetY);
-		SDL_RenderDrawPoint(NativeRenderer, Center.X - OffsetY, Center.Y - OffsetX);
+		SDL_RenderDrawPointF(NativeRenderer, Center.X + OffsetX, Center.Y + OffsetY);
+		SDL_RenderDrawPointF(NativeRenderer, Center.X + OffsetY, Center.Y + OffsetX);
+		SDL_RenderDrawPointF(NativeRenderer, Center.X - OffsetX, Center.Y + OffsetY);
+		SDL_RenderDrawPointF(NativeRenderer, Center.X - OffsetY, Center.Y + OffsetX);
+		SDL_RenderDrawPointF(NativeRenderer, Center.X + OffsetX, Center.Y - OffsetY);
+		SDL_RenderDrawPointF(NativeRenderer, Center.X + OffsetY, Center.Y - OffsetX);
+		SDL_RenderDrawPointF(NativeRenderer, Center.X - OffsetX, Center.Y - OffsetY);
+		SDL_RenderDrawPointF(NativeRenderer, Center.X - OffsetY, Center.Y - OffsetX);
 
-		if (RadiusError >= 2 * OffsetX) 
+		if (RadiusError >= 2.0f * OffsetX) 
 		{
-			RadiusError -= 2 * OffsetX + 1;
-			OffsetX += 1;
+			RadiusError -= 2.0f * OffsetX + 1.0f;
+			OffsetX += 1.0f;
 		}
-		else if (RadiusError < 2 * (Radius - OffsetY)) 
+		else if (RadiusError < 2.0f * (Radius - OffsetY)) 
 		{
-			RadiusError += 2 * OffsetY - 1;
-			OffsetY -= 1;
+			RadiusError += 2.0f * OffsetY - 1.0f;
+			OffsetY -= 1.0f;
 		}
 		else 
 		{
-			RadiusError += 2 * (OffsetY - OffsetX - 1);
-			OffsetY -= 1;
-			OffsetX += 1;
+			RadiusError += 2.0f * (OffsetY - OffsetX - 1.0f);
+			OffsetY -= 1.0f;
+			OffsetX += 1.0f;
 		}
 	}
 }
 
-void SDLRenderer::FillCircle(const FPoint& Center, int32 Radius)
+void SDLRenderer::FillCircle(const FPoint& Center, float Radius)
 {
-	int32 OffsetX = 0;
-	int32 OffsetY = Radius;
-	int32 RadiusError = Radius - 1;
+	float OffsetX = 0.0f;
+	float OffsetY = Radius;
+	float RadiusError = Radius - 1.0f;
 
 	while (OffsetY >= OffsetX) 
 	{
-		SDL_RenderDrawLine(NativeRenderer, Center.X - OffsetY, Center.Y + OffsetX, Center.X + OffsetY, Center.Y + OffsetX);
-		SDL_RenderDrawLine(NativeRenderer, Center.X - OffsetX, Center.Y + OffsetY, Center.X + OffsetX, Center.Y + OffsetY);
-		SDL_RenderDrawLine(NativeRenderer, Center.X - OffsetX, Center.Y - OffsetY, Center.X + OffsetX, Center.Y - OffsetY);
-		SDL_RenderDrawLine(NativeRenderer, Center.X - OffsetY, Center.Y - OffsetX, Center.X + OffsetY, Center.Y - OffsetX);
+		SDL_RenderDrawLineF(NativeRenderer, Center.X - OffsetY, Center.Y + OffsetX, Center.X + OffsetY, Center.Y + OffsetX);
+		SDL_RenderDrawLineF(NativeRenderer, Center.X - OffsetX, Center.Y + OffsetY, Center.X + OffsetX, Center.Y + OffsetY);
+		SDL_RenderDrawLineF(NativeRenderer, Center.X - OffsetX, Center.Y - OffsetY, Center.X + OffsetX, Center.Y - OffsetY);
+		SDL_RenderDrawLineF(NativeRenderer, Center.X - OffsetY, Center.Y - OffsetX, Center.X + OffsetY, Center.Y - OffsetX);
 
-		if (RadiusError >= 2 * OffsetX) 
+		if (RadiusError >= 2.0f * OffsetX) 
 		{
-			RadiusError -= 2 * OffsetX + 1;
-			OffsetX += 1;
+			RadiusError -= 2.0f * OffsetX + 1.0f;
+			OffsetX += 1.0f;
 		}
-		else if (RadiusError < 2 * (Radius - OffsetY)) 
+		else if (RadiusError < 2.0f * (Radius - OffsetY)) 
 		{
-			RadiusError += 2 * OffsetY - 1;
-			OffsetY -= 1;
+			RadiusError += 2.0f * OffsetY - 1.0f;
+			OffsetY -= 1.0f;
 		}
 		else 
 		{
-			RadiusError += 2 * (OffsetY - OffsetX - 1);
-			OffsetY -= 1;
-			OffsetX += 1;
+			RadiusError += 2.0f * (OffsetY - OffsetX - 1.0f);
+			OffsetY -= 1.0f;
+			OffsetX += 1.0f;
 		}
 	}
 }

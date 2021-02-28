@@ -24,8 +24,8 @@ public:
 	virtual void DrawRect(const FRect& Rect) = 0;
 	virtual void FillRect(const FRect& Rect) = 0;
 
-	virtual void DrawCircle(const FPoint& Center, int32 Radius) = 0;
-	virtual void FillCircle(const FPoint& Center, int32 Radius) = 0;
+	virtual void DrawCircle(const FPoint& Center, float Radius) = 0;
+	virtual void FillCircle(const FPoint& Center, float Radius) = 0;
 
 	virtual void* GetNativeRenderer() const { return nullptr; }
 };
