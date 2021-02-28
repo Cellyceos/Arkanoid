@@ -14,7 +14,7 @@
 class SDLWindow : public IWindow
 {
 public:
-	SDLWindow() = default;
+	SDLWindow();
 	virtual ~SDLWindow();
 
 	virtual bool Init(const StringView Title, int32 Width, int32 Height) override;
@@ -22,8 +22,8 @@ public:
 
 	virtual bool HandleEvents() override;
 
-	virtual void PrepareUpdate() override;
-	virtual void FinishUpdate() override;
+	virtual void PrepareDraw() override;
+	virtual void FinishDraw() override;
 
 	virtual void* GetNativeWindowHandle() const { return NativeWindow; }
 

@@ -12,8 +12,16 @@
 
 #include "SDL.h"
 
+
+SDLWindow::SDLWindow()
+{
+	InputManager = MakeShared<SDLInputManager>();
+	BackgroundColor = { 30, 30, 30, 255 };
+}
+
 SDLWindow::~SDLWindow()
 {
+	InputManager = nullptr;
 	Renderer = nullptr;
 
 	if (NativeWindow)
@@ -34,9 +42,6 @@ bool SDLWindow::Init(const StringView Title, int32 Width, int32 Height)
 	}
 
 	Renderer = SDLRenderer::Construct(NativeWindow);
-	InputManager = MakeShared<SDLInputManager>();
-
-	BackgroundColor = { 1, 50, 32, 255 };
 	return Renderer != nullptr;
 }
 
@@ -70,12 +75,12 @@ bool SDLWindow::HandleEvents()
 	return true;
 }
 
-void SDLWindow::PrepareUpdate()
+void SDLWindow::PrepareDraw()
 {
 	Renderer->Clear(BackgroundColor);
 }
 
-void SDLWindow::FinishUpdate()
+void SDLWindow::FinishDraw()
 {
 	Renderer->Present();
 }

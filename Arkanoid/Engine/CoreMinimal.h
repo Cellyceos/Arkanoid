@@ -43,3 +43,17 @@ struct FColor
 	uint8 Blue = 0;
 	uint8 Alpha = 0;
 };
+
+struct FPoint
+{
+	int32 X = 0;
+	int32 Y = 0;
+};
+
+struct FRect
+{
+	int32 X = 0;
+	int32 Y = 0;
+	int32 Width = 0;
+	int32 Height = 0;
+};

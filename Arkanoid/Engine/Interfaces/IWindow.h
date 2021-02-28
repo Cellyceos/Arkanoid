@@ -21,8 +21,8 @@ public:
 
 	virtual bool HandleEvents() = 0;
 
-	virtual void PrepareUpdate() = 0;
-	virtual void FinishUpdate() = 0;
+	virtual void PrepareDraw() = 0;
+	virtual void FinishDraw() = 0;
 
 	virtual const SharedPtr<class IRenderer> GetRenderer() const { return Renderer; }
 	virtual const SharedPtr<class IInputManager> GetInputManager() const { return InputManager; }

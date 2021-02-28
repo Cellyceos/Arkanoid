@@ -22,6 +22,14 @@ public:
 	virtual void Clear(const FColor& Color) override;
 	virtual void Present() override;
 
+	virtual void SetColor(const FColor& Color) override;
+
+	virtual void DrawRect(const FRect& Rect) override;
+	virtual void FillRect(const FRect& Rect) override;
+
+	virtual void DrawCircle(const FPoint& Center, int32 Radius) override;
+	virtual void FillCircle(const FPoint& Center, int32 Radius) override;
+
 	virtual void* GetNativeRenderer() const override { return NativeRenderer; }
 
 private:
