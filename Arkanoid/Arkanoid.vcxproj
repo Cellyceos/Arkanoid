@@ -152,6 +152,8 @@
   <ItemGroup>
     <ClCompile Include="Engine\SDL\SDLInputManager.cpp" />
     <ClCompile Include="Game\ArkanoidGame.cpp" />
+    <ClCompile Include="Game\Level.cpp" />
+    <ClCompile Include="Game\Platform.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\SDL\SDLContext.cpp" />
     <ClCompile Include="Engine\SDL\SDLRenderer.cpp" />
@@ -167,6 +169,8 @@
     <ClInclude Include="Engine\SDL\SDLRenderer.h" />
     <ClInclude Include="Engine\SDL\SDLWindow.h" />
     <ClInclude Include="Engine\CoreMinimal.h" />
+    <ClInclude Include="Game\Level.h" />
+    <ClInclude Include="Game\Platform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

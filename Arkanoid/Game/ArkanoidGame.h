@@ -21,4 +21,5 @@ public:
 
 private:
 	UniquePtr<class IWindow> MainWindow = nullptr;
+	UniquePtr<class Level> CurrentLevel = nullptr;
 };

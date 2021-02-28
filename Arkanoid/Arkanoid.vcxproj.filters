@@ -44,6 +44,12 @@
     <ClCompile Include="Engine\SDL\SDLInputManager.cpp">
       <Filter>Source Files\Engine\SDL</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Level.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Platform.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Interfaces\IWindow.h">
@@ -72,6 +78,12 @@
     </ClInclude>
     <ClInclude Include="Engine\SDL\SDLInputManager.h">
       <Filter>Source Files\Engine\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Level.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Platform.h">
+      <Filter>Source Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
