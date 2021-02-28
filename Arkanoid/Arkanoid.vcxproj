@@ -78,9 +78,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)Intermediate\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)Intermediate\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/Arkanoid</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Arkanoid;$(SolutionDir)/Arkanoid/Engine;$(SolutionDir)/Arkanoid/Game</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -132,7 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/Arkanoid</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Arkanoid;$(SolutionDir)/Arkanoid/Engine;$(SolutionDir)/Arkanoid/Game</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -146,20 +150,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ArkanoidGame.cpp" />
+    <ClCompile Include="Game\ArkanoidGame.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SDL\SDLContext.cpp" />
-    <ClCompile Include="SDL\SDLRenderer.cpp" />
-    <ClCompile Include="SDL\SDLWindow.cpp" />
+    <ClCompile Include="Engine\SDL\SDLContext.cpp" />
+    <ClCompile Include="Engine\SDL\SDLRenderer.cpp" />
+    <ClCompile Include="Engine\SDL\SDLWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArkanoidGame.h" />
-    <ClInclude Include="Interfaces\IWindow.h" />
-    <ClInclude Include="Interfaces\IRenderer.h" />
-    <ClInclude Include="SDL\SDLContext.h" />
-    <ClInclude Include="SDL\SDLRenderer.h" />
-    <ClInclude Include="SDL\SDLWindow.h" />
-    <ClInclude Include="CoreMinimal.h" />
+    <ClInclude Include="Game\ArkanoidGame.h" />
+    <ClInclude Include="Engine\Interfaces\IWindow.h" />
+    <ClInclude Include="Engine\Interfaces\IRenderer.h" />
+    <ClInclude Include="Engine\SDL\SDLContext.h" />
+    <ClInclude Include="Engine\SDL\SDLRenderer.h" />
+    <ClInclude Include="Engine\SDL\SDLWindow.h" />
+    <ClInclude Include="Engine\CoreMinimal.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
