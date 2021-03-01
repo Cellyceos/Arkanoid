@@ -18,6 +18,7 @@ public:
 
 	virtual bool Init(const FStringView Title, int32 Width, int32 Height) = 0;
 	virtual void Show() = 0;
+	virtual void Hide() = 0;
 
 	virtual bool HandleEvents() = 0;
 
@@ -30,6 +31,7 @@ public:
 	virtual void SetBackgroundColor(const FColor& Color) { BackgroundColor = Color; }
 	virtual FColor GetBackgroundColor() const { return BackgroundColor; }
 
+	virtual bool HasFocus() const = 0;
 	virtual void* GetNativeWindowHandle() const { return nullptr; }
 
 protected:
