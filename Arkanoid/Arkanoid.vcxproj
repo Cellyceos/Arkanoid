@@ -150,8 +150,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\SDL\SDLInputManager.cpp" />
+    <ClCompile Include="Engine\Input\InputManager.cpp" />
     <ClCompile Include="Game\ArkanoidGame.cpp" />
+    <ClCompile Include="Game\AObject.cpp" />
     <ClCompile Include="Game\Level.cpp" />
     <ClCompile Include="Game\Platform.cpp" />
     <ClCompile Include="main.cpp" />
@@ -160,8 +161,8 @@
     <ClCompile Include="Engine\SDL\SDLWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Interfaces\IInputManager.h" />
-    <ClInclude Include="Engine\SDL\SDLInputManager.h" />
+    <ClInclude Include="Engine\Input\InputEvents.h" />
+    <ClInclude Include="Engine\Input\InputManager.h" />
     <ClInclude Include="Game\ArkanoidGame.h" />
     <ClInclude Include="Engine\Interfaces\IWindow.h" />
     <ClInclude Include="Engine\Interfaces\IRenderer.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Engine\SDL\SDLRenderer.h" />
     <ClInclude Include="Engine\SDL\SDLWindow.h" />
     <ClInclude Include="Engine\CoreMinimal.h" />
+    <ClInclude Include="Game\AObject.h" />
     <ClInclude Include="Game\Level.h" />
     <ClInclude Include="Game\Platform.h" />
   </ItemGroup>

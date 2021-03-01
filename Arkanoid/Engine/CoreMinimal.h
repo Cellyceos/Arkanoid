@@ -20,6 +20,8 @@
 #include <map>
 #include <unordered_map>
 
+#include <functional>
+
 using int8 = std::int8_t;
 using int16 = std::int16_t;
 using int32 = std::int32_t;
@@ -42,11 +44,8 @@ template<class Key, class T> using TUnorderedMap = std::unordered_map<Key, T>;
 template<typename T> using TArray = std::vector<T>;
 template<typename T, uint64 Size> using TFixedArray = std::array<T, Size>;
 
-template <class T, class... Types>
-TUniquePtr<T> MakeUnique(Types&&... Args) { return std::make_unique<T>(std::forward<Types>(Args)...); }
-
-template <class T, class... Types>
-TSharedPtr<T> MakeShared(Types&&... Args) { return std::make_shared<T>(std::forward<Types>(Args)...); }
+using namespace std::placeholders;
+template<typename T> using TFunction = std::function<T>;
 
 struct FColor
 {
@@ -66,6 +65,12 @@ struct FRect
 {
 	float X = 0.0f;
 	float Y = 0.0f;
+	float Width = 0.0f;
+	float Height = 0.0f;
+};
+
+struct FSize
+{
 	float Width = 0.0f;
 	float Height = 0.0f;
 };

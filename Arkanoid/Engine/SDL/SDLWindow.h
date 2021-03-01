@@ -21,7 +21,7 @@ public:
 	virtual void Show() override;
 	virtual void Hide() override;
 
-	virtual bool HandleEvents() override;
+	virtual bool HandleEvents(TSharedPtr<class AInputManager> InputManager) override;
 
 	virtual void PrepareDraw() override;
 	virtual void FinishDraw() override;
@@ -36,4 +36,4 @@ private:
 	bool bHasFocus = false;
 };
 
-using WindowClass = SDLWindow;
+using AWindowClass = SDLWindow;

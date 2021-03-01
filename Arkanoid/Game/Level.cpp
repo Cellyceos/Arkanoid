@@ -9,31 +9,31 @@
 #include "Game/Level.h"
 #include "Game/Platform.h"
 
-#include "Engine/Interfaces/IInputManager.h"
 #include "Engine/Interfaces/IRenderer.h"
 
 
-Level::Level()
+ALevel::ALevel()
 {
-	Player = MakeUnique<Platform>();
+	Platform = std::make_unique<APlatform>();
 }
 
-Level::~Level()
-{
-
-}
-
-void Level::Init(TSharedPtr<IInputManager> InputManager)
+ALevel::~ALevel()
 {
 
 }
 
-void Level::Update(float DeltaTime)
+void ALevel::SetupPlayerInput(const TSharedPtr<AInputManager>& InputManager)
 {
-	Player->Update(DeltaTime);
+	Platform->SetupPlayerInput(InputManager);
+	Platform->SetOwner(weak_from_this());
 }
 
-void Level::Draw(TSharedPtr<IRenderer> Renderer)
+void ALevel::Update(float DeltaTime)
 {
-	Player->Draw(Renderer);
+	Platform->Update(DeltaTime);
+}
+
+void ALevel::Draw(const TSharedPtr<IRenderer>& Renderer)
+{
+	Platform->Draw(Renderer);
 }

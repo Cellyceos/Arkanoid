@@ -9,18 +9,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include  "Game/AObject.h"
 
-class Level
+class ALevel : public AObject
 {
 public:
-	Level();
-	~Level();
+	ALevel();
+	virtual ~ALevel();
 
-	void Init(TSharedPtr<class IInputManager> InputManager);
-	void Update(float DeltaTime);
-	void Draw(TSharedPtr<class IRenderer> Renderer);
+	virtual void SetupPlayerInput(const TSharedPtr<class AInputManager>& InputManager) override;
 
-private:
-	TUniquePtr<class Platform> Player = nullptr;
+	virtual void Update(float DeltaTime) override;
+	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) override;
+
+protected:
+	TUniquePtr<class APlatform> Platform;
 };
 

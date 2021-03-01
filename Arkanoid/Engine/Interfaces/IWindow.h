@@ -20,13 +20,12 @@ public:
 	virtual void Show() = 0;
 	virtual void Hide() = 0;
 
-	virtual bool HandleEvents() = 0;
+	virtual bool HandleEvents(TSharedPtr<class AInputManager> InputManager) = 0;
 
 	virtual void PrepareDraw() = 0;
 	virtual void FinishDraw() = 0;
 
 	virtual const TSharedPtr<class IRenderer> GetRenderer() const { return Renderer; }
-	virtual const TSharedPtr<class IInputManager> GetInputManager() const { return InputManager; }
 
 	virtual void SetBackgroundColor(const FColor& Color) { BackgroundColor = Color; }
 	virtual FColor GetBackgroundColor() const { return BackgroundColor; }
@@ -35,7 +34,6 @@ public:
 	virtual void* GetNativeWindowHandle() const { return nullptr; }
 
 protected:
-	TSharedPtr<class IInputManager> InputManager = nullptr;
 	TSharedPtr<class IRenderer> Renderer = nullptr;
 
 	FColor BackgroundColor;

@@ -9,14 +9,17 @@
 #include "ArkanoidGame.h"
 #include "Game/Level.h"
 
+#include "Input/InputManager.h"
+
 #if USE_SDL
 #include "SDL/SDLWindow.h"
 #endif
 
 ArkanoidGame::ArkanoidGame()
 {
-	MainWindow = MakeUnique<WindowClass>();
-	CurrentLevel = MakeUnique<Level>();
+	MainWindow = std::make_unique<AWindowClass>();
+	CurrentLevel = std::make_shared<ALevel>();
+	InputManager = std::make_shared<AInputManager>();
 }
 
 ArkanoidGame::~ArkanoidGame()
@@ -27,9 +30,13 @@ ArkanoidGame::~ArkanoidGame()
 
 bool ArkanoidGame::Init()
 {
-	if (MainWindow->Init("Arkanoid Game", 800, 600))
+	const int32 WindowWidth = 1024;
+	const int32 WindowHeight = 768;
+
+	if (MainWindow->Init("Arkanoid Game", WindowWidth, WindowHeight))
 	{
-		CurrentLevel->Init(MainWindow->GetInputManager());
+		CurrentLevel->SetRect({ 10.0f, 10.0f, (WindowWidth - 10.0f) * (2.0f / 3.0f), WindowHeight - 20.0f });
+		CurrentLevel->SetupPlayerInput(InputManager);
 		MainWindow->Show();
 		return true;
 	}
@@ -39,12 +46,15 @@ bool ArkanoidGame::Init()
 
 int32 ArkanoidGame::Exec()
 {
-	while (MainWindow->HandleEvents())
+	while (MainWindow->HandleEvents(InputManager))
 	{
 		CurrentLevel->Update(0.0f);
 
 		MainWindow->PrepareDraw();
-		CurrentLevel->Draw(MainWindow->GetRenderer());
+
+		auto& Renderer = MainWindow->GetRenderer();
+		CurrentLevel->Draw(Renderer);
+
 		MainWindow->FinishDraw();
 	}
 

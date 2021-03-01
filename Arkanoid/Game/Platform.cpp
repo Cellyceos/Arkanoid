@@ -8,58 +8,97 @@
 
 #include "Game/Platform.h"
 
-#include "Engine/Interfaces/IInputManager.h"
+#include "Engine/Input/InputManager.h"
 #include "Engine/Interfaces/IRenderer.h"
 
 
-Platform::Platform()
+APlatform::APlatform()
 {
-	Center = { 300, 500 };
-
+	Rect = { 300.0f, 500.0f, 80.0f, 14.0f };
 	Color = { 150, 150, 150, 255 };
 	GunColor = { 80, 80, 80, 255 };
 }
 
-Platform::~Platform()
+APlatform::~APlatform()
 {
 
 }
 
-void Platform::Init(TSharedPtr<IInputManager> InputManager)
+void APlatform::SetupPlayerInput(const TSharedPtr<class AInputManager>& InputManager)
+{
+	InputManager->BindAxis("Move", std::bind(&APlatform::Move, this, _1));
+	InputManager->BindAction("Release", EInputEvent::IE_Pressed, std::bind(&APlatform::ReleaseBall, this));
+}
+
+void APlatform::SetOwner(const TWeakPtr<AObject>& NewOwner)
+{
+	AObject::SetOwner(NewOwner);
+
+	if (!Owner.expired())
+	{
+		const FRect& OwnerRect = Owner.lock()->GetRect();
+		Rect.Y = OwnerRect.Height - Rect.Height - 15.0f;
+	}
+}
+
+void APlatform::Move(float Val)
+{
+	MoveDirection = Val;
+}
+
+void APlatform::ReleaseBall()
 {
 
 }
 
-void Platform::Update(float DeltaTime)
+void APlatform::Update(float DeltaTime)
 {
+	if (MoveDirection != 0.0f)
+	{
+		Rect.X += MoveDirection;
 
+	}
+
+	if (!Owner.expired())
+	{
+		const FRect& OwnerRect = Owner.lock()->GetRect();
+		const float HalfHeight = Rect.Height * 0.5f;
+
+		if (Rect.X + Rect.Width + HalfHeight > OwnerRect.X + OwnerRect.Width)
+		{
+			Rect.X = OwnerRect.X + OwnerRect.Width - Rect.Width - HalfHeight;
+		}
+		else if (Rect.X - HalfHeight < OwnerRect.X)
+		{
+			Rect.X = OwnerRect.X + HalfHeight;
+		}
+	}
 }
 
-void Platform::Draw(TSharedPtr<IRenderer> Renderer)
+void APlatform::Draw(const TSharedPtr<class IRenderer>& Renderer)
 {
-	const float HalfHeight = Height * 0.5f;
-	const float HalfWidth = Width * 0.5f;
+	const float HalfHeight = Rect.Height * 0.5f;
+	const float HalfWidth = Rect.Width * 0.5f;
 
-	const float X = Center.X - HalfWidth;
-	const float Y = Center.Y - HalfHeight;
+	const FPoint& Center = GetCenterPoint();
 
 	Renderer->SetColor(Color);
-	Renderer->FillCircle({ X, Center.Y }, HalfHeight);
-	Renderer->FillCircle({ X + Width, Center.Y }, HalfHeight);
-	Renderer->FillRect({ X, Y, Width, Height + 1.0f });
+	Renderer->FillCircle({ Rect.X, Center.Y }, HalfHeight);
+	Renderer->FillCircle({ Rect.X + Rect.Width, Center.Y }, HalfHeight);
+	Renderer->FillRect({ Rect.X, Rect.Y, Rect.Width, Rect.Height + 1.0f });
 
 	if (HasGun)
 	{
-		const float GunPlatformWidth = Width * 0.125f;
-		const float GunPlatformHeight = Height * 0.25f;
+		const float GunPlatformWidth = Rect.Width * 0.125f;
+		const float GunPlatformHeight = Rect.Height * 0.25f;
 		const float HalfHeight = GunPlatformWidth * 0.5f;
 		const float HalfWidth = GunPlatformHeight * 0.5f;
 
 		Renderer->SetColor(GunColor);
-		Renderer->FillRect({ X, Y - GunPlatformHeight, GunPlatformWidth, GunPlatformHeight });
-		Renderer->FillRect({ X + (HalfHeight - HalfWidth), Y - GunPlatformWidth, GunPlatformHeight, GunPlatformWidth });
+		Renderer->FillRect({ Rect.X, Rect.Y - GunPlatformHeight, GunPlatformWidth, GunPlatformHeight });
+		Renderer->FillRect({ Rect.X + (HalfHeight - HalfWidth), Rect.Y - GunPlatformWidth , GunPlatformHeight, GunPlatformWidth });
 
-		Renderer->FillRect({ X + Width - GunPlatformWidth, Y - GunPlatformHeight, GunPlatformWidth, GunPlatformHeight });
-		Renderer->FillRect({ X + Width - (HalfHeight + HalfWidth), Y - GunPlatformWidth, GunPlatformHeight, GunPlatformWidth });
+		Renderer->FillRect({ Rect.X + Rect.Width - GunPlatformWidth, Rect.Y - GunPlatformHeight , GunPlatformWidth, GunPlatformHeight });
+		Renderer->FillRect({ Rect.X + Rect.Width - (HalfHeight + HalfWidth), Rect.Y - GunPlatformWidth , GunPlatformHeight, GunPlatformWidth });
 	}
 }

@@ -8,20 +8,20 @@
 
 #include "SDL/SDLWindow.h"
 #include "SDL/SDLRenderer.h"
-#include "SDL/SDLInputManager.h"
+
+#include "Input/InputManager.h"
+#include "Input/InputEvents.h"
 
 #include "SDL.h"
 
 
 SDLWindow::SDLWindow()
 {
-	InputManager = MakeShared<SDLInputManager>();
 	BackgroundColor = { 30, 30, 30, 255 };
 }
 
 SDLWindow::~SDLWindow()
 {
-	InputManager = nullptr;
 	Renderer = nullptr;
 
 	if (NativeWindow)
@@ -57,7 +57,7 @@ void SDLWindow::Hide()
 	SDL_HideWindow(NativeWindow);
 }
 
-bool SDLWindow::HandleEvents()
+bool SDLWindow::HandleEvents(TSharedPtr<class AInputManager> InputManager)
 {
 	SDL_Event event;
 	while (SDL_PollEvent(&event))

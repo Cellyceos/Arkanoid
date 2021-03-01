@@ -1,8 +1,8 @@
 //
-//  IInputManager.h
-//  Base Wrapper Interface Class.
+//  InputEvents.h
+//  Input Event Structures.
 //
-//  Created by Kirill Bravichev on 02/28/2021.
+//  Created by Kirill Bravichev on 03/01/2021.
 //  Copyright (c) 2021 Cellyceos. All rights reserved.
 //
 
@@ -33,15 +33,4 @@ struct FMouseButtonEvent
     uint8 Clicks;
     int32 X;
     int32 Y;
-};
-
-class IInputManager
-{
-public:
-	IInputManager() = default;
-	virtual ~IInputManager() = default;
-
-	virtual void KeyboardEvent(const FKeyboardEvent& Event) = 0;
-	virtual void MouseButtonEvent(const FMouseButtonEvent& Event) = 0;
-	virtual void MouseMotionEvent(const FMouseMotionEvent& Event) = 0;
 };

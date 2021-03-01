@@ -20,7 +20,7 @@ TSharedPtr<SDLRenderer> SDLRenderer::Construct(SDL_Window* Window)
 		return nullptr;
 	}
 
-	return MakeShared<SDLRenderer>(NativeRenderer);
+	return std::make_shared<SDLRenderer>(NativeRenderer);
 }
 
 SDLRenderer::SDLRenderer(SDL_Renderer* Renderer) : NativeRenderer(Renderer) { }

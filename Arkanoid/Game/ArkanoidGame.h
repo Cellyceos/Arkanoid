@@ -21,5 +21,6 @@ public:
 
 private:
 	TUniquePtr<class IWindow> MainWindow = nullptr;
-	TUniquePtr<class Level> CurrentLevel = nullptr;
+	TSharedPtr<class ALevel> CurrentLevel = nullptr;
+	TSharedPtr<class AInputManager> InputManager = nullptr;
 };

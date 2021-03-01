@@ -9,22 +9,27 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Game/AObject.h"
 
-class Platform
+class APlatform : public AObject
 {
 public:
-	Platform();
-	~Platform();
+	APlatform();
+	virtual ~APlatform();
 
-	void Init(TSharedPtr<class IInputManager> InputManager);
-	void Update(float DeltaTime);
-	void Draw(TSharedPtr<class IRenderer> Renderer);
+	virtual void SetupPlayerInput(const TSharedPtr<class AInputManager>& InputManager) override;
+
+	virtual void Update(float DeltaTime) override;
+	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) override;
+
+	virtual void SetOwner(const TWeakPtr<AObject>& NewOwner) override;
+
+protected:
+	void Move(float Val);
+	void ReleaseBall();
 
 private:
-	float Width = 80.0f;
-	float Height = 14.0f;
-
-	FPoint Center;
+	float MoveDirection = 0.0f;
 
 	FColor Color;
 	FColor GunColor;

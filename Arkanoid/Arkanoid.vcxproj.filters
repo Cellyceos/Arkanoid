@@ -21,6 +21,9 @@
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{27261ad1-efed-464d-a711-8fb9525f92ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Input">
+      <UniqueIdentifier>{37e08141-8fe6-4897-a9a4-65f6f15dd80d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -41,13 +44,16 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\SDL\SDLInputManager.cpp">
-      <Filter>Source Files\Engine\SDL</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Level.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\Platform.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\InputManager.cpp">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\AObject.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,16 +79,19 @@
     <ClInclude Include="Game\ArkanoidGame.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Interfaces\IInputManager.h">
-      <Filter>Source Files\Engine\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\SDL\SDLInputManager.h">
-      <Filter>Source Files\Engine\SDL</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Level.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Platform.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\InputManager.h">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\InputEvents.h">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\AObject.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
