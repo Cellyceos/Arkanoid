@@ -25,7 +25,7 @@ Platform::~Platform()
 
 }
 
-void Platform::Init(SharedPtr<IInputManager> InputManager)
+void Platform::Init(TSharedPtr<IInputManager> InputManager)
 {
 
 }
@@ -35,7 +35,7 @@ void Platform::Update(float DeltaTime)
 
 }
 
-void Platform::Draw(SharedPtr<IRenderer> Renderer)
+void Platform::Draw(TSharedPtr<IRenderer> Renderer)
 {
 	const float HalfHeight = Height * 0.5f;
 	const float HalfWidth = Width * 0.5f;

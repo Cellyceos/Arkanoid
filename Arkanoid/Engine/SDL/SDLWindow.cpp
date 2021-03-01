@@ -31,7 +31,7 @@ SDLWindow::~SDLWindow()
 	}
 }
 
-bool SDLWindow::Init(const StringView Title, int32 Width, int32 Height)
+bool SDLWindow::Init(const FStringView Title, int32 Width, int32 Height)
 {
 	NativeWindow = SDL_CreateWindow(Title.data(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Width, Height, SDL_WINDOW_HIDDEN|SDL_WINDOW_ALLOW_HIGHDPI);
 	if (!NativeWindow)

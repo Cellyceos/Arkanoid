@@ -17,7 +17,7 @@ public:
 	explicit SDLRenderer(struct SDL_Renderer* RendererPtr);
 	virtual ~SDLRenderer();
 
-	static SharedPtr<SDLRenderer> Construct(struct SDL_Window* Window);
+	static TSharedPtr<SDLRenderer> Construct(struct SDL_Window* Window);
 
 	virtual void Clear(const FColor& Color) override;
 	virtual void Present() override;

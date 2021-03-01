@@ -14,6 +14,12 @@
 #include <string>
 #include <string_view>
 
+#include <array>
+#include <vector>
+
+#include <map>
+#include <unordered_map>
+
 using int8 = std::int8_t;
 using int16 = std::int16_t;
 using int32 = std::int32_t;
@@ -23,18 +29,24 @@ using uint16 = std::uint16_t;
 using uint32 = std::uint32_t;
 using uint64 = std::uint64_t;
 
-template<class T> using UniquePtr = std::unique_ptr<T>;
-template<class T> using SharedPtr = std::shared_ptr<T>;
-template<class T> using WeakPtr = std::weak_ptr<T>;
+template<class T> using TUniquePtr = std::unique_ptr<T>;
+template<class T> using TSharedPtr = std::shared_ptr<T>;
+template<class T> using TWeakPtr = std::weak_ptr<T>;
 
-using String = std::string;
-using StringView = std::string_view;
+using FString = std::string;
+using FStringView = std::string_view;
+
+template<class Key, class T> using TMap = std::map<Key, T>;
+template<class Key, class T> using TUnorderedMap = std::unordered_map<Key, T>;
+
+template<typename T> using TArray = std::vector<T>;
+template<typename T, uint64 Size> using TFixedArray = std::array<T, Size>;
 
 template <class T, class... Types>
-UniquePtr<T> MakeUnique(Types&&... Args) { return std::make_unique<T>(std::forward<Types>(Args)...); }
+TUniquePtr<T> MakeUnique(Types&&... Args) { return std::make_unique<T>(std::forward<Types>(Args)...); }
 
 template <class T, class... Types>
-SharedPtr<T> MakeShared(Types&&... Args) { return std::make_shared<T>(std::forward<Types>(Args)...); }
+TSharedPtr<T> MakeShared(Types&&... Args) { return std::make_shared<T>(std::forward<Types>(Args)...); }
 
 struct FColor
 {

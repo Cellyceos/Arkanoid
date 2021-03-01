@@ -16,9 +16,9 @@ public:
 	Platform();
 	~Platform();
 
-	void Init(SharedPtr<class IInputManager> InputManager);
+	void Init(TSharedPtr<class IInputManager> InputManager);
 	void Update(float DeltaTime);
-	void Draw(SharedPtr<class IRenderer> Renderer);
+	void Draw(TSharedPtr<class IRenderer> Renderer);
 
 private:
 	float Width = 80.0f;

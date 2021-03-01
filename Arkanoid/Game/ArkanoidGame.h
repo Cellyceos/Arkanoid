@@ -20,6 +20,6 @@ public:
 	int32 Exec();
 
 private:
-	UniquePtr<class IWindow> MainWindow = nullptr;
-	UniquePtr<class Level> CurrentLevel = nullptr;
+	TUniquePtr<class IWindow> MainWindow = nullptr;
+	TUniquePtr<class Level> CurrentLevel = nullptr;
 };

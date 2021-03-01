@@ -10,7 +10,7 @@
 
 #include "SDL.h"
 
-SharedPtr<SDLRenderer> SDLRenderer::Construct(SDL_Window* Window)
+TSharedPtr<SDLRenderer> SDLRenderer::Construct(SDL_Window* Window)
 {
 	SDL_Renderer* NativeRenderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
 	if (!NativeRenderer)

@@ -17,7 +17,7 @@ public:
 	SDLWindow();
 	virtual ~SDLWindow();
 
-	virtual bool Init(const StringView Title, int32 Width, int32 Height) override;
+	virtual bool Init(const FStringView Title, int32 Width, int32 Height) override;
 	virtual void Show() override;
 
 	virtual bool HandleEvents() override;

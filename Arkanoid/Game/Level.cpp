@@ -23,7 +23,7 @@ Level::~Level()
 
 }
 
-void Level::Init(SharedPtr<IInputManager> InputManager)
+void Level::Init(TSharedPtr<IInputManager> InputManager)
 {
 
 }
@@ -33,7 +33,7 @@ void Level::Update(float DeltaTime)
 	Player->Update(DeltaTime);
 }
 
-void Level::Draw(SharedPtr<IRenderer> Renderer)
+void Level::Draw(TSharedPtr<IRenderer> Renderer)
 {
 	Player->Draw(Renderer);
 }

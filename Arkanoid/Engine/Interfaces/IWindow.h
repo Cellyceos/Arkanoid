@@ -16,7 +16,7 @@ public:
 	IWindow() = default;
 	virtual ~IWindow() = default;
 
-	virtual bool Init(const StringView Title, int32 Width, int32 Height) = 0;
+	virtual bool Init(const FStringView Title, int32 Width, int32 Height) = 0;
 	virtual void Show() = 0;
 
 	virtual bool HandleEvents() = 0;
@@ -24,8 +24,8 @@ public:
 	virtual void PrepareDraw() = 0;
 	virtual void FinishDraw() = 0;
 
-	virtual const SharedPtr<class IRenderer> GetRenderer() const { return Renderer; }
-	virtual const SharedPtr<class IInputManager> GetInputManager() const { return InputManager; }
+	virtual const TSharedPtr<class IRenderer> GetRenderer() const { return Renderer; }
+	virtual const TSharedPtr<class IInputManager> GetInputManager() const { return InputManager; }
 
 	virtual void SetBackgroundColor(const FColor& Color) { BackgroundColor = Color; }
 	virtual FColor GetBackgroundColor() const { return BackgroundColor; }
@@ -33,8 +33,8 @@ public:
 	virtual void* GetNativeWindowHandle() const { return nullptr; }
 
 protected:
-	SharedPtr<class IInputManager> InputManager = nullptr;
-	SharedPtr<class IRenderer> Renderer = nullptr;
+	TSharedPtr<class IInputManager> InputManager = nullptr;
+	TSharedPtr<class IRenderer> Renderer = nullptr;
 
 	FColor BackgroundColor;
 };
