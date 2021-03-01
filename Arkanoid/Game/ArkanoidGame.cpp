@@ -7,12 +7,15 @@
 //
 
 #include "ArkanoidGame.h"
-#include "SDL/SDLWindow.h"
 #include "Game/Level.h"
+
+#if USE_SDL
+#include "SDL/SDLWindow.h"
+#endif
 
 ArkanoidGame::ArkanoidGame()
 {
-	MainWindow = MakeUnique<SDLWindow>();
+	MainWindow = MakeUnique<WindowClass>();
 	CurrentLevel = MakeUnique<Level>();
 }
 

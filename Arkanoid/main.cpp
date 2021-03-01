@@ -8,7 +8,11 @@
 
 #include "ArkanoidGame.h"
 
-int Execute()
+#if USE_SDL
+#include "SDL_main.h"
+#endif
+
+int main(int argc, char* argv[])
 {
 	ArkanoidGame Game;
 
@@ -19,24 +23,3 @@ int Execute()
 
 	return EXIT_FAILURE;
 }
-
-#if _CONSOLE
-int main(int argc, char* argv[])
-{
-	return Execute();
-}
-#elif _WINDOWS
-// Windows Header Files
-#include <windows.h>
-
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-	_In_opt_ HINSTANCE hPrevInstance,
-	_In_ LPWSTR    lpCmdLine,
-	_In_ int       nCmdShow)
-{
-	UNREFERENCED_PARAMETER(hPrevInstance);
-	UNREFERENCED_PARAMETER(lpCmdLine);
-
-	return Execute();
-}
-#endif

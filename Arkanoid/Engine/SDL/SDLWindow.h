@@ -30,3 +30,5 @@ public:
 private:
 	struct SDL_Window* NativeWindow = nullptr;
 };
+
+using WindowClass = SDLWindow;
