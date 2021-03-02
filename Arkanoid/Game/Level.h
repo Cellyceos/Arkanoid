@@ -8,7 +8,6 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include  "AObject.h"
 
 class ALevel : public AObject
@@ -26,7 +25,10 @@ protected:
 	static constexpr int64 ColNum = 11;
 	static constexpr int64 RowNum = 28;
 
+	TUniquePtr<class ABall> Ball;
 	TUniquePtr<class APlatform> Platform;
-	TFixedArray<TUniquePtr<class ABlock>, ColNum * RowNum> Blocks;
+
+	TFixedArray<TUniquePtr<class AObject>, ColNum * RowNum> StaticObjects;
+	TArray<TUniquePtr<class AObject>> DynamicObjects;
 };
 
