@@ -41,9 +41,9 @@ void APlatform::SetOwner(const TWeakPtr<AObject>& NewOwner)
 	}
 }
 
-void APlatform::Move(float Val)
+void APlatform::Move(float Direction)
 {
-	MoveDirection = Val;
+	MoveSpeed = Direction * Speed;
 }
 
 void APlatform::ReleaseBall()
@@ -53,10 +53,9 @@ void APlatform::ReleaseBall()
 
 void APlatform::Update(float DeltaTime)
 {
-	if (MoveDirection != 0.0f)
+	if (MoveSpeed != 0.0f)
 	{
-		Rect.X += MoveDirection;
-
+		Rect.X += MoveSpeed * DeltaTime;
 	}
 
 	if (!Owner.expired())

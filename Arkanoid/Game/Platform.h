@@ -25,11 +25,12 @@ public:
 	virtual void SetOwner(const TWeakPtr<AObject>& NewOwner) override;
 
 protected:
-	void Move(float Val);
+	void Move(float Direction);
 	void ReleaseBall();
 
 private:
-	float MoveDirection = 0.0f;
+	float Speed = 500.0f;
+	float MoveSpeed = 0.0f;
 
 	FColor Color;
 	FColor GunColor;

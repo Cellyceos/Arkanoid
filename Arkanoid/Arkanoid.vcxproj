@@ -150,6 +150,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\FixedFrameRate.cpp" />
     <ClCompile Include="Engine\Input\InputManager.cpp" />
     <ClCompile Include="Game\ArkanoidGame.cpp" />
     <ClCompile Include="Game\AObject.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="Engine\SDL\SDLWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\FixedFrameRate.h" />
     <ClInclude Include="Engine\Input\InputEvents.h" />
     <ClInclude Include="Engine\Input\InputManager.h" />
     <ClInclude Include="Game\ArkanoidGame.h" />

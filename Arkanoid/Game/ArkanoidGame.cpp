@@ -9,6 +9,8 @@
 #include "ArkanoidGame.h"
 #include "Game/Level.h"
 
+#include "FixedFrameRate.h"
+#include "Interfaces/IRenderer.h"
 #include "Input/InputManager.h"
 
 #if USE_SDL
@@ -46,16 +48,19 @@ bool ArkanoidGame::Init()
 
 int32 ArkanoidGame::Exec()
 {
+	AFixedFrameRate FixedFrameRate(60ll);
 	while (MainWindow->HandleEvents(InputManager))
 	{
-		CurrentLevel->Update(0.0f);
+		CurrentLevel->Update(FixedFrameRate.GetDeltaTime());
 
 		MainWindow->PrepareDraw();
 
-		auto& Renderer = MainWindow->GetRenderer();
+		auto Renderer = MainWindow->GetRenderer();
 		CurrentLevel->Draw(Renderer);
 
 		MainWindow->FinishDraw();
+
+		FixedFrameRate.WaitForFixedRate();
 	}
 
 	return 0;
