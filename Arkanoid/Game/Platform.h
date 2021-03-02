@@ -9,7 +9,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Game/AObject.h"
+#include "AObject.h"
 
 class APlatform : public AObject
 {

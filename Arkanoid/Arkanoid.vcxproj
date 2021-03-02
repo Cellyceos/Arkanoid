@@ -154,7 +154,7 @@
     <ClCompile Include="Engine\Input\InputManager.cpp" />
     <ClCompile Include="Game\ABlock.cpp" />
     <ClCompile Include="Game\ArkanoidGame.cpp" />
-    <ClCompile Include="Game\AObject.cpp" />
+    <ClCompile Include="Engine\AObject.cpp" />
     <ClCompile Include="Game\Level.cpp" />
     <ClCompile Include="Game\Platform.cpp" />
     <ClCompile Include="main.cpp" />
@@ -174,7 +174,7 @@
     <ClInclude Include="Engine\SDL\SDLRenderer.h" />
     <ClInclude Include="Engine\SDL\SDLWindow.h" />
     <ClInclude Include="Engine\CoreMinimal.h" />
-    <ClInclude Include="Game\AObject.h" />
+    <ClInclude Include="Engine\AObject.h" />
     <ClInclude Include="Game\Level.h" />
     <ClInclude Include="Game\Platform.h" />
   </ItemGroup>
