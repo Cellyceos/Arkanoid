@@ -57,7 +57,7 @@ void SDLWindow::Hide()
 	SDL_HideWindow(NativeWindow);
 }
 
-bool SDLWindow::HandleEvents(TSharedPtr<class AInputManager> InputManager)
+bool SDLWindow::HandleEvents(const TSharedPtr<class AInputManager>& InputManager)
 {
 	SDL_Event event;
 	while (SDL_PollEvent(&event))

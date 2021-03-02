@@ -21,7 +21,7 @@ public:
 	virtual void Show() override;
 	virtual void Hide() override;
 
-	virtual bool HandleEvents(TSharedPtr<class AInputManager> InputManager) override;
+	virtual bool HandleEvents(const TSharedPtr<class AInputManager>& InputManager) override;
 
 	virtual void PrepareDraw() override;
 	virtual void FinishDraw() override;

@@ -24,7 +24,7 @@ APlatform::~APlatform()
 
 }
 
-void APlatform::SetupPlayerInput(const TSharedPtr<class AInputManager>& InputManager)
+void APlatform::SetupPlayerInput(const TSharedPtr<AInputManager>& InputManager)
 {
 	InputManager->BindAxis("Move", std::bind(&APlatform::Move, this, _1));
 	InputManager->BindAction("Release", EInputEvent::IE_Pressed, std::bind(&APlatform::ReleaseBall, this));
@@ -74,7 +74,7 @@ void APlatform::Update(float DeltaTime)
 	}
 }
 
-void APlatform::Draw(const TSharedPtr<class IRenderer>& Renderer)
+void APlatform::Draw(const TSharedPtr<IRenderer>& Renderer)
 {
 	const float HalfHeight = Rect.Height * 0.5f;
 	const float HalfWidth = Rect.Width * 0.5f;

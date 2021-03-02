@@ -20,12 +20,13 @@ public:
 	virtual void Show() = 0;
 	virtual void Hide() = 0;
 
-	virtual bool HandleEvents(TSharedPtr<class AInputManager> InputManager) = 0;
+	virtual bool HandleEvents(const TSharedPtr<class AInputManager>& InputManager) = 0;
 
 	virtual void PrepareDraw() = 0;
 	virtual void FinishDraw() = 0;
 
-	virtual const TSharedPtr<class IRenderer> GetRenderer() const { return Renderer; }
+	virtual TSharedPtr<class IRenderer> GetRenderer() { return Renderer; }
+	virtual TSharedPtr<const class IRenderer> GetRenderer() const { return Renderer; }
 
 	virtual void SetBackgroundColor(const FColor& Color) { BackgroundColor = Color; }
 	virtual FColor GetBackgroundColor() const { return BackgroundColor; }
