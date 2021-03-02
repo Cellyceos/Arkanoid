@@ -19,7 +19,7 @@ public:
 	virtual void SetupPlayerInput(const TSharedPtr<class AInputManager>& InputManager) { }
 
 	virtual void Update(float DeltaTime) { }
-	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) { }
+	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) const { }
 
 	virtual FRect GetRect() const { return Rect; }
 	virtual void SetRect(const FRect& NewRect) { Rect = NewRect; }
@@ -32,6 +32,7 @@ public:
 	virtual void SetPosition(const FPoint& NewPos) { Rect.X = NewPos.X; Rect.Y = NewPos.Y; }
 	virtual FPoint GetPosition() const { return { Rect.X, Rect.Y }; }
 
+	virtual void SetCenterPoint(const FPoint& Point) { Rect.X = Point.X - Rect.Width * 0.5f; Rect.Y = Point.Y - Rect.Height * 0.5f; }
 	virtual FPoint GetCenterPoint() const { return { Rect.X + Rect.Width * 0.5f, Rect.Y + Rect.Height * 0.5f }; }
 
 	virtual TWeakPtr<AObject> GetOwner() const { return Owner; }

@@ -33,7 +33,7 @@ void ALevel::Update(float DeltaTime)
 	Platform->Update(DeltaTime);
 }
 
-void ALevel::Draw(const TSharedPtr<IRenderer>& Renderer)
+void ALevel::Draw(const TSharedPtr<IRenderer>& Renderer) const
 {
 	Platform->Draw(Renderer);
 }

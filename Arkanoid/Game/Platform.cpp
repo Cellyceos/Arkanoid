@@ -37,7 +37,7 @@ void APlatform::SetOwner(const TWeakPtr<AObject>& NewOwner)
 	if (!Owner.expired())
 	{
 		const FRect& OwnerRect = Owner.lock()->GetRect();
-		Rect.Y = OwnerRect.Height - Rect.Height - 15.0f;
+		SetCenterPoint({ OwnerRect.X + OwnerRect.Width * 0.5f, OwnerRect.Height - Rect.Height });
 	}
 }
 
@@ -74,7 +74,7 @@ void APlatform::Update(float DeltaTime)
 	}
 }
 
-void APlatform::Draw(const TSharedPtr<IRenderer>& Renderer)
+void APlatform::Draw(const TSharedPtr<IRenderer>& Renderer) const
 {
 	const float HalfHeight = Rect.Height * 0.5f;
 	const float HalfWidth = Rect.Width * 0.5f;
