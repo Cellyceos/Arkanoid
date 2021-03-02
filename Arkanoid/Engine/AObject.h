@@ -19,7 +19,7 @@ public:
 	virtual void SetupPlayerInput(const TSharedPtr<class AInputManager>& InputManager) { }
 
 	virtual void Update(float DeltaTime) { }
-	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) const { }
+	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) const = 0;
 
 	virtual FRect GetRect() const { return Rect; }
 	virtual void SetRect(const FRect& NewRect) { Rect = NewRect; }
