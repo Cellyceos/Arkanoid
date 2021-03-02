@@ -10,10 +10,37 @@
 
 #include "AObject.h"
 
+enum class EBlockType
+{
+	White,
+	Orange,
+	LightBlue,
+	Green,
+	Red,
+	Blue,
+	Pink,
+	Yellow,
+	Silver,
+	Gold
+};
+
 class ABlock : public AObject
 {
 public:
+	ABlock(EBlockType Type);
+
 	virtual void Update(float DeltaTime) override;
 	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) const override;
+
+private:
+	struct FBlockSettings
+	{
+		uint8 Healh;
+		FColor MainColor;
+		FColor SecondColor;
+	};
+
+	static TUnorderedMap<EBlockType, FBlockSettings> BlockTypes;
+	FBlockSettings Settings;
 };
 

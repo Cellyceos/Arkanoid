@@ -33,11 +33,11 @@ void ALevel::SetupPlayerInput(const TSharedPtr<AInputManager>& InputManager)
 	const float BrickWidth = (Rect.Width - 20.0f) / 11.0f;
 	const float BrickHeight = (Rect.Height - 20.0f) / 28.0f;
 
-	for (int64 CollIdx = 0; CollIdx < ColNum; CollIdx++)
+	for (int64 CollIdx = 0ll; CollIdx < ColNum; CollIdx++)
 	{
-		for (int64 RowIdx = 2; RowIdx < RowNum; RowIdx++)
+		for (int64 RowIdx = 0ll; RowIdx < RowNum; RowIdx++)
 		{
-			auto Block = std::make_unique<ABlock>();
+			auto Block = std::make_unique<ABlock>(EBlockType::Silver);
 			Block->SetRect({ X + CollIdx * BrickWidth, Y + RowIdx * BrickHeight, BrickWidth, BrickHeight });
 			Blocks[CollIdx * RowNum + RowIdx] = std::move(Block);
 		}
