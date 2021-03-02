@@ -23,6 +23,10 @@ public:
 	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) const override;
 
 protected:
+	static constexpr int64 ColNum = 11;
+	static constexpr int64 RowNum = 28;
+
 	TUniquePtr<class APlatform> Platform;
+	TFixedArray<TUniquePtr<class ABlock>, ColNum * RowNum> Blocks;
 };
 

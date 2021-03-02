@@ -59,6 +59,9 @@
     <ClCompile Include="Engine\FixedFrameRate.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Game\ABlock.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Interfaces\IWindow.h">
@@ -99,6 +102,9 @@
     </ClInclude>
     <ClInclude Include="Engine\FixedFrameRate.h">
       <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ABlock.h">
+      <Filter>Source Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

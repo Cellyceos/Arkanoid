@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClCompile Include="Engine\FixedFrameRate.cpp" />
     <ClCompile Include="Engine\Input\InputManager.cpp" />
+    <ClCompile Include="Game\ABlock.cpp" />
     <ClCompile Include="Game\ArkanoidGame.cpp" />
     <ClCompile Include="Game\AObject.cpp" />
     <ClCompile Include="Game\Level.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Engine\FixedFrameRate.h" />
     <ClInclude Include="Engine\Input\InputEvents.h" />
     <ClInclude Include="Engine\Input\InputManager.h" />
+    <ClInclude Include="Game\ABlock.h" />
     <ClInclude Include="Game\ArkanoidGame.h" />
     <ClInclude Include="Engine\Interfaces\IWindow.h" />
     <ClInclude Include="Engine\Interfaces\IRenderer.h" />
