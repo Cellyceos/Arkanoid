@@ -61,16 +61,20 @@ struct FPoint
 	float Y = 0.0f;
 };
 
+struct FSize
+{
+	float Width = 0.0f;
+	float Height = 0.0f;
+};
+
 struct FRect
 {
 	float X = 0.0f;
 	float Y = 0.0f;
 	float Width = 0.0f;
 	float Height = 0.0f;
-};
 
-struct FSize
-{
-	float Width = 0.0f;
-	float Height = 0.0f;
+	FRect() = default;
+	FRect(const float InX, const float InY, const float InWidth, const float InHeight) : X(InX), Y(InY), Width(InWidth), Height(InHeight) { }
+	FRect(const FPoint& Point, const FSize& Size) : X(Point.X), Y(Point.Y), Width(Size.Width), Height(Size.Height) { }
 };

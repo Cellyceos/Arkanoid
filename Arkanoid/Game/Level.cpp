@@ -28,11 +28,12 @@ ALevel::~ALevel()
 void ALevel::SetupPlayerInput(const TSharedPtr<AInputManager>& InputManager)
 {
 	Platform->SetupPlayerInput(InputManager);
+	Platform->SetCenterPoint({ Position.X + Size.Width * 0.5f, Size.Height - Platform->GetHeight() });
 
-	const float X = Rect.X + 10.0f;
-	const float Y = Rect.Y + 10.0f;
-	const float BrickWidth = (Rect.Width - 20.0f) / 11.0f;
-	const float BrickHeight = (Rect.Height - 20.0f) / 28.0f;
+	const float X = Position.X + 10.0f;
+	const float Y = Position.Y + 10.0f;
+	const float BrickWidth = (Size.Width - 20.0f) / 11.0f;
+	const float BrickHeight = (Size.Height - 20.0f) / 28.0f;
 
 	for (int64 CollIdx = 0ll; CollIdx < ColNum; CollIdx++)
 	{
@@ -88,6 +89,5 @@ void ALevel::Draw(const TSharedPtr<IRenderer>& Renderer) const
 	Platform->Draw(Renderer);
 
 	Renderer->SetColor({ 255, 0, 0, 255 });
-	Renderer->DrawRect(Rect);
-
+	Renderer->DrawRect({Position, Size});
 }

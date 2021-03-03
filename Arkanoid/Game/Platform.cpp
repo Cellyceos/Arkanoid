@@ -14,7 +14,7 @@
 
 APlatform::APlatform()
 {
-	Rect = { 300.0f, 500.0f, 80.0f, 14.0f };
+	Size = { 80.0f, 14.0f };
 	Color = { 150, 150, 150, 255 };
 	GunColor = { 80, 80, 80, 255 };
 }
@@ -44,35 +44,40 @@ void APlatform::Update(float DeltaTime)
 {
 	if (MoveSpeed != 0.0f)
 	{
-		Rect.X += MoveSpeed * DeltaTime;
-	}
+		Position.X += MoveSpeed * DeltaTime;
 	}
 }
 
 void APlatform::Draw(const TSharedPtr<IRenderer>& Renderer) const
 {
-	const float HalfHeight = Rect.Height * 0.5f;
-	const float HalfWidth = Rect.Width * 0.5f;
+	const float HalfHeight = Size.Height * 0.5f;
+	const float HalfWidth = Size.Width * 0.5f;
 
 	const FPoint& Center = GetCenterPoint();
 
-	Renderer->SetColor(Color);
-	Renderer->FillCircle({ Rect.X, Center.Y }, HalfHeight);
-	Renderer->FillCircle({ Rect.X + Rect.Width, Center.Y }, HalfHeight);
-	Renderer->FillRect({ Rect.X, Rect.Y, Rect.Width, Rect.Height + 1.0f });
+	Renderer->SetColor({ 125, 125, 125, 255 });
+	Renderer->FillCircle({ Position.X, Center.Y }, HalfHeight);
+	Renderer->FillCircle({ Position.X + Size.Width - 1.0f, Center.Y }, HalfHeight);
+	Renderer->FillRect({ Position, { Size.Width, Size.Height + 1.0f } });
+
+	float Offset = 2.0f;
+	Renderer->SetColor({ 150, 150, 150, 255 });
+	Renderer->FillCircle({ Position.X, Center.Y }, HalfHeight - Offset);
+	Renderer->FillCircle({ Position.X + Size.Width - 1.0f, Center.Y }, HalfHeight - Offset);
+	Renderer->FillRect({ Position.X + Offset, Position.Y + Offset, Size.Width - 2.0f * Offset, Size.Height + 1.0f - 2.0f * Offset });
 
 	if (HasGun)
 	{
-		const float GunPlatformWidth = Rect.Width * 0.125f;
-		const float GunPlatformHeight = Rect.Height * 0.25f;
+		const float GunPlatformWidth = Size.Width * 0.125f;
+		const float GunPlatformHeight = Size.Height * 0.25f;
 		const float HalfHeight = GunPlatformWidth * 0.5f;
 		const float HalfWidth = GunPlatformHeight * 0.5f;
 
 		Renderer->SetColor(GunColor);
-		Renderer->FillRect({ Rect.X, Rect.Y - GunPlatformHeight, GunPlatformWidth, GunPlatformHeight });
-		Renderer->FillRect({ Rect.X + (HalfHeight - HalfWidth), Rect.Y - GunPlatformWidth , GunPlatformHeight, GunPlatformWidth });
+		Renderer->FillRect({ Position.X, Position.Y - GunPlatformHeight, GunPlatformWidth, GunPlatformHeight });
+		Renderer->FillRect({ Position.X + (HalfHeight - HalfWidth), Position.Y - GunPlatformWidth , GunPlatformHeight, GunPlatformWidth });
 
-		Renderer->FillRect({ Rect.X + Rect.Width - GunPlatformWidth, Rect.Y - GunPlatformHeight , GunPlatformWidth, GunPlatformHeight });
-		Renderer->FillRect({ Rect.X + Rect.Width - (HalfHeight + HalfWidth), Rect.Y - GunPlatformWidth , GunPlatformHeight, GunPlatformWidth });
+		Renderer->FillRect({ Position.X + Size.Width - GunPlatformWidth, Position.Y - GunPlatformHeight , GunPlatformWidth, GunPlatformHeight });
+		Renderer->FillRect({ Position.X + Size.Width - (HalfHeight + HalfWidth), Position.Y - GunPlatformWidth , GunPlatformHeight, GunPlatformWidth });
 	}
 }

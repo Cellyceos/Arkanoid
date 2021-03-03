@@ -34,12 +34,12 @@ void ABlock::Update(float DeltaTime)
 void ABlock::Draw(const TSharedPtr<class IRenderer>& Renderer) const
 {
 	Renderer->SetColor(Settings.MainColor);
-	Renderer->FillRect({ Rect.X, Rect.Y, Rect.Width - 2.0f, Rect.Height - 2.0f });
+	Renderer->FillRect({ Position, { Size.Width - 2.0f, Size.Height - 2.0f } });
 
 	if (Settings.Healh > 1)
 	{
 		const float Offset = 3.0f;
 		Renderer->SetColor(Settings.SecondColor);
-		Renderer->FillRect({ Rect.X + Offset, Rect.Y + Offset, Rect.Width - 2.0f - 2.0f * Offset, Rect.Height - 2.0f - 2.0f * Offset });
+		Renderer->FillRect({ Position.X + Offset, Position.Y + Offset, Size.Width - 2.0f - 2.0f * Offset, Size.Height - 2.0f - 2.0f * Offset });
 	}
 }

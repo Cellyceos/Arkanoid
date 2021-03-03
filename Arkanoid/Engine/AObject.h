@@ -21,21 +21,22 @@ public:
 	virtual void Update(float DeltaTime) { }
 	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) const = 0;
 
-	virtual FRect GetRect() const { return Rect; }
-	virtual void SetRect(const FRect& NewRect) { Rect = NewRect; }
+	virtual FRect GetRect() const { return {Position, Size}; }
+	virtual void SetRect(const FRect& Rect) { Position = { Rect.X, Rect.Y }; Size = { Rect.Width, Rect.Height }; }
 
-	virtual FSize GetSize() const { return { GetWidth(), GetHeight() }; }
+	virtual float GetWidth() const { return Size.Width; }
+	virtual float GetHeight() const { return Size.Height; }
 
-	virtual float GetWidth() const { return Rect.Width; }
-	virtual float GetHeight() const { return Rect.Height; }
+	virtual FSize GetSize() const { return Size; }
+	virtual void SetSize(const FSize& NewSize) { Size = NewSize; }
 
-	virtual void SetPosition(const FPoint& NewPos) { Rect.X = NewPos.X; Rect.Y = NewPos.Y; }
-	virtual FPoint GetPosition() const { return { Rect.X, Rect.Y }; }
+	virtual void SetPosition(const FPoint& NewPos) { Position = NewPos; }
+	virtual FPoint GetPosition() const { return Position; }
 
-	virtual void SetCenterPoint(const FPoint& Point) { Rect.X = Point.X - Rect.Width * 0.5f; Rect.Y = Point.Y - Rect.Height * 0.5f; }
-	virtual FPoint GetCenterPoint() const { return { Rect.X + Rect.Width * 0.5f, Rect.Y + Rect.Height * 0.5f }; }
-
+	virtual void SetCenterPoint(const FPoint& Point) { Position = { Point.X - Size.Width * 0.5f, Point.Y - Size.Height * 0.5f }; }
+	virtual FPoint GetCenterPoint() const { return { Position.X + Size.Width * 0.5f, Position.Y + Size.Height * 0.5f }; }
 
 protected:
-	FRect Rect;
+	FPoint Position;
+	FSize Size;
 };
