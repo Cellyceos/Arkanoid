@@ -8,7 +8,6 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "AObject.h"
 
 class APlatform : public AObject
@@ -21,8 +20,6 @@ public:
 
 	virtual void Update(float DeltaTime) override;
 	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) const override;
-
-	virtual void SetOwner(const TWeakPtr<AObject>& NewOwner) override;
 
 protected:
 	void Move(float Direction);

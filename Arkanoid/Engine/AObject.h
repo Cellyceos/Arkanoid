@@ -35,10 +35,7 @@ public:
 	virtual void SetCenterPoint(const FPoint& Point) { Rect.X = Point.X - Rect.Width * 0.5f; Rect.Y = Point.Y - Rect.Height * 0.5f; }
 	virtual FPoint GetCenterPoint() const { return { Rect.X + Rect.Width * 0.5f, Rect.Y + Rect.Height * 0.5f }; }
 
-	virtual TWeakPtr<AObject> GetOwner() const { return Owner; }
-	virtual void SetOwner(const TWeakPtr<AObject>& NewOwner) { Owner = NewOwner; }
 
 protected:
-	TWeakPtr<AObject> Owner;
 	FRect Rect;
 };

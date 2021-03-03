@@ -28,7 +28,6 @@ ALevel::~ALevel()
 void ALevel::SetupPlayerInput(const TSharedPtr<AInputManager>& InputManager)
 {
 	Platform->SetupPlayerInput(InputManager);
-	Platform->SetOwner(weak_from_this());
 
 	const float X = Rect.X + 10.0f;
 	const float Y = Rect.Y + 10.0f;
@@ -41,8 +40,6 @@ void ALevel::SetupPlayerInput(const TSharedPtr<AInputManager>& InputManager)
 		{
 			auto Block = std::make_unique<ABlock>(EBlockType::Silver);
 			Block->SetRect({ X + CollIdx * BrickWidth, Y + RowIdx * BrickHeight, BrickWidth, BrickHeight });
-			Block->SetOwner(weak_from_this());
-
 			StaticObjects[CollIdx * RowNum + RowIdx] = std::move(Block);
 		}
 	}

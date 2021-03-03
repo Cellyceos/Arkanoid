@@ -30,17 +30,6 @@ void APlatform::SetupPlayerInput(const TSharedPtr<AInputManager>& InputManager)
 	InputManager->BindAction("Release", EInputEvent::IE_Pressed, std::bind(&APlatform::ReleaseBall, this));
 }
 
-void APlatform::SetOwner(const TWeakPtr<AObject>& NewOwner)
-{
-	AObject::SetOwner(NewOwner);
-
-	if (!Owner.expired())
-	{
-		const FRect& OwnerRect = Owner.lock()->GetRect();
-		SetCenterPoint({ OwnerRect.X + OwnerRect.Width * 0.5f, OwnerRect.Height - Rect.Height });
-	}
-}
-
 void APlatform::Move(float Direction)
 {
 	MoveSpeed = Direction * Speed;
@@ -57,20 +46,6 @@ void APlatform::Update(float DeltaTime)
 	{
 		Rect.X += MoveSpeed * DeltaTime;
 	}
-
-	if (!Owner.expired())
-	{
-		const FRect& OwnerRect = Owner.lock()->GetRect();
-		const float HalfHeight = Rect.Height * 0.5f;
-
-		if (Rect.X + Rect.Width + HalfHeight > OwnerRect.X + OwnerRect.Width)
-		{
-			Rect.X = OwnerRect.X + OwnerRect.Width - Rect.Width - HalfHeight;
-		}
-		else if (Rect.X - HalfHeight < OwnerRect.X)
-		{
-			Rect.X = OwnerRect.X + HalfHeight;
-		}
 	}
 }
 
