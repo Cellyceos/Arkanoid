@@ -12,6 +12,7 @@
 
 enum class EBlockType
 {
+	Unknown,
 	White,
 	Orange,
 	LightBlue,
