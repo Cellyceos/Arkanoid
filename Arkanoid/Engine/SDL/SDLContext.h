@@ -11,7 +11,7 @@
 class SDLContext
 {
 public:
-	static SDLContext& getInstance() { return Context; }
+	static SDLContext& Get() { return Context; }
 
 private:
 	SDLContext();
