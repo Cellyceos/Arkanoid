@@ -19,17 +19,27 @@ AFixedFrameRate::AFixedFrameRate(int64 Rate)
 
 void AFixedFrameRate::SetFixedRate(int64 Rate)
 {
-	FrameTime = std::nano::den / Rate;
 	FixedRate = Rate;
+	if (Rate > 0)
+	{
+		FixedFrameTime = OneSecond / Rate;
+	}
 }
 
 void AFixedFrameRate::WaitForFixedRate() const
 {
 	const auto CurrentTime = std::chrono::high_resolution_clock::now();
-	const auto WaitTime = FrameTime - (CurrentTime - TimeStamp).count();
-	if (WaitTime > 0)
+	DeltaTime = CurrentTime - TimeStamp;
+
+	if (FixedRate > 0)
 	{
-		std::this_thread::sleep_for(std::chrono::nanoseconds(WaitTime));
+		const auto WaitTime = FixedFrameTime - DeltaTime;
+		DeltaTime += WaitTime;
+
+		if (WaitTime > std::chrono::nanoseconds::zero())
+		{
+			std::this_thread::sleep_for(WaitTime);
+		}
 	}
 
 	TimeStamp = std::chrono::high_resolution_clock::now();
@@ -37,5 +47,5 @@ void AFixedFrameRate::WaitForFixedRate() const
 
 float AFixedFrameRate::GetDeltaTime() const
 {
-	return static_cast<float>(FrameTime) / std::nano::den;
+	return DeltaTime.count() / static_cast<float>(std::nano::den);
 }

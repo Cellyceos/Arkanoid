@@ -15,7 +15,7 @@
 class AFixedFrameRate
 {
 public:
-	AFixedFrameRate(int64 Rate);
+	AFixedFrameRate(int64 Rate = 0ll);
 
 	void WaitForFixedRate() const;
 
@@ -24,10 +24,17 @@ public:
 	void SetFixedRate(int64 Rate);
 	int64 GetFixedRate() const { return FixedRate; }
 
-private:
-	int64 FixedRate = 60ll;
-	int64 FrameTime = 0ll;
+	bool IsFrameRateLocked() const { return FixedRate > 0; }
 
+	int64 GetCurrentFrameRate() const { return OneSecond / DeltaTime; }
+
+private:
+	std::chrono::nanoseconds FixedFrameTime;
+	int64 FixedRate;
+
+	static constexpr std::chrono::nanoseconds OneSecond{ std::chrono::seconds(1) };
+
+	mutable std::chrono::nanoseconds DeltaTime;
 	mutable std::chrono::time_point<std::chrono::high_resolution_clock> TimeStamp;
 };
 
