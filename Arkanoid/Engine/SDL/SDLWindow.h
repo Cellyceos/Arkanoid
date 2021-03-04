@@ -9,9 +9,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Interfaces/IWindow.h"
+#include "Interfaces/GenericWindow.h"
 
-class SDLWindow : public IWindow
+class SDLWindow : public AGenericWindow
 {
 public:
 	SDLWindow();

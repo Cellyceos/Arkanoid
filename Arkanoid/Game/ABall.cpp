@@ -8,14 +8,15 @@
 
 #include "Game/ABall.h"
 
-#include "Interfaces/IRenderer.h"
+#include "Engine/Interfaces/GenericRenderer.h"
+
 
 void ABall::Update(float DeltaTime)
 {
 
 }
 
-void ABall::Draw(const TSharedPtr<IRenderer>& Renderer) const
+void ABall::Draw(const TSharedPtr<AGenericRenderer>& Renderer) const
 {
 	const float BallRadius = 10.0f;
 	const FPoint Center{ 300.0f, 200.0f };

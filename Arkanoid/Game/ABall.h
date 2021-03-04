@@ -15,5 +15,5 @@ class ABall : public AObject
 {
 public:
 	virtual void Update(float DeltaTime) override;
-	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) const override;
+	virtual void Draw(const TSharedPtr<class AGenericRenderer>& Renderer) const override;
 };

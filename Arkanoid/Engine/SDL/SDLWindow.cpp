@@ -15,7 +15,7 @@
 #include "SDL.h"
 
 
-SDLWindow::SDLWindow()
+SDLWindow::SDLWindow() : AGenericWindow()
 {
 	BackgroundColor = { 30, 30, 30, 255 };
 }

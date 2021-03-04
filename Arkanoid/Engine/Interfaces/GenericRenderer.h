@@ -1,6 +1,6 @@
 //
-//  IRenderer.h
-//  Base Wrapper Interface Class.
+//  GenericRenderer.h
+//  Base Renderer Interface Class.
 //
 //  Created by Kirill Bravichev on 02/28/2021.
 //  Copyright (c) 2021 Cellyceos. All rights reserved.
@@ -10,11 +10,12 @@
 
 #include "CoreMinimal.h"
 
-class IRenderer
+
+class AGenericRenderer
 {
 public:
-	IRenderer() = default;
-	virtual ~IRenderer() = default;
+	AGenericRenderer() = default;
+	virtual ~AGenericRenderer() = default;
 
 	virtual void Clear(const FColor& Color) = 0;
 	virtual void Present() = 0;

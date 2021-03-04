@@ -11,7 +11,7 @@
 #include "Game/ABlock.h"
 #include "Game/Platform.h"
 
-#include "Engine/Interfaces/IRenderer.h"
+#include "Engine/Interfaces/GenericRenderer.h"
 
 
 ALevel::ALevel()
@@ -39,7 +39,7 @@ void ALevel::SetupPlayerInput(const TSharedPtr<AInputManager>& InputManager)
 	{
 		for (int64 RowIdx = 0ll; RowIdx < RowNum; RowIdx++)
 		{
-			auto Block = std::make_unique<ABlock>(EBlockType::Silver);
+			auto Block = std::make_unique<ABlock>(static_cast<EBlockType>((CollIdx % 10 + 1)));
 			Block->SetRect({ X + CollIdx * BrickWidth, Y + RowIdx * BrickHeight, BrickWidth, BrickHeight });
 			StaticObjects[CollIdx * RowNum + RowIdx] = std::move(Block);
 		}
@@ -67,7 +67,7 @@ void ALevel::Update(float DeltaTime)
 	Platform->Update(DeltaTime);
 }
 
-void ALevel::Draw(const TSharedPtr<IRenderer>& Renderer) const
+void ALevel::Draw(const TSharedPtr<AGenericRenderer>& Renderer) const
 {
 	for (const auto& Obj : StaticObjects)
 	{

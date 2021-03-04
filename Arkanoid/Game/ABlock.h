@@ -31,7 +31,7 @@ public:
 	ABlock(EBlockType Type);
 
 	virtual void Update(float DeltaTime) override;
-	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) const override;
+	virtual void Draw(const TSharedPtr<class AGenericRenderer>& Renderer) const override;
 
 private:
 	struct FBlockSettings

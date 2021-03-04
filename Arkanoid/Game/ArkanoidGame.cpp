@@ -10,8 +10,8 @@
 #include "Game/Level.h"
 
 #include "FixedFrameRate.h"
-#include "Interfaces/IRenderer.h"
 #include "Input/InputManager.h"
+#include "Interfaces/GenericRenderer.h"
 
 #if USE_SDL
 #include "SDL/SDLWindow.h"

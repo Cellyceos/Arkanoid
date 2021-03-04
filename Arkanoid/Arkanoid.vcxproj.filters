@@ -65,15 +65,18 @@
     <ClCompile Include="Game\ABall.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Interfaces\GenericWindow.cpp">
+      <Filter>Source Files\Engine\Interfaces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Interfaces\IWindow.h">
+    <ClInclude Include="Engine\Interfaces\GenericWindow.h">
       <Filter>Source Files\Engine\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Engine\SDL\SDLWindow.h">
       <Filter>Source Files\Engine\SDL</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Interfaces\IRenderer.h">
+    <ClInclude Include="Engine\Interfaces\GenericRenderer.h">
       <Filter>Source Files\Engine\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Engine\SDL\SDLContext.h">

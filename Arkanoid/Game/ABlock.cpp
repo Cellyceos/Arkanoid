@@ -8,7 +8,8 @@
 
 #include "Game/ABlock.h"
 
-#include "Interfaces/IRenderer.h"
+#include "Engine/Interfaces/GenericRenderer.h"
+
 
 TUnorderedMap<EBlockType, ABlock::FBlockSettings> ABlock::BlockTypes
 {
@@ -31,7 +32,7 @@ void ABlock::Update(float DeltaTime)
 
 }
 
-void ABlock::Draw(const TSharedPtr<class IRenderer>& Renderer) const
+void ABlock::Draw(const TSharedPtr<AGenericRenderer>& Renderer) const
 {
 	Renderer->SetColor(Settings.MainColor);
 	Renderer->FillRect({ Position, { Size.Width - 2.0f, Size.Height - 2.0f } });

@@ -9,9 +9,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Interfaces/IRenderer.h"
+#include "Interfaces/GenericRenderer.h"
 
-class SDLRenderer : public IRenderer
+class SDLRenderer : public AGenericRenderer
 {
 public:
 	explicit SDLRenderer(struct SDL_Renderer* RendererPtr);

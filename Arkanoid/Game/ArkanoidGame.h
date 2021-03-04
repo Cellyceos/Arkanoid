@@ -20,7 +20,7 @@ public:
 	int32 Exec();
 
 private:
-	TUniquePtr<class IWindow> MainWindow = nullptr;
+	TUniquePtr<class AGenericWindow> MainWindow = nullptr;
 	TSharedPtr<class ALevel> CurrentLevel = nullptr;
 	TSharedPtr<class AInputManager> InputManager = nullptr;
 };

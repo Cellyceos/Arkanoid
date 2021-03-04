@@ -19,7 +19,7 @@ public:
 	virtual void SetupPlayerInput(const TSharedPtr<class AInputManager>& InputManager) override;
 
 	virtual void Update(float DeltaTime) override;
-	virtual void Draw(const TSharedPtr<class IRenderer>& Renderer) const override;
+	virtual void Draw(const TSharedPtr<class AGenericRenderer>& Renderer) const override;
 
 protected:
 	void Move(float Direction);

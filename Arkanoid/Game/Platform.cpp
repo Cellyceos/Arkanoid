@@ -9,7 +9,7 @@
 #include "Game/Platform.h"
 
 #include "Engine/Input/InputManager.h"
-#include "Engine/Interfaces/IRenderer.h"
+#include "Engine/Interfaces/GenericRenderer.h"
 
 
 APlatform::APlatform()
@@ -48,7 +48,7 @@ void APlatform::Update(float DeltaTime)
 	}
 }
 
-void APlatform::Draw(const TSharedPtr<IRenderer>& Renderer) const
+void APlatform::Draw(const TSharedPtr<AGenericRenderer>& Renderer) const
 {
 	const float HalfHeight = Size.Height * 0.5f;
 	const float HalfWidth = Size.Width * 0.5f;
