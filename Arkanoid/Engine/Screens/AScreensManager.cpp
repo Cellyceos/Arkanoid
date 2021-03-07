@@ -21,11 +21,6 @@ void AScreensManager::Init()
 	ActiveScreens.insert(ActiveScreens.begin(), ScreensCreator(shared_from_this(), 0));
 	ActiveScreens.insert(ActiveScreens.begin(), ScreensCreator(shared_from_this(), 1));
 	ActiveScreens.insert(ActiveScreens.begin(), ScreensCreator(shared_from_this(), 2));
-
-	for (auto& Screen : ActiveScreens)
-	{
-		Screen->Enter();
-	}
 }
 
 void AScreensManager::OnKeyDown(const struct SDL_KeyboardEvent& Event)

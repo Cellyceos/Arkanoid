@@ -17,7 +17,7 @@ public:
 	AGameScreen(const TSharedPtr<class AScreensManager>& InOwner);
 	virtual ~AGameScreen();
 
-	virtual void Enter() override;
+	virtual void Init() override;
 	
 	virtual void Update(float DeltaTime) override;
 	virtual void Draw(const TSharedPtr<ARendererClass>& Renderer) const override;

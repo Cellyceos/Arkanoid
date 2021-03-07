@@ -13,5 +13,5 @@
 
 struct IScreensCreator
 {
-    virtual TUniquePtr<AScreenState> operator ()(const TSharedPtr<class AScreensManager>& Owner, int32 StateID) const { return nullptr; }
+    virtual TSharedPtr<AScreenState> operator ()(const TSharedPtr<class AScreensManager>& Owner, int32 StateID) const { return nullptr; }
 };

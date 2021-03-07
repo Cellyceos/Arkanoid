@@ -23,10 +23,10 @@ AGameScreen::~AGameScreen()
 	CurrentLevel = nullptr;
 }
 
-void AGameScreen::Enter()
+void AGameScreen::Init()
 {
-	CurrentLevel->SetRect({ GameConfig::BorderSize, GameConfig::BorderSize, 
-		(GameConfig::WindowWidth - GameConfig::BorderSize) * GameConfig::LevelRatio, 
+	CurrentLevel->SetRect({ GameConfig::BorderSize, GameConfig::BorderSize,
+		(GameConfig::WindowWidth - GameConfig::BorderSize) * GameConfig::LevelRatio,
 		GameConfig::WindowHeight - 2.0f * GameConfig::BorderSize });
 
 	UI->SetRect({ 2.0f * GameConfig::BorderSize + CurrentLevel->GetWidth(),

@@ -14,6 +14,9 @@ APauseScreen::APauseScreen(const TSharedPtr<class AScreensManager>& InOwner) : A
 
 }
 
+void APauseScreen::Init()
+{
+}
 void APauseScreen::Draw(const TSharedPtr<ARendererClass>& Renderer) const
 {
 	const FPoint Center{ GameConfig::WindowWidth * 0.5f, GameConfig::WindowHeight * 0.5 };

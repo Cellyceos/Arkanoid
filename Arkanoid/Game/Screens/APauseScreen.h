@@ -16,6 +16,7 @@ class APauseScreen : public AScreenState
 public:
 	APauseScreen(const TSharedPtr<class AScreensManager>& InOwner);
 
+	virtual void Init() override;
 	virtual void Draw(const TSharedPtr<ARendererClass>& Renderer) const override;
 };
 

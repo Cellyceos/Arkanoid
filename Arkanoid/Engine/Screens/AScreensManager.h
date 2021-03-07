@@ -41,5 +41,4 @@ private:
     FColor BackgroundColor{ 30, 30, 30, 255 };
 
     TArray<TUniquePtr<AScreenState>> ActiveScreens;
-    int32 ActiveStateIDx = 0;
 };

@@ -16,6 +16,7 @@ public:
 	AScreenState(const TSharedPtr<class AScreensManager>& InOwner) : Owner(InOwner) { }
 	virtual ~AScreenState() = default;
 
+	virtual void Init() { }
 	virtual void Enter();
 	virtual void Exit();
 

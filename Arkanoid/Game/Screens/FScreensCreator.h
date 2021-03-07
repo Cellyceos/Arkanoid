@@ -15,6 +15,6 @@ enum class EScreenType
 
 struct FScreensCreator : IScreensCreator
 {
-	virtual TUniquePtr<AScreenState> operator()(const TSharedPtr<class AScreensManager>& Owner, int32 StateID) const override;
+	virtual TSharedPtr<AScreenState> operator()(const TSharedPtr<class AScreensManager>& Owner, int32 StateID) const override;
 };
 
