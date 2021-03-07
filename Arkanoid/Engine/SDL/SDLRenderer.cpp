@@ -9,6 +9,9 @@
 #include "SDL/SDLRenderer.h"
 
 #include "SDL.h"
+#include "SDL_ttf.h"
+
+TMap <FFontKey, TTF_Font*> SDLRenderer::FontCache;
 
 TSharedPtr<SDLRenderer> SDLRenderer::Construct(SDL_Window* Window)
 {
@@ -23,10 +26,22 @@ TSharedPtr<SDLRenderer> SDLRenderer::Construct(SDL_Window* Window)
 	return std::make_shared<SDLRenderer>(NativeRenderer);
 }
 
-SDLRenderer::SDLRenderer(SDL_Renderer* Renderer) : NativeRenderer(Renderer) { }
+SDLRenderer::SDLRenderer(SDL_Renderer* Renderer) : NativeRenderer(Renderer)
+{
+	// Enable Alpha Blending by default
+	SDL_SetRenderDrawBlendMode(NativeRenderer, SDL_BLENDMODE_BLEND);
+}
 
 SDLRenderer::~SDLRenderer()
 {
+	for (auto& [FontKey, Font] : FontCache)
+	{
+		TTF_CloseFont(Font);
+		Font = nullptr;
+	}
+
+	FontCache.clear();
+
 	if (NativeRenderer)
 	{
 		SDL_DestroyRenderer(NativeRenderer);
@@ -43,6 +58,27 @@ void SDLRenderer::Clear(const FColor& Color)
 void SDLRenderer::SetColor(const FColor& Color)
 {
 	SDL_SetRenderDrawColor(NativeRenderer, Color.Red, Color.Green, Color.Blue, Color.Alpha);
+}
+
+void SDLRenderer::SetFont(const FStringView& FontName, const int32 FontSize)
+{
+	const FFontKey FontKey{ FontName, FontSize };
+	auto CachedFont = FontCache.find(FontKey);
+
+	if (CachedFont == FontCache.end())
+	{
+		CurrentFont = TTF_OpenFont(FontName.data(), FontSize);
+		if (!CurrentFont)
+		{
+			SDL_Log("TTF ERROR: %s", SDL_GetError());
+		}
+
+		FontCache.insert(std::make_pair(FontKey, CurrentFont));
+	}
+	else
+	{
+		CurrentFont = CachedFont->second;
+	}
 }
 
 void SDLRenderer::DrawRect(const FRect& Rect)
@@ -123,6 +159,37 @@ void SDLRenderer::FillCircle(const FPoint& Center, float Radius)
 			OffsetX += 1.0f;
 		}
 	}
+}
+
+void SDLRenderer::DrawText(const FStringView& Text, const FPoint& Position, ETextJustify Justify, const FColor& Color)
+{
+	SDL_Surface* Surface = TTF_RenderText_Blended(CurrentFont, Text.data(), { Color.Red, Color.Green, Color.Blue, Color.Alpha });
+	SDL_Texture* Texture = SDL_CreateTextureFromSurface(NativeRenderer, Surface);
+
+	int32 TextureWidth{ 0 }, TextureHeight{ 0 };
+	SDL_QueryTexture(Texture, nullptr, nullptr, &TextureWidth, &TextureHeight);
+
+	SDL_FRect DestRect = { Position.X, Position.Y, static_cast<float>(TextureWidth), static_cast<float>(TextureHeight) };
+
+	switch (Justify)
+	{
+	case ETextJustify::CenteredTop:
+		DestRect.x -= TextureWidth * 0.5f;
+		break;
+	case ETextJustify::CenteredMid:
+		DestRect.x -= TextureWidth * 0.5f;
+		DestRect.y -= TextureHeight * 0.5f;
+		break;
+	case ETextJustify::CenteredBottom:
+		DestRect.x -= TextureWidth * 0.5f;
+		DestRect.y -= TextureHeight;
+		break;
+	}
+
+	SDL_RenderCopyF(NativeRenderer, Texture, nullptr, &DestRect);
+
+	SDL_FreeSurface(Surface);
+	SDL_DestroyTexture(Texture);
 }
 
 void SDLRenderer::Present()

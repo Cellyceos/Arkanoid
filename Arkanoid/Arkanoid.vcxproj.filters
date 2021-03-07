@@ -23,6 +23,9 @@
     </Filter>
     <Filter Include="Source Files\Engine\Input">
       <UniqueIdentifier>{37e08141-8fe6-4897-a9a4-65f6f15dd80d}</UniqueIdentifier>
+    <Filter Include="Resource Files\Fonts">
+      <UniqueIdentifier>{31869043-591c-444a-a6b8-d825da317d6e}</UniqueIdentifier>
+    </Filter>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -115,5 +118,12 @@
     <ClInclude Include="Game\ABall.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
+  <ItemGroup>
+    <Font Include="..\Assets\Ancient Medium.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="..\Assets\Open Sans.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>
