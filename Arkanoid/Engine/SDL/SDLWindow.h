@@ -9,27 +9,35 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Interfaces/GenericWindow.h"
 
-class SDLWindow : public AGenericWindow
+
+class SDLWindow
 {
 public:
 	SDLWindow();
 	virtual ~SDLWindow();
 
-	virtual bool Init(const FStringView Title, int32 Width, int32 Height) override;
-	virtual void Show() override;
-	virtual void Hide() override;
+	virtual bool CreateWindow(const FStringView& Title, int32 Width, int32 Height);
+	virtual void Show();
+	virtual void Hide();
 
-	virtual bool HandleEvents(const TSharedPtr<class AInputManager>& InputManager) override;
+	virtual int32 GetWidth() const;
+	virtual int32 GetHeight() const;
 
-	virtual void PrepareDraw() override;
-	virtual void FinishDraw() override;
+	virtual bool HandleEvents();
 
-	virtual bool HasFocus() const override { return bHasFocus; }
-	virtual void* GetNativeWindowHandle() const override { return NativeWindow; }
+	virtual bool HasFocus() const { return bHasFocus; }
+	virtual void* GetNativeWindowHandle() const { return NativeWindow; }
+
+	virtual TSharedPtr<class SDLRenderer> GetRenderer() { return Renderer; }
+	virtual TSharedPtr<const class SDLRenderer> GetRenderer() const { return Renderer; }
+
+	virtual void SetMessageHandler(const TSharedPtr<class IMessageHandler>& InMessageHandler) { MessageHandler = InMessageHandler; }
 
 private:
+	TSharedPtr<class IMessageHandler> MessageHandler = nullptr;
+	TSharedPtr<class SDLRenderer> Renderer = nullptr;
+
 	struct SDL_Window* NativeWindow = nullptr;
 
 	uint32 WindowID = 0;

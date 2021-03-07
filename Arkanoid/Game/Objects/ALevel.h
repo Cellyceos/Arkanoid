@@ -16,10 +16,10 @@ public:
 	ALevel();
 	virtual ~ALevel();
 
-	virtual void SetupPlayerInput(const TSharedPtr<class AInputManager>& InputManager) override;
+	void Init();
 
 	virtual void Update(float DeltaTime) override;
-	virtual void Draw(const TSharedPtr<class AGenericRenderer>& Renderer) const override;
+	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const override;
 
 protected:
 	static constexpr int64 ColNum = 11;
@@ -30,5 +30,7 @@ protected:
 
 	TFixedArray<TUniquePtr<class AObject>, ColNum * RowNum> StaticObjects;
 	TArray<TUniquePtr<class AObject>> DynamicObjects;
+
+	static TFixedArray<uint16, ColNum* RowNum> Level;
 };
 

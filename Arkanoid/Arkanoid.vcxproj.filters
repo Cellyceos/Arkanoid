@@ -21,11 +21,20 @@
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{27261ad1-efed-464d-a711-8fb9525f92ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Input">
-      <UniqueIdentifier>{37e08141-8fe6-4897-a9a4-65f6f15dd80d}</UniqueIdentifier>
+    <Filter Include="Source Files\Game\Objects">
+      <UniqueIdentifier>{0b0a893c-194f-45b7-9b06-436cbb3a2300}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Resource Files\Fonts">
       <UniqueIdentifier>{31869043-591c-444a-a6b8-d825da317d6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Screens">
+      <UniqueIdentifier>{2b45bb57-83a5-4eca-8921-d4f31199a049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\UI">
+      <UniqueIdentifier>{255ee906-82b3-40c3-945e-f7e843d90b34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Screens">
+      <UniqueIdentifier>{78be42b1-4ee3-4bfb-b5bc-bb61231aa5c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -41,46 +50,58 @@
     <ClCompile Include="Engine\SDL\SDLRenderer.cpp">
       <Filter>Source Files\Engine\SDL</Filter>
     </ClCompile>
-    <ClCompile Include="Game\ArkanoidGame.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Level.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Platform.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Input\InputManager.cpp">
-      <Filter>Source Files\Engine\Input</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\FixedFrameRate.cpp">
       <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\ABlock.cpp">
-      <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="Engine\AObject.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Game\ABall.cpp">
-      <Filter>Source Files\Game</Filter>
+    <ClCompile Include="ArkanoidGame.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Interfaces\GenericWindow.cpp">
-      <Filter>Source Files\Engine\Interfaces</Filter>
+    <ClCompile Include="Game\UI\AGameUI.cpp">
+      <Filter>Source Files\Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\ABall.cpp">
+      <Filter>Source Files\Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\ABlock.cpp">
+      <Filter>Source Files\Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\ALevel.cpp">
+      <Filter>Source Files\Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Objects\APlatform.cpp">
+      <Filter>Source Files\Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Screens\AGameScreen.cpp">
+      <Filter>Source Files\Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Screens\AMainScreen.cpp">
+      <Filter>Source Files\Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Screens\APauseScreen.cpp">
+      <Filter>Source Files\Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Screens\AScoreScreen.cpp">
+      <Filter>Source Files\Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Screens\AScreensManager.cpp">
+      <Filter>Source Files\Engine\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Screens\AScreenState.cpp">
+      <Filter>Source Files\Engine\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Screens\FScreenCreator.cpp">
+      <Filter>Source Files\Game\Screens</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Interfaces\GenericWindow.h">
-      <Filter>Source Files\Engine\Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\SDL\SDLWindow.h">
       <Filter>Source Files\Engine\SDL</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Interfaces\GenericRenderer.h">
-      <Filter>Source Files\Engine\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Engine\SDL\SDLContext.h">
       <Filter>Source Files\Engine\SDL</Filter>
@@ -91,33 +112,67 @@
     <ClInclude Include="Engine\CoreMinimal.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Game\ArkanoidGame.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Level.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Platform.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Input\InputManager.h">
-      <Filter>Source Files\Engine\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Input\InputEvents.h">
-      <Filter>Source Files\Engine\Input</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\FixedFrameRate.h">
       <Filter>Source Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\ABlock.h">
-      <Filter>Source Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="Engine\AObject.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Game\ABall.h">
+    <ClInclude Include="ArkanoidGame.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Interfaces\IMessageHendler.h">
+      <Filter>Source Files\Engine\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\UI\AGameUI.h">
+      <Filter>Source Files\Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\BasicTypes.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\ABall.h">
+      <Filter>Source Files\Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\ABlock.h">
+      <Filter>Source Files\Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\ALevel.h">
+      <Filter>Source Files\Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Objects\APlatform.h">
+      <Filter>Source Files\Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Screens\AGameScreen.h">
+      <Filter>Source Files\Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Screens\AMainScreen.h">
+      <Filter>Source Files\Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Screens\APauseScreen.h">
+      <Filter>Source Files\Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Screens\AScoreScreen.h">
+      <Filter>Source Files\Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Screens\AScreensManager.h">
+      <Filter>Source Files\Engine\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Screens\AScreenState.h">
+      <Filter>Source Files\Engine\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Screens\FScreensCreator.h">
+      <Filter>Source Files\Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Interfaces\IInputHendler.h">
+      <Filter>Source Files\Engine\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Interfaces\IScreensCreator.h">
+      <Filter>Source Files\Engine\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameConfig.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
+  </ItemGroup>
   <ItemGroup>
     <Font Include="..\Assets\Ancient Medium.ttf">
       <Filter>Resource Files\Fonts</Filter>

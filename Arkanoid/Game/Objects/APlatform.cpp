@@ -6,10 +6,7 @@
 //  Copyright (c) 2021 Cellyceos. All rights reserved.
 //
 
-#include "Game/Platform.h"
-
-#include "Engine/Input/InputManager.h"
-#include "Engine/Interfaces/GenericRenderer.h"
+#include "Objects/APlatform.h"
 
 
 APlatform::APlatform()
@@ -24,10 +21,10 @@ APlatform::~APlatform()
 
 }
 
-void APlatform::SetupPlayerInput(const TSharedPtr<AInputManager>& InputManager)
+void APlatform::SetupPlayerInput(const TSharedPtr<IInputComponent>& InputComponent)
 {
-	InputManager->BindAxis("Move", std::bind(&APlatform::Move, this, _1));
-	InputManager->BindAction("Release", EInputEvent::IE_Pressed, std::bind(&APlatform::ReleaseBall, this));
+	//InputComponent->BindAxis("Move", std::bind(&APlatform::Move, this, _1));
+	//InputComponent->BindAction("Release", EInputEvent::IE_Pressed, std::bind(&APlatform::ReleaseBall, this));
 }
 
 void APlatform::Move(float Direction)
@@ -48,7 +45,7 @@ void APlatform::Update(float DeltaTime)
 	}
 }
 
-void APlatform::Draw(const TSharedPtr<AGenericRenderer>& Renderer) const
+void APlatform::Draw(const TSharedPtr<SDLRenderer>& Renderer) const
 {
 	const float HalfHeight = Size.Height * 0.5f;
 	const float HalfWidth = Size.Width * 0.5f;

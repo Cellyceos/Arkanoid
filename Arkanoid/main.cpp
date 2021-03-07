@@ -7,10 +7,8 @@
 //
 
 #include "ArkanoidGame.h"
-
-#if USE_SDL
 #include "SDL_main.h"
-#endif
+
 
 int main(int argc, char* argv[])
 {
@@ -18,7 +16,7 @@ int main(int argc, char* argv[])
 
 	if (Game.Init())
 	{
-		return Game.Exec();
+		return Game.Loop();
 	}
 
 	return EXIT_FAILURE;

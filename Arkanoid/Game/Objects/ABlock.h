@@ -31,12 +31,13 @@ public:
 	ABlock(EBlockType Type);
 
 	virtual void Update(float DeltaTime) override;
-	virtual void Draw(const TSharedPtr<class AGenericRenderer>& Renderer) const override;
+	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const override;
 
 private:
 	struct FBlockSettings
 	{
 		uint8 Healh;
+		uint8 Score;
 		FColor MainColor;
 		FColor SecondColor;
 	};

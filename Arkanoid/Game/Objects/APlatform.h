@@ -16,10 +16,10 @@ public:
 	APlatform();
 	virtual ~APlatform();
 
-	virtual void SetupPlayerInput(const TSharedPtr<class AInputManager>& InputManager) override;
+	virtual void SetupPlayerInput(const TSharedPtr<class IInputComponent>& InputComponent) override;
 
 	virtual void Update(float DeltaTime) override;
-	virtual void Draw(const TSharedPtr<class AGenericRenderer>& Renderer) const override;
+	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const override;
 
 protected:
 	void Move(float Direction);

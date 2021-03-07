@@ -6,20 +6,23 @@
 //  Copyright (c) 2021 Cellyceos. All rights reserved.
 //
 
-#include "Game/ABall.h"
+#include "Objects/ABall.h"
 
-#include "Engine/Interfaces/GenericRenderer.h"
 
+ABall::ABall()
+{
+	Size = { 20.0f, 20.0f };
+}
 
 void ABall::Update(float DeltaTime)
 {
 
 }
 
-void ABall::Draw(const TSharedPtr<AGenericRenderer>& Renderer) const
+void ABall::Draw(const TSharedPtr<SDLRenderer>& Renderer) const
 {
-	const float BallRadius = 10.0f;
-	const FPoint Center{ 300.0f, 200.0f };
+	const float BallRadius = Size.Height * 0.5f;
+	const FPoint Center = GetCenterPoint();
 
 	Renderer->SetColor({ 100, 100, 100, 255 });
 	Renderer->FillCircle({ Center.X, Center.Y }, BallRadius);

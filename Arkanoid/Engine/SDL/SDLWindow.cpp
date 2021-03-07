@@ -8,16 +8,12 @@
 
 #include "SDL/SDLWindow.h"
 #include "SDL/SDLRenderer.h"
-
-#include "Input/InputManager.h"
-#include "Input/InputEvents.h"
+#include "Interfaces/IMessageHendler.h"
 
 #include "SDL.h"
 
-
-SDLWindow::SDLWindow() : AGenericWindow()
+SDLWindow::SDLWindow()
 {
-	BackgroundColor = { 30, 30, 30, 255 };
 }
 
 SDLWindow::~SDLWindow()
@@ -31,7 +27,7 @@ SDLWindow::~SDLWindow()
 	}
 }
 
-bool SDLWindow::Init(const FStringView Title, int32 Width, int32 Height)
+bool SDLWindow::CreateWindow(const FStringView& Title, int32 Width, int32 Height)
 {
 	NativeWindow = SDL_CreateWindow(Title.data(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Width, Height, SDL_WINDOW_HIDDEN|SDL_WINDOW_ALLOW_HIGHDPI);
 
@@ -57,44 +53,68 @@ void SDLWindow::Hide()
 	SDL_HideWindow(NativeWindow);
 }
 
-bool SDLWindow::HandleEvents(const TSharedPtr<class AInputManager>& InputManager)
+int32 SDLWindow::GetWidth() const
 {
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
+	int32 Width = 0;
+	SDL_GetWindowSize(NativeWindow, &Width, nullptr);
+	return Width;
+}
+
+int32 SDLWindow::GetHeight() const
+{
+	int32 Height = 0;
+	SDL_GetWindowSize(NativeWindow, nullptr, &Height);
+	return Height;
+}
+
+bool SDLWindow::HandleEvents()
+{
+	SDL_Event Event;
+	while (SDL_PollEvent(&Event))
 	{
-		switch (event.type) {
+		switch (Event.type) {
 		case SDL_KEYDOWN:
-		case SDL_KEYUP:
-			if (WindowID == event.key.windowID && HasFocus())
+			if (WindowID == Event.key.windowID && HasFocus() && MessageHandler)
 			{
-				InputManager->KeyboardEvent({ event.key.state, event.key.repeat > 0, event.key.keysym.sym });
+				MessageHandler->OnKeyDown(Event.key);
+			}
+			break;
+		case SDL_KEYUP:
+			if (WindowID == Event.key.windowID && HasFocus() && MessageHandler)
+			{
+				MessageHandler->OnKeyUp(Event.key);
 			}
 			break;
 		case SDL_MOUSEMOTION:
-			if (WindowID == event.motion.windowID && HasFocus())
+			if (WindowID == Event.motion.windowID && HasFocus() && MessageHandler)
 			{
-				InputManager->MouseMotionEvent({ event.motion.state, event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel });
+				MessageHandler->OnMouseMotion(Event.motion);
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-		case SDL_MOUSEBUTTONUP:
-			if (WindowID == event.button.windowID && HasFocus())
+			if (WindowID == Event.button.windowID && HasFocus() && MessageHandler)
 			{
-				InputManager->MouseButtonEvent({ event.button.button, event.button.state, event.button.clicks, event.button.x, event.button.y });
+				MessageHandler->OnMouseButtonDown(Event.button);
+			}
+			break;
+		case SDL_MOUSEBUTTONUP:
+			if (WindowID == Event.button.windowID && HasFocus() && MessageHandler)
+			{
+				MessageHandler->OnMouseButtonUp(Event.button);
 			}
 			break;
 		case SDL_QUIT:
 			return false;
 		case SDL_WINDOWEVENT:
-			switch (event.window.event) {
+			switch (Event.window.event) {
 			case SDL_WINDOWEVENT_FOCUS_GAINED:
-				if (event.window.windowID == WindowID)
+				if (Event.window.windowID == WindowID)
 				{
 					bHasFocus = true;
 				}
 				break;
 			case SDL_WINDOWEVENT_FOCUS_LOST:
-				if (event.window.windowID == WindowID)
+				if (Event.window.windowID == WindowID)
 				{
 					bHasFocus = false;
 				}
@@ -105,14 +125,4 @@ bool SDLWindow::HandleEvents(const TSharedPtr<class AInputManager>& InputManager
 	}
 
 	return true;
-}
-
-void SDLWindow::PrepareDraw()
-{
-	Renderer->Clear(BackgroundColor);
-}
-
-void SDLWindow::FinishDraw()
-{
-	Renderer->Present();
 }

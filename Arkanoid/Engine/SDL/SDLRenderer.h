@@ -9,12 +9,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Interfaces/GenericRenderer.h"
+
 
 enum class ETextJustify {
+	LeftTop,
+	LeftMiddle, 
+	LeftBottom,
 	CenteredTop,
-	CenteredMid,
-	CenteredBottom
+	CenteredMiddle,
+	CenteredBottom,
+	RightTop,
+	RightMiddle,
+	RightBottom
 };
 
 struct FFontKey
@@ -33,7 +39,7 @@ struct FFontKey
 	}
 };
 
-class SDLRenderer : public AGenericRenderer
+class SDLRenderer
 {
 public:
 	explicit SDLRenderer(struct SDL_Renderer* RendererPtr);
@@ -41,28 +47,30 @@ public:
 
 	static TSharedPtr<SDLRenderer> Construct(struct SDL_Window* Window);
 
-	virtual void Clear(const FColor& Color) override;
-	virtual void Present() override;
+	virtual void Clear(const FColor& Color);
+	virtual void Present();
 
-	virtual void SetColor(const FColor& Color) override;
+	virtual void SetColor(const FColor& Color);
 	virtual void SetFont(const FStringView& FontName, const int32 FontSize);
 
 	// Rectangle
-	virtual void DrawRect(const FRect& Rect) override;
-	virtual void FillRect(const FRect& Rect) override;
+	virtual void DrawRect(const FRect& Rect);
+	virtual void FillRect(const FRect& Rect);
 
 	// Circle
-	virtual void DrawCircle(const FPoint& Center, float Radius) override;
-	virtual void FillCircle(const FPoint& Center, float Radius) override;
+	virtual void DrawCircle(const FPoint& Center, float Radius);
+	virtual void FillCircle(const FPoint& Center, float Radius);
 
 	// Text
 	virtual void DrawText(const FStringView& Text, const FPoint& Position, ETextJustify Justify, const FColor& Color);
 
-	virtual void* GetNativeRenderer() const override { return NativeRenderer; }
+	virtual struct SDL_Renderer* GetNativeRenderer() const { return NativeRenderer; }
 
 private:
 	struct SDL_Renderer* NativeRenderer = nullptr;
 	struct _TTF_Font* CurrentFont = nullptr;
 
-	static TMap <FFontKey, struct _TTF_Font*> FontCache;
+	static TMap <FFontKey, struct _TTF_Font*> FontNameCache;
 };
+
+using ARendererClass = SDLRenderer;

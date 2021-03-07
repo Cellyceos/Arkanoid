@@ -11,7 +11,7 @@
 #include "SDL.h"
 #include "SDL_ttf.h"
 
-TMap <FFontKey, TTF_Font*> SDLRenderer::FontCache;
+TMap <FFontKey, TTF_Font*> SDLRenderer::FontNameCache;
 
 TSharedPtr<SDLRenderer> SDLRenderer::Construct(SDL_Window* Window)
 {
@@ -34,13 +34,13 @@ SDLRenderer::SDLRenderer(SDL_Renderer* Renderer) : NativeRenderer(Renderer)
 
 SDLRenderer::~SDLRenderer()
 {
-	for (auto& [FontKey, Font] : FontCache)
+	for (auto& [FontKey, Font] : FontNameCache)
 	{
 		TTF_CloseFont(Font);
 		Font = nullptr;
 	}
 
-	FontCache.clear();
+	FontNameCache.clear();
 
 	if (NativeRenderer)
 	{
@@ -63,9 +63,9 @@ void SDLRenderer::SetColor(const FColor& Color)
 void SDLRenderer::SetFont(const FStringView& FontName, const int32 FontSize)
 {
 	const FFontKey FontKey{ FontName, FontSize };
-	auto CachedFont = FontCache.find(FontKey);
+	auto CachedFont = FontNameCache.find(FontKey);
 
-	if (CachedFont == FontCache.end())
+	if (CachedFont == FontNameCache.end())
 	{
 		CurrentFont = TTF_OpenFont(FontName.data(), FontSize);
 		if (!CurrentFont)
@@ -73,7 +73,7 @@ void SDLRenderer::SetFont(const FStringView& FontName, const int32 FontSize)
 			SDL_Log("TTF ERROR: %s", SDL_GetError());
 		}
 
-		FontCache.insert(std::make_pair(FontKey, CurrentFont));
+		FontNameCache.insert(std::make_pair(FontKey, CurrentFont));
 	}
 	else
 	{
@@ -173,15 +173,34 @@ void SDLRenderer::DrawText(const FStringView& Text, const FPoint& Position, ETex
 
 	switch (Justify)
 	{
+	case ETextJustify::LeftTop:
+		DestRect.x -= TextureWidth;
+		break;
+	case ETextJustify::LeftMiddle:
+		DestRect.x -= TextureWidth;
+		DestRect.y -= TextureHeight * 0.5f;
+		break;
+	case ETextJustify::LeftBottom:
+		DestRect.x -= TextureWidth;
+		DestRect.y -= TextureHeight;
+		break;
 	case ETextJustify::CenteredTop:
 		DestRect.x -= TextureWidth * 0.5f;
 		break;
-	case ETextJustify::CenteredMid:
+	case ETextJustify::CenteredMiddle:
 		DestRect.x -= TextureWidth * 0.5f;
 		DestRect.y -= TextureHeight * 0.5f;
 		break;
 	case ETextJustify::CenteredBottom:
 		DestRect.x -= TextureWidth * 0.5f;
+		DestRect.y -= TextureHeight;
+		break;
+	case ETextJustify::RightTop:
+		break;
+	case ETextJustify::RightMiddle:
+		DestRect.y -= TextureHeight * 0.5f;
+		break;
+	case ETextJustify::RightBottom:
 		DestRect.y -= TextureHeight;
 		break;
 	}

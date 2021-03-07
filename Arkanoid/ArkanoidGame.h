@@ -17,10 +17,9 @@ public:
 	~ArkanoidGame();
 
 	bool Init();
-	int32 Exec();
+	int32 Loop();
 
 private:
-	TUniquePtr<class AGenericWindow> MainWindow = nullptr;
-	TSharedPtr<class ALevel> CurrentLevel = nullptr;
-	TSharedPtr<class AInputManager> InputManager = nullptr;
+	TSharedPtr<AWindowClass> MainWindow = nullptr;
+	TSharedPtr<class AScreensManager> ScreensManager = nullptr;
 };

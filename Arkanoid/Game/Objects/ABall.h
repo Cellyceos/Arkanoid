@@ -14,6 +14,11 @@
 class ABall : public AObject
 {
 public:
+	ABall();
+
 	virtual void Update(float DeltaTime) override;
-	virtual void Draw(const TSharedPtr<class AGenericRenderer>& Renderer) const override;
+	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const override;
+
+private:
+	FPoint Direction;
 };

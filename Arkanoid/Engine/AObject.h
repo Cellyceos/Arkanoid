@@ -16,10 +16,10 @@ public:
 	AObject() = default;
 	virtual ~AObject() = default;
 
-	virtual void SetupPlayerInput(const TSharedPtr<class AInputManager>& InputManager) { }
+	virtual void SetupPlayerInput(const TSharedPtr<class IInputComponent>& InputComponent) { }
 
 	virtual void Update(float DeltaTime) { }
-	virtual void Draw(const TSharedPtr<class AGenericRenderer>& Renderer) const = 0;
+	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const = 0;
 
 	virtual FRect GetRect() const { return {Position, Size}; }
 	virtual void SetRect(const FRect& Rect) { Position = { Rect.X, Rect.Y }; Size = { Rect.Width, Rect.Height }; }
