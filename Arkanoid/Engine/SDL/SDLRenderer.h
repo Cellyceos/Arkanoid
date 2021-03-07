@@ -24,12 +24,12 @@ struct FFontKey
 
 	friend bool operator <(const FFontKey& Left, const FFontKey& Right)
 	{
-		if (Left.FontSize < Right.FontSize)
+		if (Left.FontName == Right.FontName)
 		{
-			return true;
+			return Left.FontSize < Right.FontSize;
 		}
 
-		return Left.FontName < Right.FontName;
+		return Left.FontSize > Right.FontSize && Left.FontName < Right.FontName;
 	}
 };
 
