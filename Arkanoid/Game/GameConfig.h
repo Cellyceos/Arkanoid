@@ -18,4 +18,13 @@ public:
 	static constexpr float BorderSize{ 10.0f };
 	static constexpr float LevelRatio{ 2.0f/3.0f };
 	static constexpr float UserInterfaceRatio{ 1.0f/3.0f };
+
+	enum class EScreenTypes
+	{
+		Unknown,
+		MainScreen,
+		GameScreen,
+		PauseScreen,
+		ScoreScreen,		
+	};
 };

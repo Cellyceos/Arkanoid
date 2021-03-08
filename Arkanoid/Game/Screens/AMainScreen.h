@@ -19,6 +19,8 @@ public:
 	virtual void Update(float DeltaTime) override;
 	virtual void Draw(const TSharedPtr<ARendererClass>& Renderer) const override;
 
+	virtual int32 GetId() const override { return static_cast<int32>(GameConfig::EScreenTypes::MainScreen); }
+
 private:
 	FColor FontColor{ 255, 255, 255, 255 };
 	int8 Direction{ -2 };

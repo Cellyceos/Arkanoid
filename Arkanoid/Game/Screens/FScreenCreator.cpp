@@ -1,3 +1,11 @@
+//
+//  FScreensCreator.cpp
+//  Screen Creator for Arkanoud Game.
+//
+//  Created by Kirill Bravichev on 03/07/2021.
+//  Copyright (c) 2021 Cellyceos. All rights reserved.
+//
+
 #include "FScreensCreator.h"
 
 #include "Screens/AGameScreen.h"
@@ -8,18 +16,18 @@
 TSharedPtr<AScreenState> FScreensCreator::operator ()(const TSharedPtr<class AScreensManager>& Owner, int32 StateID) const
 {
 	TSharedPtr<AScreenState> NewScreen = nullptr;
-	switch (static_cast<EScreenType>(StateID))
+	switch (static_cast<GameConfig::EScreenTypes>(StateID))
 	{
-	case EScreenType::MainScreen:
+	case GameConfig::EScreenTypes::MainScreen:
 		NewScreen = std::make_shared<AMainScreen>(Owner);
 		break;
-	case EScreenType::GameScreen:
+	case GameConfig::EScreenTypes::GameScreen:
 		NewScreen = std::make_shared<AGameScreen>(Owner);
 		break;
-	case EScreenType::PauseScreen:
+	case GameConfig::EScreenTypes::PauseScreen:
 		NewScreen = std::make_shared<APauseScreen>(Owner);
 		break;
-	case EScreenType::ScoreScreen:
+	case GameConfig::EScreenTypes::ScoreScreen:
 		NewScreen = std::make_shared<AScoreScreen>(Owner);
 		break;
 	default:

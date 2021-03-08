@@ -1,16 +1,14 @@
+//
+//  FScreensCreator.h
+//  Screen Creator for Arkanoud Game.
+//
+//  Created by Kirill Bravichev on 03/07/2021.
+//  Copyright (c) 2021 Cellyceos. All rights reserved.
+//
+
 #pragma once
 
 #include "Interfaces/IScreensCreator.h"
-
-
-enum class EScreenType
-{
-	MainScreen,
-	GameScreen,
-	PauseScreen,
-	ScoreScreen,
-	Unknown
-};
 
 
 struct FScreensCreator : IScreensCreator

@@ -23,6 +23,7 @@ public:
 	virtual void Draw(const TSharedPtr<ARendererClass>& Renderer) const override;
 
 	virtual bool ShouldDrawPrevScreen() const override { return false; }
+	virtual int32 GetId() const override { return static_cast<int32>(GameConfig::EScreenTypes::GameScreen); }
 
 protected:
 	TUniquePtr<class ALevel> CurrentLevel = nullptr;
