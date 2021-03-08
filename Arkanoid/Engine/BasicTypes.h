@@ -89,6 +89,12 @@ struct FRect
 	}
 };
 
+struct FAABB
+{
+	FPoint Center;
+	TFixedArray<float, 2> Radius{ 0.0f, 0.0f };
+};
+
 enum class EInputEvent
 {
 	Released,

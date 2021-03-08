@@ -124,6 +124,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\AObject.cpp" />
     <ClCompile Include="Engine\FixedFrameRate.cpp" />
     <ClCompile Include="Engine\Screens\AScreenState.cpp" />
     <ClCompile Include="Engine\Screens\AScreensManager.cpp" />

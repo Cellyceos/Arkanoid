@@ -95,6 +95,9 @@
     <ClCompile Include="Game\Screens\FScreenCreator.cpp">
       <Filter>Source Files\Game\Screens</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\AObject.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\SDL\SDLWindow.h">
