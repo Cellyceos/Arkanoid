@@ -31,9 +31,9 @@ void AGameScreen::Init()
 		(GameConfig::WindowWidth - GameConfig::BorderSize) * GameConfig::LevelRatio,
 		GameConfig::WindowHeight - 2.0f * GameConfig::BorderSize });
 
-	UI->SetRect({ 2.0f * GameConfig::BorderSize + CurrentLevel->GetWidth(),
+	UI->SetRect({ GameConfig::BorderSize + CurrentLevel->GetWidth(),
 		GameConfig::BorderSize,
-		(GameConfig::WindowWidth - 3.0f * GameConfig::BorderSize) - CurrentLevel->GetWidth(),
+		(GameConfig::WindowWidth - 2.0f * GameConfig::BorderSize) - CurrentLevel->GetWidth(),
 		GameConfig::WindowHeight - 2.0f * GameConfig::BorderSize });
 
 	CurrentLevel->Init();
@@ -62,11 +62,6 @@ void AGameScreen::Update(float DeltaTime)
 
 void AGameScreen::Draw(const TSharedPtr<ARendererClass>& Renderer) const
 {
-	Renderer->SetColor({ 0, 255, 0, 255 });
-	Renderer->DrawRect({ GameConfig::BorderSize, GameConfig::BorderSize,
-		GameConfig::WindowWidth - 2.0f * GameConfig::BorderSize,
-		GameConfig::WindowHeight - 2.0f * GameConfig::BorderSize });
-
 	CurrentLevel->Draw(Renderer);
 	UI->Draw(Renderer);
 }
