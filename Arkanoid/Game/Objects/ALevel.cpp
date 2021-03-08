@@ -60,10 +60,11 @@ void ALevel::Init()
 	Platform->SetCenterPoint({ Position.X + Size.Width * 0.5f, Size.Height - Platform->GetHeight() });
 	Ball->SetCenterPoint({ Position.X + Size.Width * 0.5f, Size.Height - Platform->GetHeight() - Ball->GetHeight() });
 
-	const float X = Position.X + GameConfig::BorderSize;
-	const float Y = Position.Y + GameConfig::BorderSize;
-	const float BrickWidth = (Size.Width - 2.0f * GameConfig::BorderSize) / ColNum;
-	const float BrickHeight = (Size.Height - 2.0f * GameConfig::BorderSize) / RowNum;
+	const float Offset = 2.0;
+	const float X = Position.X + BorderSize + Offset;
+	const float Y = Position.Y + BorderSize + Offset;
+	const float BrickWidth = (Size.Width - 2.0f * BorderSize - Offset) / ColNum;
+	const float BrickHeight = (Size.Height - 2.0f * BorderSize - Offset) / RowNum;
 
 	for (uint64 Idx = 0ll; Idx < Level.size(); Idx++)
 	{
