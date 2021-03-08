@@ -27,11 +27,12 @@ protected:
 	void ReleaseBall(EInputEvent KeyEvent);
 
 private:
-	float Speed = 500.0f;
 	float MoveSpeed = 0.0f;
-
-	FColor Color;
 	FColor GunColor;
+
+	const float Speed{ 500.0f };
+	const FColor BackGroundColor{ 120, 120, 120, 255 };
+	const FColor ForegroundColor{ 150, 150, 150, 255 };
 
 	bool HasGun = false;
 };

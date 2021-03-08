@@ -16,7 +16,6 @@
 APlatform::APlatform()
 {
 	Size = { 80.0f, 14.0f };
-	Color = { 150, 150, 150, 255 };
 	GunColor = { 80, 80, 80, 255 };
 }
 
@@ -85,16 +84,16 @@ void APlatform::Draw(const TSharedPtr<SDLRenderer>& Renderer) const
 
 	const FPoint& Center = GetCenterPoint();
 
-	Renderer->SetColor({ 125, 125, 125, 255 });
-	Renderer->FillCircle({ Position.X, Center.Y }, HalfHeight);
-	Renderer->FillCircle({ Position.X + Size.Width - 1.0f, Center.Y }, HalfHeight);
-	Renderer->FillRect({ Position, { Size.Width, Size.Height + 1.0f } });
+	Renderer->SetColor(BackGroundColor);
+	Renderer->FillCircle({ Position.X + HalfHeight, Center.Y }, HalfHeight);
+	Renderer->FillCircle({ Position.X + Size.Width - HalfHeight - 1.0f, Center.Y }, HalfHeight);
+	Renderer->FillRect({ Position.X + HalfHeight, Position.Y, Size.Width - Size.Height, Size.Height + 1.0f });
 
-	float Offset = 2.0f;
-	Renderer->SetColor({ 150, 150, 150, 255 });
-	Renderer->FillCircle({ Position.X, Center.Y }, HalfHeight - Offset);
-	Renderer->FillCircle({ Position.X + Size.Width - 1.0f, Center.Y }, HalfHeight - Offset);
-	Renderer->FillRect({ Position.X + Offset, Position.Y + Offset, Size.Width - 2.0f * Offset, Size.Height + 1.0f - 2.0f * Offset });
+	const float Offset = 2.0f;
+	Renderer->SetColor(ForegroundColor);
+	Renderer->FillCircle({ Position.X + HalfHeight, Center.Y }, HalfHeight - Offset);
+	Renderer->FillCircle({ Position.X + Size.Width - HalfHeight - 1.0f, Center.Y }, HalfHeight - Offset);
+	Renderer->FillRect({ Position.X + HalfHeight + Offset, Position.Y + Offset, Size.Width - Size.Height - 2.0f * Offset, Size.Height + 1.0f - 2.0f * Offset });
 
 	if (HasGun)
 	{
