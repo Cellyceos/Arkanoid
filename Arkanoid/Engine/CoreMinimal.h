@@ -11,7 +11,6 @@
 #include <cassert>
 
 #include "BasicTypes.h"
-#include "GameConfig.h"
 
 #ifdef USE_SDL
 #include "SDL/SDLWindow.h"

@@ -11,6 +11,8 @@
 #include "Objects/ABlock.h"
 #include "Objects/APlatform.h"
 
+#include "Game/GameConfig.h"
+
 
 TFixedArray<uint16, ALevel::ColNum * ALevel::RowNum> ALevel::Level{
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 

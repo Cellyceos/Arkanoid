@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Screens/AScreenState.h"
+#include "Game/GameConfig.h"
 
 
 class APauseScreen : public AScreenState

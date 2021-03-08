@@ -13,6 +13,8 @@
 #include "Engine/FixedFrameRate.h"
 #include "Engine/Screens/AScreensManager.h"
 
+#include "Game/GameConfig.h"
+
 
 ArkanoidGame::ArkanoidGame()
 {
