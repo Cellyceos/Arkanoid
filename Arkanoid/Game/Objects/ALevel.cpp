@@ -105,6 +105,12 @@ void ALevel::Update(float DeltaTime)
 
 void ALevel::Draw(const TSharedPtr<SDLRenderer>& Renderer) const
 {
+	Renderer->SetColor(BorderColor);
+	Renderer->FillRect({ Position.X, Position.Y, BorderSize, Size.Height });
+	Renderer->FillRect({ Position.X, Position.Y, Size.Width, BorderSize });
+	Renderer->FillRect({ Position.X + Size.Width - BorderSize, Position.Y, BorderSize, Size.Height });
+	Renderer->FillRect({ Position.X, Position.Y + Size.Height - BorderSize, Size.Width, BorderSize });
+
 	for (const auto& Obj : StaticObjects)
 	{
 		if (Obj)

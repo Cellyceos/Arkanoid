@@ -34,5 +34,9 @@ protected:
 	TArray<TUniquePtr<class AObject>> DynamicObjects;
 
 	static TFixedArray<uint16, ColNum* RowNum> Level;
+
+private:
+	const FColor BorderColor{ 125, 125, 125, 255 };
+	const float BorderSize{ 5.0f };
 };
 
