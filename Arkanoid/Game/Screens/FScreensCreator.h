@@ -13,6 +13,7 @@
 
 struct FScreensCreator : IScreensCreator
 {
+	virtual int32 GetScreensCount() const override;
 	virtual TSharedPtr<AScreenState> operator()(const TSharedPtr<class AScreensManager>& Owner, int32 StateID) const override;
 };
 

@@ -14,6 +14,7 @@
 
 AScreensManager::AScreensManager(const TSharedPtr<IScreensCreator>& InScreensCreator) : ScreensCreator(InScreensCreator)
 {
+	ActiveScreens.reserve(ScreensCreator->GetScreensCount());
 }
 
 void AScreensManager::Update(float DeltaTime)
