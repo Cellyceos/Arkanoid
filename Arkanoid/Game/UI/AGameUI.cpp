@@ -15,8 +15,10 @@ void AGameUI::Update(float DeltaTime)
 
 void AGameUI::Draw(const TSharedPtr<SDLRenderer>& Renderer) const
 {
+#ifdef DEBUG_UI
 	Renderer->SetColor({ 125, 125, 0, 255 });
-	Renderer->FillRect({ Position, Size });
+	Renderer->DrawRect({ Position, Size });
+#endif // DEBUG_UI
 
 	const FPoint Center { Position.X + Size.Width * 0.5f, Position.Y };
 	Renderer->SetFont("Assets/Ancient Medium.ttf", 70);

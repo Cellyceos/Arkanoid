@@ -126,7 +126,4 @@ void ALevel::Draw(const TSharedPtr<SDLRenderer>& Renderer) const
 
 	Ball->Draw(Renderer);
 	Platform->Draw(Renderer);
-
-	Renderer->SetColor({ 255, 0, 0, 255 });
-	Renderer->DrawRect({Position, Size});
 }

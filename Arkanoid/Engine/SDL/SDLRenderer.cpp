@@ -212,10 +212,10 @@ void SDLRenderer::DrawText(const FStringView& Text, const FPoint& Position, ETex
 
 	SDL_RenderCopyF(NativeRenderer, Texture, nullptr, &DestRect);
 
-#ifdef _DEBUG
+#ifdef DEBUG_UI
 	SetColor(DebugColor);
 	FillRect({ Position.X - 2.0f, Position.Y - 2.0f, 4.0f, 4.0f });
-#endif
+#endif //DEBUG_UI
 
 	SDL_FreeSurface(Surface);
 	SDL_DestroyTexture(Texture);
