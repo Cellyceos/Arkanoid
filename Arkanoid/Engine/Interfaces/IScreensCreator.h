@@ -13,5 +13,7 @@
 
 struct IScreensCreator
 {
+    static constexpr int32 InvalidRequestId{ -1 };
+
     virtual TSharedPtr<AScreenState> operator ()(const TSharedPtr<class AScreensManager>& Owner, int32 StateID) const { return nullptr; }
 };
