@@ -11,8 +11,6 @@
 #include "Objects/ABlock.h"
 #include "Objects/APlatform.h"
 
-#include "Game/GameConfig.h"
-
 
 TFixedArray<uint16, ALevel::ColNum * ALevel::RowNum> ALevel::Level{
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -59,7 +57,6 @@ ALevel::~ALevel()
 
 void ALevel::Init()
 {
-	//Platform->SetupPlayerInput(InputManager);
 	Platform->SetCenterPoint({ Position.X + Size.Width * 0.5f, Size.Height - Platform->GetHeight() });
 	Ball->SetCenterPoint({ Position.X + Size.Width * 0.5f, Size.Height - Platform->GetHeight() - Ball->GetHeight() });
 
@@ -74,7 +71,7 @@ void ALevel::Init()
 		if (BlockType != EBlockType::Unknown)
 		{
 			auto Block = std::make_unique<ABlock>(BlockType);
-			Block->SetRect({ X + Idx % ColNum * BrickWidth, Y + Idx / ColNum * BrickHeight, BrickWidth, BrickHeight });
+			Block->SetRect({ (X + (Idx % ColNum) * BrickWidth), (Y + (Idx / ColNum) * BrickHeight), BrickWidth - Offset, BrickHeight - Offset });
 			StaticObjects[Idx] = std::move(Block);
 		}
 	}
