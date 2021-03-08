@@ -13,6 +13,11 @@
 
 TMap <FFontKey, TTF_Font*> SDLRenderer::FontNameCache;
 
+#ifdef _DEBUG
+FColor SDLRenderer::DebugColor{255, 0, 0, 255};
+#endif // _DEBUG
+
+
 TSharedPtr<SDLRenderer> SDLRenderer::Construct(SDL_Window* Window)
 {
 	SDL_Renderer* NativeRenderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
@@ -206,6 +211,11 @@ void SDLRenderer::DrawText(const FStringView& Text, const FPoint& Position, ETex
 	}
 
 	SDL_RenderCopyF(NativeRenderer, Texture, nullptr, &DestRect);
+
+#ifdef _DEBUG
+	SetColor(DebugColor);
+	FillRect({ Position.X - 2.0f, Position.Y - 2.0f, 4.0f, 4.0f });
+#endif
 
 	SDL_FreeSurface(Surface);
 	SDL_DestroyTexture(Texture);

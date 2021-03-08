@@ -71,6 +71,10 @@ private:
 	struct _TTF_Font* CurrentFont = nullptr;
 
 	static TMap <FFontKey, struct _TTF_Font*> FontNameCache;
+
+#ifdef _DEBUG
+	static FColor DebugColor;
+#endif // _DEBUG
 };
 
 using ARendererClass = SDLRenderer;

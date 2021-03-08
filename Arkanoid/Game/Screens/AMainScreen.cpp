@@ -25,9 +25,6 @@ void AMainScreen::Draw(const TSharedPtr<ARendererClass>& Renderer) const
 	Renderer->SetFont("Assets/Ancient Medium.ttf", 170);
 	Renderer->DrawText("Arkanoid", Center, ETextJustify::CenteredBottom, { 255, 255, 255, 255 });
 
-	Renderer->SetColor({ 255, 255, 0, 255 });
-	Renderer->DrawRect({ Center, { 5.0f, 5.0f } });
-
 	Renderer->SetFont("Assets/Open Sans.ttf", 30);
 	Renderer->DrawText("Press Enter to Start", Center, ETextJustify::CenteredTop, FontColor);
 }
