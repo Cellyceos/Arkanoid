@@ -98,7 +98,6 @@
     <ClCompile Include="Game\Objects\ABall.cpp" />
     <ClCompile Include="Game\Objects\ABlock.cpp" />
     <ClCompile Include="ArkanoidGame.cpp" />
-    <ClCompile Include="Engine\AObject.cpp" />
     <ClCompile Include="Game\Objects\ALevel.cpp" />
     <ClCompile Include="Game\Objects\APlatform.cpp" />
     <ClCompile Include="main.cpp" />

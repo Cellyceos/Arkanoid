@@ -76,6 +76,11 @@ void AScreensManager::TransitState()
 	RequestScreenId = IScreensCreator::InvalidRequestId;
 }
 
+void AScreensManager::RequestToQuit()
+{
+	SDL_Event exitEvent = { SDL_QUIT };
+	SDL_PushEvent(&exitEvent);
+}
 
 /// Begin IMessageHandler
 void AScreensManager::OnKeyDown(const SDL_KeyboardEvent& Event)

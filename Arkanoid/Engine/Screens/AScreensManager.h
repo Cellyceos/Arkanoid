@@ -25,6 +25,7 @@ public:
     virtual FColor GetBackgroundColor() const { return BackgroundColor; }
 
     virtual void RequestScreenTransition(int32 ScreenId) { RequestScreenId = ScreenId; }
+    virtual void RequestToQuit();
 
 protected:
     virtual void TransitState();

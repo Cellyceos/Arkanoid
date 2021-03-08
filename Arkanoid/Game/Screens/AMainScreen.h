@@ -27,6 +27,7 @@ private:
 	FColor FontColor{ 255, 255, 255, 255 };
 	int8 Direction{ -2 };
 
-	void Close(EInputEvent KeyEvent);
+	void StartGame(EInputEvent KeyEvent);
+	void Quit(EInputEvent KeyEvent);
 };
 

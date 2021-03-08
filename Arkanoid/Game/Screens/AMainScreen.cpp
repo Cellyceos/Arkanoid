@@ -9,7 +9,7 @@
 #include "Screens/AMainScreen.h"
 #include "Screens/AScreensManager.h"
 
-#include "SDL_keycode.h"
+#include "SDL_events.h"
 
 AMainScreen::AMainScreen(const TSharedPtr<class AScreensManager>& InOwner) : AScreenState(InOwner)
 {
@@ -17,14 +17,23 @@ AMainScreen::AMainScreen(const TSharedPtr<class AScreensManager>& InOwner) : ASc
 }
 void AMainScreen::Init()
 {
-	BindKey(SDLK_RETURN, std::bind(&AMainScreen::Close, this, _1));
+	BindKey(SDLK_RETURN, std::bind(&AMainScreen::StartGame, this, _1));
+	BindKey(SDLK_ESCAPE, std::bind(&AMainScreen::Quit, this, _1));
 }
 
-void AMainScreen::Close(EInputEvent KeyEvent)
+void AMainScreen::StartGame(EInputEvent KeyEvent)
 {
 	if (KeyEvent == EInputEvent::Pressed)
 	{
 		Owner->RequestScreenTransition(static_cast<int32>(GameConfig::EScreenTypes::GameScreen));
+	}
+}
+
+void AMainScreen::Quit(EInputEvent KeyEvent)
+{
+	if (KeyEvent == EInputEvent::Pressed)
+	{
+		Owner->RequestToQuit();
 	}
 }
 
