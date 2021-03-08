@@ -1,5 +1,5 @@
 //
-//  SDLContext.cpp
+//  SDLContext.h
 //  Context for correctly init and deinit SDL lib.
 //
 //  Created by Kirill Bravichev on 02/28/2021.

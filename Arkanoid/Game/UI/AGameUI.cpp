@@ -1,3 +1,11 @@
+//
+//  AGameUI.cpp
+//  In Game User Interface Class.
+//
+//  Created by Kirill Bravichev on 03/07/2021.
+//  Copyright (c) 2021 Cellyceos. All rights reserved.
+//
+
 #include "UI/AGameUI.h"
 
 void AGameUI::Update(float DeltaTime)

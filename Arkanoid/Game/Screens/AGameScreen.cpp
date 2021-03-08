@@ -1,5 +1,5 @@
 //
-//  GameScreen.h
+//  GameScreen.cpp
 //  Game Screen State.
 //
 //  Created by Kirill Bravichev on 03/05/2021.
