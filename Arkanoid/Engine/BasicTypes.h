@@ -88,3 +88,11 @@ struct FRect
 		return (GetLeft() < rect.GetRight() && GetTop() < rect.GetBottom() && GetRight() > rect.GetLeft() && GetBottom() > rect.GetTop());
 	}
 };
+
+enum class EInputEvent
+{
+	Released,
+	Pressed
+};
+
+using FInputDelegate = TFunction<void(EInputEvent)>;

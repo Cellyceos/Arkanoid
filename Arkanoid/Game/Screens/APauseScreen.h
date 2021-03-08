@@ -21,5 +21,9 @@ public:
 	virtual void Draw(const TSharedPtr<ARendererClass>& Renderer) const override;
 
 	virtual int32 GetId() const override { return static_cast<int32>(GameConfig::EScreenTypes::PauseScreen); }
+
+private:
+	void Continue(EInputEvent KeyEvent);
+	void Close(EInputEvent KeyEvent);
 };
 

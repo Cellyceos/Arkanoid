@@ -8,6 +8,10 @@
 
 #include "Objects/APlatform.h"
 
+#include "Engine/Interfaces/IInputHendler.h"
+
+#include "SDL_keycode.h"
+#include "SDL_log.h"
 
 APlatform::APlatform()
 {
@@ -21,20 +25,49 @@ APlatform::~APlatform()
 
 }
 
-void APlatform::SetupPlayerInput(const TSharedPtr<IInputComponent>& InputComponent)
+void APlatform::SetupPlayerInput(const TSharedPtr<IInputHandler>& InputHandler)
 {
-	//InputComponent->BindAxis("Move", std::bind(&APlatform::Move, this, _1));
-	//InputComponent->BindAction("Release", EInputEvent::IE_Pressed, std::bind(&APlatform::ReleaseBall, this));
+	InputHandler->BindKey(SDLK_LEFT, std::bind(&APlatform::MoveLeft, this, _1));
+	InputHandler->BindKey(SDLK_RIGHT, std::bind(&APlatform::MoveRight, this, _1));
+	InputHandler->BindKey(SDLK_SPACE, std::bind(&APlatform::ReleaseBall, this, _1));
 }
 
-void APlatform::Move(float Direction)
+void APlatform::MoveRight(EInputEvent KeyEvent)
 {
-	MoveSpeed = Direction * Speed;
+	switch (KeyEvent)
+	{
+	case EInputEvent::Pressed:
+		MoveSpeed = Speed;
+		break;
+	case EInputEvent::Released:
+		MoveSpeed = 0;
+		break;
+	default:
+		break;
+	}
 }
 
-void APlatform::ReleaseBall()
+void APlatform::MoveLeft(EInputEvent KeyEvent)
 {
+	switch (KeyEvent)
+	{
+	case EInputEvent::Pressed:
+		MoveSpeed = -Speed;
+		break;
+	case EInputEvent::Released:
+		MoveSpeed = 0;
+		break;
+	default:
+		break;
+	}
+}
 
+void APlatform::ReleaseBall(EInputEvent KeyEvent)
+{
+	if (KeyEvent == EInputEvent::Pressed)
+	{
+		SDL_Log("Release Ball");
+	}
 }
 
 void APlatform::Update(float DeltaTime)

@@ -15,10 +15,8 @@
 class AScreensManager : public IMessageHandler, public std::enable_shared_from_this<AScreensManager>
 {
 public:
-    AScreensManager(const IScreensCreator& ScreensCreator);
+    AScreensManager(const TSharedPtr<IScreensCreator>& ScreensCreator);
 	~AScreensManager() = default;
-
-    void Init();
 
     void Update(float DeltaTime);
     void Draw(const TSharedPtr<ARendererClass>& Renderer) const;
@@ -26,19 +24,27 @@ public:
     virtual void SetBackgroundColor(const FColor& Color) { BackgroundColor = Color; }
     virtual FColor GetBackgroundColor() const { return BackgroundColor; }
 
+    virtual void RequestScreenTransition(int32 ScreenId) { RequestScreenId = ScreenId; }
+
 protected:
+    virtual void TransitState();
+
     /// Begin IMessageHandler
     virtual void OnKeyDown(const struct SDL_KeyboardEvent& Event) override;
     virtual void OnKeyUp(const struct SDL_KeyboardEvent& Event)  override;
     virtual void OnMouseButtonDown(const struct SDL_MouseButtonEvent& Event) override;
     virtual void OnMouseButtonUp(const struct SDL_MouseButtonEvent& Event) override;
     virtual void OnMouseMotion(const struct SDL_MouseMotionEvent& Event)  override;
-    virtual void OnWindowsChangeFocus()  override;
+
+    virtual void OnWindowsFocusGained() override;
+    virtual void OnWindowsFocusLost() override;
     /// End IMessageHandler
 
 private:
-    const IScreensCreator& ScreensCreator;
+    const TSharedPtr<IScreensCreator> ScreensCreator;
+    
     FColor BackgroundColor{ 30, 30, 30, 255 };
+    int32 RequestScreenId{ IScreensCreator::InvalidRequestId };
 
-    TArray<TUniquePtr<AScreenState>> ActiveScreens;
+    TArray<TSharedPtr<AScreenState>> ActiveScreens;
 };

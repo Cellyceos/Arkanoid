@@ -80,6 +80,11 @@ void ALevel::Init()
 	}
 }
 
+void ALevel::SetupPlayerInput(const TSharedPtr<class IInputHandler>& InputHandler)
+{
+	Platform->SetupPlayerInput(InputHandler);
+}
+
 void ALevel::Update(float DeltaTime)
 {
 	for (const auto& Obj : StaticObjects)

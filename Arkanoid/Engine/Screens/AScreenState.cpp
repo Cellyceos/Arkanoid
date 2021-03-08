@@ -18,7 +18,22 @@ void AScreenState::Exit()
 
 }
 
-void AScreenState::RequestTransition()
-{
 
+/// Begin IInputHandler
+void AScreenState::BindKey(int32 KeyCode, FInputDelegate Func)
+{
+	assert(KeyBindings.find(KeyCode) == KeyBindings.end());
+	KeyBindings.insert(std::make_pair(KeyCode, std::move(Func)));
 }
+
+FInputDelegate AScreenState::GetDelegateBoundToKey(int32 KeyCode) const
+{
+	auto KeyIter = KeyBindings.find(KeyCode);
+	if (KeyIter != KeyBindings.end())
+	{
+		return KeyIter->second;
+	}
+
+	return nullptr;
+}
+/// End IInputHandler

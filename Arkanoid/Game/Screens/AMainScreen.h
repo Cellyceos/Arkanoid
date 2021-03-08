@@ -17,6 +17,7 @@ class AMainScreen : public AScreenState
 public:
 	AMainScreen(const TSharedPtr<class AScreensManager>& InOwner);
 
+	virtual void Init() override;
 	virtual void Update(float DeltaTime) override;
 	virtual void Draw(const TSharedPtr<ARendererClass>& Renderer) const override;
 
@@ -25,5 +26,7 @@ public:
 private:
 	FColor FontColor{ 255, 255, 255, 255 };
 	int8 Direction{ -2 };
+
+	void Close(EInputEvent KeyEvent);
 };
 

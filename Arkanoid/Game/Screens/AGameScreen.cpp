@@ -7,10 +7,12 @@
 //
 
 #include "Screens/AGameScreen.h"
+#include "Screens/AScreensManager.h"
 
 #include "Objects/ALevel.h"
 #include "UI/AGameUI.h"
 
+#include "SDL_keycode.h"
 
 AGameScreen::AGameScreen(const TSharedPtr<class AScreensManager>& InOwner) : AScreenState(InOwner)
 {
@@ -35,6 +37,22 @@ void AGameScreen::Init()
 		GameConfig::WindowHeight - 2.0f * GameConfig::BorderSize });
 
 	CurrentLevel->Init();
+	CurrentLevel->SetupPlayerInput(shared_from_this());
+
+	BindKey(SDLK_ESCAPE, std::bind(&AGameScreen::Pause, this, _1));
+}
+
+void AGameScreen::OnWindowsLostFocus()
+{
+	Owner->RequestScreenTransition(static_cast<int32>(GameConfig::EScreenTypes::PauseScreen));
+}
+
+void AGameScreen::Pause(EInputEvent KeyEvent)
+{
+	if (KeyEvent == EInputEvent::Pressed)
+	{
+		Owner->RequestScreenTransition(static_cast<int32>(GameConfig::EScreenTypes::PauseScreen));
+	}
 }
 
 void AGameScreen::Update(float DeltaTime)

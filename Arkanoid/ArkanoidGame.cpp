@@ -30,10 +30,10 @@ bool ArkanoidGame::Init()
 {
 	if (MainWindow->CreateWindow(GameConfig::WindowTitle, GameConfig::WindowWidth, GameConfig::WindowHeight))
 	{
-		ScreensManager = std::make_shared<AScreensManager>(FScreensCreator());
-		MainWindow->SetMessageHandler(ScreensManager);
+		ScreensManager = std::make_shared<AScreensManager>(std::make_shared<FScreensCreator>());
+		ScreensManager->RequestScreenTransition(static_cast<int32>(GameConfig::EScreenTypes::MainScreen));
 
-		ScreensManager->Init();
+		MainWindow->SetMessageHandler(ScreensManager);
 		MainWindow->Show();
 
 		return true;

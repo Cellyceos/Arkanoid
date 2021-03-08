@@ -111,12 +111,20 @@ bool SDLWindow::HandleEvents()
 				if (Event.window.windowID == WindowID)
 				{
 					bHasFocus = true;
+					if (MessageHandler)
+					{
+						MessageHandler->OnWindowsFocusGained();
+					}
 				}
 				break;
 			case SDL_WINDOWEVENT_FOCUS_LOST:
 				if (Event.window.windowID == WindowID)
 				{
 					bHasFocus = false;
+					if (MessageHandler)
+					{
+						MessageHandler->OnWindowsFocusLost();
+					}
 				}
 				break;
 			}

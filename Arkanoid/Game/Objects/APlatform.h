@@ -16,14 +16,15 @@ public:
 	APlatform();
 	virtual ~APlatform();
 
-	virtual void SetupPlayerInput(const TSharedPtr<class IInputComponent>& InputComponent) override;
+	virtual void SetupPlayerInput(const TSharedPtr<class IInputHandler>& InputComponent) override;
 
 	virtual void Update(float DeltaTime) override;
 	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const override;
 
 protected:
-	void Move(float Direction);
-	void ReleaseBall();
+	void MoveLeft(EInputEvent KeyEvent);
+	void MoveRight(EInputEvent KeyEvent);
+	void ReleaseBall(EInputEvent KeyEvent);
 
 private:
 	float Speed = 500.0f;

@@ -16,7 +16,7 @@ public:
 	AObject() = default;
 	virtual ~AObject() = default;
 
-	virtual void SetupPlayerInput(const TSharedPtr<class IInputComponent>& InputComponent) { }
+	virtual void SetupPlayerInput(const TSharedPtr<class IInputHandler>& InputComponent) { }
 
 	virtual void Update(float DeltaTime) { }
 	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const = 0;

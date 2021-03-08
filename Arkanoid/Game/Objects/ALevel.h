@@ -18,6 +18,8 @@ public:
 
 	void Init();
 
+	virtual void SetupPlayerInput(const TSharedPtr<class IInputHandler>& InputComponent) override;
+
 	virtual void Update(float DeltaTime) override;
 	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const override;
 
