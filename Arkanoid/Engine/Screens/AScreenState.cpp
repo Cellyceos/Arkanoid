@@ -7,17 +7,27 @@
 //
 
 #include "Screens/AScreenState.h"
+#include "Screens/AScreensManager.h"
 
 void AScreenState::Enter()
 {
-
+	bIsEntered = true;
+	bIsExited = false;
 }
 
 void AScreenState::Exit()
 {
-
+	bIsEntered = false;
+	bIsExited = true;
 }
 
+void AScreenState::RequestTransition(int32 ScreenId)
+{
+	if (!Owner.expired())
+	{
+		Owner.lock()->RequestScreenTransition(ScreenId);
+	}
+}
 
 /// Begin IInputHandler
 void AScreenState::BindKey(int32 KeyCode, FInputDelegate Func)

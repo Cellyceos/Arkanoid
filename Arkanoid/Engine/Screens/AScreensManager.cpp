@@ -17,6 +17,11 @@ AScreensManager::AScreensManager(const TSharedPtr<IScreensCreator>& InScreensCre
 	ActiveScreens.reserve(ScreensCreator->GetScreensCount());
 }
 
+AScreensManager::~AScreensManager()
+{
+	SDL_Log("~AScreensManager\n");
+}
+
 void AScreensManager::Update(float DeltaTime)
 {
 	if (RequestScreenId != IScreensCreator::InvalidRequestId)
@@ -60,11 +65,13 @@ void AScreensManager::TransitState()
 		{
 			break;
 		}
+
+		(*EndIter)->Exit();
 	}
 
 	if (EndIter == ActiveScreens.end())
 	{
-		auto NewScreen = (*ScreensCreator)(shared_from_this(), RequestScreenId);
+		auto NewScreen = (*ScreensCreator)(weak_from_this(), RequestScreenId);
 		NewScreen->Enter();
 
 		ActiveScreens.insert(ActiveScreens.begin(), NewScreen);

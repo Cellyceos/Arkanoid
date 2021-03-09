@@ -124,10 +124,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ALevelManager.cpp" />
     <ClCompile Include="Engine\AObject.cpp" />
     <ClCompile Include="Engine\FixedFrameRate.cpp" />
     <ClCompile Include="Engine\Screens\AScreenState.cpp" />
     <ClCompile Include="Engine\Screens\AScreensManager.cpp" />
+    <ClCompile Include="Game\AScoreManager.cpp" />
     <ClCompile Include="Game\Screens\FScreenCreator.cpp" />
     <ClCompile Include="Game\Objects\ABall.cpp" />
     <ClCompile Include="Game\Objects\ABlock.cpp" />
@@ -139,7 +141,6 @@
     <ClCompile Include="Engine\SDL\SDLRenderer.cpp" />
     <ClCompile Include="Engine\SDL\SDLWindow.cpp" />
     <ClCompile Include="Game\Screens\AGameScreen.cpp" />
-    <ClCompile Include="Game\UI\AGameUI.cpp" />
     <ClCompile Include="Game\Screens\AMainScreen.cpp" />
     <ClCompile Include="Game\Screens\APauseScreen.cpp" />
     <ClCompile Include="Game\Screens\AScoreScreen.cpp" />
@@ -152,6 +153,8 @@
     <ClInclude Include="Engine\Interfaces\IScreensCreator.h" />
     <ClInclude Include="Engine\Screens\AScreenState.h" />
     <ClInclude Include="Engine\Screens\AScreensManager.h" />
+    <ClInclude Include="Game\ALevelManager.h" />
+    <ClInclude Include="Game\AScoreManager.h" />
     <ClInclude Include="Game\Screens\FScreensCreator.h" />
     <ClInclude Include="Game\Objects\ABall.h" />
     <ClInclude Include="Game\Objects\ABlock.h" />
@@ -164,7 +167,6 @@
     <ClInclude Include="Game\Objects\ALevel.h" />
     <ClInclude Include="Game\Objects\APlatform.h" />
     <ClInclude Include="Game\Screens\AGameScreen.h" />
-    <ClInclude Include="Game\UI\AGameUI.h" />
     <ClInclude Include="Game\Screens\AMainScreen.h" />
     <ClInclude Include="Game\Screens\APauseScreen.h" />
     <ClInclude Include="Game\Screens\AScoreScreen.h" />

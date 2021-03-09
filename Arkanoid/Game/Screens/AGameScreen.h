@@ -15,11 +15,12 @@
 class AGameScreen : public AScreenState
 {
 public:
-	AGameScreen(const TSharedPtr<class AScreensManager>& InOwner);
+	AGameScreen(const TWeakPtr<class AScreensManager>& InOwner);
 	virtual ~AGameScreen();
 
 	virtual void Init() override;
-	
+	virtual void Enter() override;
+
 	virtual void Update(float DeltaTime) override;
 	virtual void Draw(const TSharedPtr<ARendererClass>& Renderer) const override;
 
@@ -29,12 +30,11 @@ public:
 	virtual void OnWindowsLostFocus() override;
 
 protected:
-	TUniquePtr<class ALevel> CurrentLevel = nullptr;
-	TUniquePtr<class AGameUI> UI = nullptr;
+	TSharedPtr<class ALevel> CurrentLevel = nullptr;
 	
-	FColor TestColor;
-
 private:
+	FRect Rect;
+
 	void Pause(EInputEvent KeyEvent);
 };
 

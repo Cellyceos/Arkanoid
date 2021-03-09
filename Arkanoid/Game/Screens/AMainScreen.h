@@ -15,7 +15,8 @@
 class AMainScreen : public AScreenState
 {
 public:
-	AMainScreen(const TSharedPtr<class AScreensManager>& InOwner);
+	AMainScreen(const TWeakPtr<class AScreensManager>& InOwner);
+	virtual ~AMainScreen();
 
 	virtual void Init() override;
 	virtual void Update(float DeltaTime) override;

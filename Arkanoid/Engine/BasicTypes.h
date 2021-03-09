@@ -93,6 +93,13 @@ struct FAABB
 {
 	FPoint Center;
 	TFixedArray<float, 2> Radius{ 0.0f, 0.0f };
+
+	bool Test(const FAABB& Other) const
+	{
+		if (std::fabsf(Center.X - Other.Center.X) > (Radius[0] + Other.Radius[0])) return false;
+		if (std::fabsf(Center.Y - Other.Center.Y) > (Radius[1] + Other.Radius[1])) return false;
+		return true;
+	}
 };
 
 enum class EInputEvent

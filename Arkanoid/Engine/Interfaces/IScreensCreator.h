@@ -16,5 +16,5 @@ struct IScreensCreator
     static constexpr int32 InvalidRequestId{ -1 };
 
     virtual int32 GetScreensCount() const { return 0; }
-    virtual TSharedPtr<AScreenState> operator ()(const TSharedPtr<class AScreensManager>& Owner, int32 StateID) const { return nullptr; }
+    virtual TSharedPtr<AScreenState> operator ()(const TWeakPtr<class AScreensManager>& Owner, int32 StateID) const { return nullptr; }
 };

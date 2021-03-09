@@ -15,4 +15,6 @@
 #ifdef USE_SDL
 #include "SDL/SDLWindow.h"
 #include "SDL/SDLRenderer.h"
+
+#include "SDL_log.h"
 #endif // USE_SDL

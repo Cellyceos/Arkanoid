@@ -14,7 +14,7 @@
 class AScreenState : public IInputHandler
 {
 public:
-	AScreenState(const TSharedPtr<class AScreensManager>& InOwner) : Owner(InOwner) { }
+	AScreenState(const TWeakPtr<class AScreensManager>& InOwner) : Owner(InOwner) { }
 	virtual ~AScreenState() = default;
 
 	virtual int32 GetId() const = 0;
@@ -33,8 +33,18 @@ public:
 	virtual void OnWindowsGainFocus() {}
 	virtual void OnWindowsLostFocus() {}
 
+	virtual void RequestTransition(int32 ScreenId);
+
+	bool IsEntered() const { return bIsEntered; }
+	bool IsExited() const { return bIsExited; }
+
 protected:
-	TSharedPtr<class AScreensManager> Owner = nullptr;
+	TWeakPtr<class AScreensManager> Owner;
+	const FColor TextColor{ 255, 255, 255, 255 };
+
+private:
+	bool bIsEntered = false;
+	bool bIsExited = false;
 
 /// Begin IInputHandler
 public:

@@ -30,15 +30,29 @@ public:
 	virtual FSize GetSize() const { return Size; }
 	virtual void SetSize(const FSize& NewSize);
 
-	virtual void SetPosition(const FPoint& NewPos) { Position = NewPos; }
+	virtual void SetPosition(const FPoint& NewPos);
 	virtual FPoint GetPosition() const { return Position; }
+
+	virtual void OnCollisionEnter(const TSharedPtr<AObject>& Col) {}
 
 	virtual void SetCenterPoint(const FPoint& Point);
 	virtual FPoint GetCenterPoint() const { return Aabb.Center; }
 
 	virtual FAABB GetAABB() const { return Aabb; }
 
+	virtual void AttachTo(const TWeakPtr<AObject>& Parent);
+	virtual void Detach();
+
+	virtual void SetParent(const TWeakPtr<AObject>& InParent) { Parent = InParent; }
+	virtual void SetChild(const TWeakPtr<AObject>& InChild) { Child = InChild; }
+	virtual void FreeChild();
+
+	virtual bool ShouldBeDestroyed() const { return false; }
+
 protected:
+	TWeakPtr<AObject> Parent;
+	TWeakPtr<AObject> Child;
+
 	FPoint Position;
 	FSize Size;
 	FAABB Aabb;

@@ -16,7 +16,7 @@ class AScreensManager : public IMessageHandler, public std::enable_shared_from_t
 {
 public:
     AScreensManager(const TSharedPtr<IScreensCreator>& ScreensCreator);
-	~AScreensManager() = default;
+	virtual ~AScreensManager();
 
     void Update(float DeltaTime);
     void Draw(const TSharedPtr<ARendererClass>& Renderer) const;

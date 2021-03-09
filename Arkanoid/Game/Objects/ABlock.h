@@ -22,27 +22,35 @@ enum class EBlockType
 	Pink,
 	Yellow,
 	Silver,
-	Gold
+	Gold,
+	Count,
 };
 
 class ABlock : public AObject
 {
 public:
 	ABlock(EBlockType Type);
+	virtual ~ABlock();
 
-	virtual void Update(float DeltaTime) override;
 	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const override;
+
+	virtual void OnCollisionEnter(const TSharedPtr<AObject>& Col) override;
+	virtual bool ShouldBeDestroyed() const override { return Settings.Healh == 0; }
+
+	EBlockType GetBlockId() const { return Settings.Type; }
+	uint8 GetScore() const { return Settings.Score; }
 
 private:
 	struct FBlockSettings
 	{
+		EBlockType Type;
 		uint8 Healh;
 		uint8 Score;
 		FColor MainColor;
 		FColor SecondColor;
 	};
 
-	static TUnorderedMap<EBlockType, FBlockSettings> BlockTypes;
+	static TFixedArray<const FBlockSettings, static_cast<int32>(EBlockType::Count)> BlockTypes;
 	FBlockSettings Settings;
 };
 

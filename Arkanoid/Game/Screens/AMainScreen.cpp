@@ -11,10 +11,16 @@
 
 #include "SDL_events.h"
 
-AMainScreen::AMainScreen(const TSharedPtr<class AScreensManager>& InOwner) : AScreenState(InOwner)
+AMainScreen::AMainScreen(const TWeakPtr<class AScreensManager>& InOwner) : AScreenState(InOwner)
 {
 
 }
+
+AMainScreen::~AMainScreen()
+{
+	SDL_Log("~AMainScreen\n");
+}
+
 void AMainScreen::Init()
 {
 	BindKey(SDLK_RETURN, std::bind(&AMainScreen::StartGame, this, _1));
@@ -25,7 +31,7 @@ void AMainScreen::StartGame(EInputEvent KeyEvent)
 {
 	if (KeyEvent == EInputEvent::Pressed)
 	{
-		Owner->RequestScreenTransition(static_cast<int32>(GameConfig::EScreenTypes::GameScreen));
+		RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::GameScreen));
 	}
 }
 
@@ -33,7 +39,10 @@ void AMainScreen::Quit(EInputEvent KeyEvent)
 {
 	if (KeyEvent == EInputEvent::Pressed)
 	{
-		Owner->RequestToQuit();
+		if (!Owner.expired())
+		{
+			Owner.lock()->RequestToQuit();
+		}
 	}
 }
 
@@ -45,9 +54,9 @@ void AMainScreen::Update(float DeltaTime)
 void AMainScreen::Draw(const TSharedPtr<ARendererClass>& Renderer) const
 {
 	const FPoint Center{ GameConfig::WindowWidth * 0.5f, GameConfig::WindowHeight * 0.5 };
-	Renderer->SetFont("Assets/Ancient Medium.ttf", 170);
+	Renderer->SetFont(GameConfig::AncientFont, 170);
 	Renderer->DrawText("Arkanoid", Center, ETextJustify::CenteredBottom, { 255, 255, 255, 255 });
 
-	Renderer->SetFont("Assets/Open Sans.ttf", 30);
+	Renderer->SetFont(GameConfig::OpenSansFont, 30);
 	Renderer->DrawText("Press Enter to Start", Center, ETextJustify::CenteredTop, FontColor);
 }

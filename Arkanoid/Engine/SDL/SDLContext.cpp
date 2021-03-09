@@ -32,6 +32,7 @@ SDLContext::SDLContext()
 
 SDLContext::~SDLContext()
 {
+	SDL_Log("~SDLContext\n");
 	TTF_Quit();
 	SDL_Quit();
 }

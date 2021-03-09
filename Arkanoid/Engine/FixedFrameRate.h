@@ -34,7 +34,7 @@ private:
 
 	static constexpr std::chrono::nanoseconds OneSecond{ std::chrono::seconds(1) };
 
-	mutable std::chrono::nanoseconds DeltaTime;
-	mutable std::chrono::time_point<std::chrono::high_resolution_clock> TimeStamp;
+	mutable std::chrono::nanoseconds DeltaTime{ std::chrono::nanoseconds::zero() };
+	mutable std::chrono::time_point<std::chrono::high_resolution_clock> TimeStamp{  };
 };
 

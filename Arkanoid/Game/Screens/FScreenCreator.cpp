@@ -18,7 +18,7 @@ int32 FScreensCreator::GetScreensCount() const
 	return static_cast<int32>(GameConfig::EScreenTypes::ScoreScreen) + 1;
 }
 
-TSharedPtr<AScreenState> FScreensCreator::operator ()(const TSharedPtr<class AScreensManager>& Owner, int32 StateID) const
+TSharedPtr<AScreenState> FScreensCreator::operator ()(const TWeakPtr<class AScreensManager>& Owner, int32 StateID) const
 {
 	TSharedPtr<AScreenState> NewScreen = nullptr;
 	switch (static_cast<GameConfig::EScreenTypes>(StateID))

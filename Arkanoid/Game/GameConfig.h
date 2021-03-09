@@ -19,6 +19,12 @@ public:
 	static constexpr float LevelRatio{ 2.0f/3.0f };
 	static constexpr float UserInterfaceRatio{ 1.0f/3.0f };
 
+	static constexpr FStringView AncientFont{ "Assets/Ancient Medium.ttf" };
+	static constexpr FStringView OpenSansFont{ "Assets/Open Sans.ttf" };
+
+	static constexpr int64 ColNum = 11;
+	static constexpr int64 RowNum = 28;
+
 	enum class EScreenTypes
 	{
 		Unknown,

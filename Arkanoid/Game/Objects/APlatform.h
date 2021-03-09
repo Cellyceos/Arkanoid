@@ -21,6 +21,8 @@ public:
 	virtual void Update(float DeltaTime) override;
 	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const override;
 
+	virtual void OnCollisionEnter(const TSharedPtr<AObject>& Col) override;
+
 protected:
 	void MoveLeft(EInputEvent KeyEvent);
 	void MoveRight(EInputEvent KeyEvent);

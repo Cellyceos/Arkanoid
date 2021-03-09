@@ -10,8 +10,8 @@
 
 void AObject::SetRect(const FRect& Rect) 
 { 
-	Position = { Rect.X, Rect.Y }; 
-	Size = { Rect.Width, Rect.Height }; 
+	SetSize({ Rect.Width, Rect.Height });
+	SetPosition({ Rect.X, Rect.Y });
 }
 
 void AObject::SetSize(const FSize& NewSize) 
@@ -20,8 +20,34 @@ void AObject::SetSize(const FSize& NewSize)
 	Aabb.Radius = { NewSize.Width * 0.5f, NewSize.Height * 0.5f };
 }
 
+void AObject::SetPosition(const FPoint& NewPos)
+{ 
+	Position = NewPos; 
+	Aabb.Center = { Position.X + Aabb.Radius[0], Position.Y + Aabb.Radius[1] };
+}
+
 void AObject::SetCenterPoint(const FPoint& Point) 
 { 
 	Position = { Point.X - Aabb.Radius[0], Point.Y - Aabb.Radius[1] };
 	Aabb.Center = Point;
+}
+
+void AObject::AttachTo(const TWeakPtr<AObject>& Parent)
+{
+	Parent.lock()->SetChild(weak_from_this());
+	SetParent(Parent);
+}
+
+void AObject::Detach()
+{
+	if (!Parent.expired())
+	{
+		Parent.lock()->FreeChild();
+		Parent.reset();
+	}
+}
+
+void AObject::FreeChild()
+{
+	Child.reset();
 }

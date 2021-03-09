@@ -30,9 +30,6 @@
     <Filter Include="Source Files\Game\Screens">
       <UniqueIdentifier>{2b45bb57-83a5-4eca-8921-d4f31199a049}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\UI">
-      <UniqueIdentifier>{255ee906-82b3-40c3-945e-f7e843d90b34}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine\Screens">
       <UniqueIdentifier>{78be42b1-4ee3-4bfb-b5bc-bb61231aa5c8}</UniqueIdentifier>
     </Filter>
@@ -55,9 +52,6 @@
     </ClCompile>
     <ClCompile Include="ArkanoidGame.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\UI\AGameUI.cpp">
-      <Filter>Source Files\Game\UI</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
@@ -98,6 +92,12 @@
     <ClCompile Include="Engine\AObject.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Game\AScoreManager.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="ALevelManager.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\SDL\SDLWindow.h">
@@ -123,9 +123,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Interfaces\IMessageHendler.h">
       <Filter>Source Files\Engine\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\UI\AGameUI.h">
-      <Filter>Source Files\Game\UI</Filter>
     </ClInclude>
     <ClInclude Include="Engine\BasicTypes.h">
       <Filter>Source Files\Engine</Filter>
@@ -170,6 +167,12 @@
       <Filter>Source Files\Engine\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Game\GameConfig.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\AScoreManager.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ALevelManager.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
   </ItemGroup>

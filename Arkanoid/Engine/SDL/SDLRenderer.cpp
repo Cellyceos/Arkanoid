@@ -39,6 +39,7 @@ SDLRenderer::SDLRenderer(SDL_Renderer* Renderer) : NativeRenderer(Renderer)
 
 SDLRenderer::~SDLRenderer()
 {
+	SDL_Log("~SDLRenderer\n");
 	for (auto& [FontKey, Font] : FontNameCache)
 	{
 		TTF_CloseFont(Font);

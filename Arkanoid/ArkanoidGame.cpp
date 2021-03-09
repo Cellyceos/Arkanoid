@@ -14,7 +14,7 @@
 #include "Engine/Screens/AScreensManager.h"
 
 #include "Game/GameConfig.h"
-
+#include "ALevelManager.h"
 
 ArkanoidGame::ArkanoidGame()
 {
@@ -23,7 +23,11 @@ ArkanoidGame::ArkanoidGame()
 
 ArkanoidGame::~ArkanoidGame()
 {
+	SDL_Log("~ArkanoidGame\n");
+	MainWindow->SetMessageHandler(nullptr);
 	MainWindow = nullptr;
+
+	ScreensManager = nullptr;
 }
 
 bool ArkanoidGame::Init()
@@ -34,8 +38,11 @@ bool ArkanoidGame::Init()
 		ScreensManager->RequestScreenTransition(static_cast<int32>(GameConfig::EScreenTypes::MainScreen));
 
 		MainWindow->SetMessageHandler(ScreensManager);
-		MainWindow->Show();
 
+		// Load Levels
+		ALevelManager::Get();
+
+		MainWindow->Show();
 		return true;
 	}
 
@@ -51,6 +58,7 @@ int32 ArkanoidGame::Loop()
 		ScreensManager->Draw(MainWindow->GetRenderer());
 
 		FixedFrameRate.WaitForFixedRate();
+		printf("FPS: %lld\n", FixedFrameRate.GetCurrentFrameRate());
 	}
 
 	return 0;

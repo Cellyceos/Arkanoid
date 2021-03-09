@@ -11,71 +11,60 @@
 #include "Objects/ABlock.h"
 #include "Objects/APlatform.h"
 
-
-TFixedArray<uint16, ALevel::ColNum * ALevel::RowNum> ALevel::Level{
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 
-	5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
-	6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 
-	2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-	7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 
-	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
-};
+#include "Game/AScoreManager.h"
+#include "Game/ALevelManager.h"
 
 
 ALevel::ALevel()
 {
-	Platform = std::make_unique<APlatform>();
-	Ball = std::make_unique<ABall>();
+	Platform = std::make_shared<APlatform>();
+	Ball = std::make_shared<ABall>();
 }
 
 ALevel::~ALevel()
 {
-
+	AScoreManager::Get().FinishGame();
 }
 
-void ALevel::Init()
+bool ALevel::StartGame(int32 InLevel /* = 1 */)
 {
-	Platform->SetCenterPoint({ Position.X + Size.Width * 0.5f, Size.Height - Platform->GetHeight() });
-	Ball->SetCenterPoint({ Position.X + Size.Width * 0.5f, Size.Height - Platform->GetHeight() - Ball->GetHeight() });
+	ALevelManager& LevelManager = ALevelManager::Get();
+	if (InLevel > LevelManager.GetLevelCount())
+	{
+		return false;
+	}
+
+	Level = InLevel;
+
+	Platform->SetCenterPoint({ Position.X + Aabb.Radius[0], Size.Height - Platform->GetHeight() });
+	Ball->SetCenterPoint({ Position.X + Aabb.Radius[0], Size.Height - Platform->GetHeight() - Ball->GetHeight() });
+	Ball->AttachTo(Platform);
 
 	const float Offset = 2.0;
 	const float X = Position.X + BorderSize + Offset;
 	const float Y = Position.Y + BorderSize + Offset;
-	const float BrickWidth = (Size.Width - 2.0f * BorderSize - Offset) / ColNum;
-	const float BrickHeight = (Size.Height - 2.0f * BorderSize - Offset) / RowNum;
+	const float BrickWidth = (Size.Width - 2.0f * BorderSize - Offset) / GameConfig::ColNum;
+	const float BrickHeight = (Size.Height - 2.0f * BorderSize - Offset) / GameConfig::RowNum;
 
-	for (uint64 Idx = 0ll; Idx < Level.size(); Idx++)
+	const auto& LevelSchema = LevelManager.GetLevelSchema(Level);
+	for (uint64 Idx = 0ll; Idx < GameConfig::ColNum * GameConfig::RowNum; Idx++)
 	{
-		const EBlockType BlockType = static_cast<EBlockType>(Level[Idx]);
+		const EBlockType BlockType = static_cast<EBlockType>(LevelSchema[Idx]);
 		if (BlockType != EBlockType::Unknown)
 		{
-			auto Block = std::make_unique<ABlock>(BlockType);
-			Block->SetRect({ (X + (Idx % ColNum) * BrickWidth), (Y + (Idx / ColNum) * BrickHeight), BrickWidth - Offset, BrickHeight - Offset });
-			StaticObjects[Idx] = std::move(Block);
+			auto Block = std::make_shared<ABlock>(BlockType);
+			Block->SetRect({ (X + (Idx % GameConfig::ColNum) * BrickWidth), (Y + (Idx / GameConfig::ColNum) * BrickHeight), BrickWidth - Offset, BrickHeight - Offset });
+			StaticObjects[Idx] = Block;
+			++AliveBlocksCount;
 		}
 	}
+
+	return true;
+}
+
+void ALevel::SetRect(const FRect& Rect)
+{
+	AObject::SetRect({ Rect.X + BorderSize, Rect.Y + BorderSize, Rect.Width - 2.0f * BorderSize, Rect.Height - 2.0f * BorderSize });
 }
 
 void ALevel::SetupPlayerInput(const TSharedPtr<class IInputHandler>& InputHandler)
@@ -85,42 +74,85 @@ void ALevel::SetupPlayerInput(const TSharedPtr<class IInputHandler>& InputHandle
 
 void ALevel::Update(float DeltaTime)
 {
-	for (const auto& Obj : StaticObjects)
-	{
-		if (Obj)
-		{
-			Obj->Update(DeltaTime);
-		}
-	}
-
-	for (const auto& Obj : DynamicObjects)
-	{
-		if (Obj)
-		{
-			Obj->Update(DeltaTime);
-		}
-	}
-
 	Platform->Update(DeltaTime);
+	ShouldBeInside(Platform);
+
+	Ball->Update(DeltaTime);
+	ShouldBeInside(Ball);
+
+	if (Ball->ShouldBeDestroyed())
+	{
+		Platform->SetCenterPoint({ Position.X + Aabb.Radius[0], Size.Height - Platform->GetHeight() });
+		Ball->SetCenterPoint({ Position.X + Aabb.Radius[0], Size.Height - Platform->GetHeight() - Ball->GetHeight() });
+		Ball->AttachTo(Platform);
+		--CurrentLives;
+	}
+
+	CheckCollision();
 }
+
+void ALevel::CheckCollision()
+{
+	const FAABB& BallAabb = Ball->GetAABB();
+	if (BallAabb.Test(Platform->GetAABB()))
+	{
+		Ball->OnCollisionEnter(Platform);
+		Platform->OnCollisionEnter(Ball);
+		return;
+	}
+
+	for (auto& Obj : StaticObjects)
+	{
+		if (Obj && BallAabb.Test(Obj->GetAABB()))
+		{
+			Obj->OnCollisionEnter(Ball);
+			Ball->OnCollisionEnter(Obj);
+
+			if (Obj->ShouldBeDestroyed())
+			{
+				int32 Score = Obj->GetScore();
+				if (Obj->GetBlockId() == EBlockType::Silver)
+				{
+					Score *= Level;
+				}
+
+				AScoreManager::Get().UpdateScore(Score);
+				--AliveBlocksCount;
+				Obj.reset();
+			}
+
+			break;
+		}
+	}
+}
+
+void ALevel::ShouldBeInside(TSharedPtr<AObject> Obj)
+{
+	const FAABB& ObjAABB = Obj->GetAABB();
+	const float HalfWidth = ObjAABB.Radius[0];
+	const float HalfHeight = ObjAABB.Radius[1];
+
+	const bool bColided = ((ObjAABB.Center.X - HalfWidth) < Position.X) ||
+		((ObjAABB.Center.X + HalfWidth) > (Position.X + Size.Width)) ||
+		((ObjAABB.Center.Y - HalfHeight) < Position.Y) ||
+		((ObjAABB.Center.Y + HalfHeight) > (Position.Y + Size.Height));
+
+	if (bColided)
+	{
+		Obj->OnCollisionEnter(shared_from_this());
+	}
+}
+
 
 void ALevel::Draw(const TSharedPtr<SDLRenderer>& Renderer) const
 {
 	Renderer->SetColor(BorderColor);
-	Renderer->FillRect({ Position.X, Position.Y, BorderSize, Size.Height });
-	Renderer->FillRect({ Position.X, Position.Y, Size.Width, BorderSize });
-	Renderer->FillRect({ Position.X + Size.Width - BorderSize, Position.Y, BorderSize, Size.Height });
-	Renderer->FillRect({ Position.X, Position.Y + Size.Height - BorderSize, Size.Width, BorderSize });
+	Renderer->FillRect({ Position.X - BorderSize, Position.Y - BorderSize, BorderSize, Size.Height + 2.0f * BorderSize });
+	Renderer->FillRect({ Position.X - BorderSize, Position.Y - BorderSize, Size.Width + 2.0f * BorderSize, BorderSize });
+	Renderer->FillRect({ Position.X + Size.Width, Position.Y - BorderSize, BorderSize, Size.Height + 2.0f * BorderSize });
+	Renderer->FillRect({ Position.X - BorderSize, Position.Y + Size.Height, Size.Width + 2.0f * BorderSize, BorderSize });
 
 	for (const auto& Obj : StaticObjects)
-	{
-		if (Obj)
-		{
-			Obj->Draw(Renderer);
-		}
-	}
-
-	for (const auto& Obj : DynamicObjects)
 	{
 		if (Obj)
 		{
