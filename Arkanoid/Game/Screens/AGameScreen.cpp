@@ -39,12 +39,9 @@ void AGameScreen::Init()
 	CurrentLevel->SetupPlayerInput(shared_from_this());
 
 	BindKey(SDLK_ESCAPE, std::bind(&AGameScreen::Pause, this, _1));
-}
 
-void AGameScreen::Enter()
-{
+	AScoreManager::Get().StartGame();
 	CurrentLevel->StartGame();
-	AScreenState::Enter();
 }
 
 void AGameScreen::OnWindowsLostFocus()

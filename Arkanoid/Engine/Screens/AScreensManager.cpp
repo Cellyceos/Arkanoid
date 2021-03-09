@@ -65,16 +65,11 @@ void AScreensManager::TransitState()
 		{
 			break;
 		}
-
-		(*EndIter)->Exit();
 	}
 
 	if (EndIter == ActiveScreens.end())
 	{
-		auto NewScreen = (*ScreensCreator)(weak_from_this(), RequestScreenId);
-		NewScreen->Enter();
-
-		ActiveScreens.insert(ActiveScreens.begin(), NewScreen);
+		ActiveScreens.insert(ActiveScreens.begin(), (*ScreensCreator)(weak_from_this(), RequestScreenId));
 	}
 	else
 	{

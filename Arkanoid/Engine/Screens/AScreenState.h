@@ -20,8 +20,6 @@ public:
 	virtual int32 GetId() const = 0;
 
 	virtual void Init() { }
-	virtual void Enter();
-	virtual void Exit();
 
 	virtual void Update(float DeltaTime) { }
 	virtual void Draw(const TSharedPtr<ARendererClass>& Renderer) const = 0;
@@ -35,16 +33,9 @@ public:
 
 	virtual void RequestTransition(int32 ScreenId);
 
-	bool IsEntered() const { return bIsEntered; }
-	bool IsExited() const { return bIsExited; }
-
 protected:
 	TWeakPtr<class AScreensManager> Owner;
 	const FColor TextColor{ 255, 255, 255, 255 };
-
-private:
-	bool bIsEntered = false;
-	bool bIsExited = false;
 
 /// Begin IInputHandler
 public:
