@@ -68,6 +68,7 @@ void ABall::AttachTo(const TWeakPtr<AObject>& Parent)
 {
 	AObject::AttachTo(Parent);
 	bShouldBeDestroed = false;
+	Direction = { 0.0f, 1.0f };
 }
 
 void ABall::Draw(const TSharedPtr<SDLRenderer>& Renderer) const

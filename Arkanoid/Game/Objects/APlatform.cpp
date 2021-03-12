@@ -96,28 +96,13 @@ void APlatform::OnCollisionEnter(const TSharedPtr<AObject>& Col)
 {
 	if (std::dynamic_pointer_cast<ALevel>(Col))
 	{
-		const FPoint& ObjPos = Col->GetPosition();
-		const float HalfWidth = Aabb.Radius[0];
-		FPoint Center{ Aabb.Center };
-
-		if ((Aabb.Center.X - HalfWidth) < ObjPos.X)
-		{
-			Center.X = ObjPos.X + HalfWidth;
-		}
-		else if ((Aabb.Center.X + HalfWidth) > (ObjPos.X + Col->GetWidth()))
-		{
-			Center.X = ObjPos.X + Col->GetWidth() - HalfWidth;
-		}
-
-		SetCenterPoint(Center);
-
 		if (!Child.expired())
 		{
 			const auto& LockedChild = Child.lock();
-			const FPoint& ChildCenter = LockedChild->GetCenterPoint();
-			Center.Y = ChildCenter.Y;
+			FPoint ChildCenter = LockedChild->GetCenterPoint();
+			ChildCenter.X = Aabb.Center.X;
 
-			LockedChild->SetCenterPoint(Center);
+			LockedChild->SetCenterPoint(ChildCenter);
 		}
 	}
 }

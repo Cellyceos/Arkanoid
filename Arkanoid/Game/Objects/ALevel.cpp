@@ -101,8 +101,9 @@ void ALevel::CheckCollision()
 		return;
 	}
 
-	for (auto& Obj : StaticObjects)
+	for (auto ObjIter = StaticObjects.rbegin(); ObjIter != StaticObjects.rend(); ++ObjIter)
 	{
+		auto& Obj = *ObjIter;
 		if (Obj && BallAabb.Test(Obj->GetAABB()))
 		{
 			Obj->OnCollisionEnter(Ball);
@@ -126,19 +127,44 @@ void ALevel::CheckCollision()
 	}
 }
 
-void ALevel::ShouldBeInside(TSharedPtr<AObject> Obj)
+void ALevel::ShouldBeInside(const TSharedPtr<AObject>& Obj)
 {
+	bool bCollided = false;
+
 	const FAABB& ObjAABB = Obj->GetAABB();
+	FPoint Center{ ObjAABB.Center };
+
 	const float HalfWidth = ObjAABB.Radius[0];
 	const float HalfHeight = ObjAABB.Radius[1];
 
-	const bool bColided = ((ObjAABB.Center.X - HalfWidth) < Position.X) ||
-		((ObjAABB.Center.X + HalfWidth) > (Position.X + Size.Width)) ||
-		((ObjAABB.Center.Y - HalfHeight) < Position.Y) ||
-		((ObjAABB.Center.Y + HalfHeight) > (Position.Y + Size.Height));
+	const float Right = Position.X + Size.Width;
+	const float Bottom = Position.Y + Size.Height;
 
-	if (bColided)
+	if ((ObjAABB.Center.X - HalfWidth) < Position.X)
 	{
+		Center.X = Position.X + HalfWidth;
+		bCollided = true;
+	}
+	else if ((ObjAABB.Center.X + HalfWidth) > Right)
+	{
+		Center.X = Right - HalfWidth;
+		bCollided = true;
+	}
+
+	if ((ObjAABB.Center.Y - HalfHeight) < Position.Y)
+	{
+		Center.Y = Position.Y + HalfHeight;
+		bCollided = true;
+	}
+	else if ((ObjAABB.Center.Y + HalfHeight) >= Bottom)
+	{
+		Center.Y = Bottom - HalfHeight;
+		bCollided = true;
+	}
+
+	if (bCollided)
+	{
+		Obj->SetCenterPoint(Center);
 		Obj->OnCollisionEnter(shared_from_this());
 	}
 }

@@ -45,6 +45,6 @@ private:
 	const float BorderSize{ 5.0f };
 
 	void CheckCollision();
-	void ShouldBeInside(TSharedPtr<AObject> Obj);
+	void ShouldBeInside(const TSharedPtr<AObject>&);
 };
 
