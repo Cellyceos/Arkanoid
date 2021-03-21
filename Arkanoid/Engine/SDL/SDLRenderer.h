@@ -8,10 +8,11 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "BasicTypes.h"
+#include "SDL/SDLSurface.h"
 
 
-enum class ETextJustify {
+enum class EJustify {
 	LeftTop,
 	LeftMiddle, 
 	LeftBottom,
@@ -23,6 +24,7 @@ enum class ETextJustify {
 	RightBottom
 };
 
+#ifdef USE_SDL_TTF
 struct FFontKey
 {
 	FStringView FontName;
@@ -38,6 +40,8 @@ struct FFontKey
 		return Left.FontSize > Right.FontSize && Left.FontName < Right.FontName;
 	}
 };
+#endif // USE_SDL_TTF
+
 
 class SDLRenderer
 {
@@ -51,7 +55,6 @@ public:
 	virtual void Present();
 
 	virtual void SetColor(const FColor& Color);
-	virtual void SetFont(const FStringView& FontName, const int32 FontSize);
 
 	// Rectangle
 	virtual void DrawRect(const FRect& Rect);
@@ -61,18 +64,29 @@ public:
 	virtual void DrawCircle(const FPoint& Center, float Radius);
 	virtual void FillCircle(const FPoint& Center, float Radius);
 
-	// Text
-	virtual void DrawText(const FStringView& Text, const FPoint& Position, ETextJustify Justify, const FColor& Color);
+	virtual void DrawSurface(const TSharedPtr<const ASurfaceClass>& Surface, const FPoint& Position, float Rotation, EJustify Justify = EJustify::CenteredMiddle);
 
 	virtual struct SDL_Renderer* GetNativeRenderer() const { return NativeRenderer; }
 
 private:
 	struct SDL_Renderer* NativeRenderer = nullptr;
-	struct _TTF_Font* CurrentFont = nullptr;
 
+	void DrawTextureInternal(struct SDL_Texture* Texture, const FPoint& Position, float Rotation, EJustify Justify);
+
+#ifdef USE_SDL_TTF
+public:
+	virtual bool SetFont(const FStringView& FontName, const int32 FontSize);
+	virtual void DrawText(const FStringView& Text, const FPoint& Position, EJustify Justify, const FColor& Color);
+
+private:
+	struct _TTF_Font* CurrentFont = nullptr;
 	static TMap <FFontKey, struct _TTF_Font*> FontNameCache;
 
-#ifdef _DEBUG
+	void ClearFontResources();
+#endif // USE_SDL_TTF
+
+#ifdef DEBUG_UI
+private:
 	static FColor DebugColor;
 #endif // _DEBUG
 };

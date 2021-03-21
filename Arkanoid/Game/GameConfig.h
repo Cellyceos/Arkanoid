@@ -33,4 +33,11 @@ public:
 		PauseScreen,
 		ScoreScreen,		
 	};
+
+	enum class EScreenRequestReason
+	{
+		Default,
+		Force,
+		Error
+	};
 };

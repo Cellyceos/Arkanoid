@@ -24,6 +24,6 @@ public:
 	virtual int32 GetId() const override { return static_cast<int32>(GameConfig::EScreenTypes::ScoreScreen); }
 
 private:
-	void Continue(EInputEvent KeyEvent);
+	void Continue(EInputState KeyEvent);
 };
 

@@ -10,7 +10,10 @@
 #include "SDL/SDLRenderer.h"
 #include "Interfaces/IMessageHendler.h"
 
-#include "SDL.h"
+#include "SDL_video.h"
+#include "SDL_events.h"
+#include "SDL_messagebox.h"
+
 
 SDLWindow::SDLWindow()
 {
@@ -18,7 +21,6 @@ SDLWindow::SDLWindow()
 
 SDLWindow::~SDLWindow()
 {
-	SDL_Log("~SDLWindow\n");
 	Renderer = nullptr;
 
 	if (NativeWindow)
@@ -26,6 +28,8 @@ SDLWindow::~SDLWindow()
 		SDL_DestroyWindow(NativeWindow);
 		NativeWindow = nullptr;
 	}
+
+	LOG("~SDLWindow\n");
 }
 
 bool SDLWindow::CreateWindow(const FStringView& Title, int32 Width, int32 Height)
@@ -35,7 +39,7 @@ bool SDLWindow::CreateWindow(const FStringView& Title, int32 Width, int32 Height
 	if (!NativeWindow)
 	{
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Unable to create window. See the log for more info.", NULL);
-		SDL_LogCritical(SDL_LOG_CATEGORY_APPLICATION, "Unable to create window, error: %s", SDL_GetError());
+		LOG_CRITICAL("Unable to create window, error: %s", SDL_GetError());
 		return false;
 	}
 
@@ -68,6 +72,12 @@ int32 SDLWindow::GetHeight() const
 	return Height;
 }
 
+void SDLWindow::SendQuitMessage()
+{
+	SDL_Event exitEvent = { SDL_QUIT };
+	SDL_PushEvent(&exitEvent);
+}
+
 bool SDLWindow::HandleEvents()
 {
 	SDL_Event Event;
@@ -77,31 +87,36 @@ bool SDLWindow::HandleEvents()
 		case SDL_KEYDOWN:
 			if (WindowID == Event.key.windowID && HasFocus() && MessageHandler)
 			{
-				MessageHandler->OnKeyDown(Event.key);
+				LOG("Keyboard event: Key = %s, IsRepeat = %d, State = %s", SDL_GetKeyName(Event.key.keysym.sym), Event.key.repeat > 0, "PRESSED");
+				MessageHandler->OnKeyDown({ EInputState::Pressed, Event.key.repeat > 0, static_cast<EInputKey>(Event.key.keysym.sym) });
 			}
 			break;
 		case SDL_KEYUP:
 			if (WindowID == Event.key.windowID && HasFocus() && MessageHandler)
 			{
-				MessageHandler->OnKeyUp(Event.key);
+				LOG("Keyboard event: Key = %s, IsRepeat = %d, State = %s", SDL_GetKeyName(Event.key.keysym.sym), Event.key.repeat > 0, "RELEASED");
+				MessageHandler->OnKeyUp({ EInputState::Released, Event.key.repeat > 0, static_cast<EInputKey>(Event.key.keysym.sym) });
 			}
 			break;
 		case SDL_MOUSEMOTION:
 			if (WindowID == Event.motion.windowID && HasFocus() && MessageHandler)
 			{
-				MessageHandler->OnMouseMotion(Event.motion);
+				LOG("Mouse Motion event: X = %d, Y = %d, State = %d", Event.motion.x, Event.motion.y, Event.motion.state);
+				MessageHandler->OnMouseMotion({ Event.motion.state, Event.motion.x, Event.motion.y, Event.motion.xrel, Event.motion.yrel });
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			if (WindowID == Event.button.windowID && HasFocus() && MessageHandler)
 			{
-				MessageHandler->OnMouseButtonDown(Event.button);
+				LOG("Mouse Button event: Button = %d, Clicks = %d, State = %s", Event.button.button, Event.button.clicks, "PRESSED");
+				MessageHandler->OnMouseButtonDown({ static_cast<EMouseButtonType>(Event.button.button), EInputState::Pressed, Event.button.clicks, Event.button.x, Event.button.y });
 			}
 			break;
 		case SDL_MOUSEBUTTONUP:
 			if (WindowID == Event.button.windowID && HasFocus() && MessageHandler)
 			{
-				MessageHandler->OnMouseButtonUp(Event.button);
+				LOG("Mouse Button event: Button = %d, Clicks = %d, State = %s", Event.button.button, Event.button.clicks, "RELEASED");
+				MessageHandler->OnMouseButtonUp({ static_cast<EMouseButtonType>(Event.button.button), EInputState::Released, Event.button.clicks, Event.button.x, Event.button.y });
 			}
 			break;
 		case SDL_QUIT:

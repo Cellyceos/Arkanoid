@@ -31,7 +31,7 @@ ABlock::ABlock(EBlockType Type) : Settings(BlockTypes[static_cast<int32>(Type)])
 
 ABlock::~ABlock()
 {
-	SDL_Log("~ABlock\n");
+	LOG("~ABlock\n");
 }
 
 void ABlock::OnCollisionEnter(const TSharedPtr<AObject>& Col)
@@ -42,7 +42,7 @@ void ABlock::OnCollisionEnter(const TSharedPtr<AObject>& Col)
 	}
 }
 
-void ABlock::Draw(const TSharedPtr<SDLRenderer>& Renderer) const
+void ABlock::Draw(const TSharedPtr<ARendererClass>& Renderer) const
 {
 	Renderer->SetColor(Settings.MainColor);
 	Renderer->FillRect({ Position, Size });

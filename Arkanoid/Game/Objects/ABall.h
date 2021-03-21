@@ -18,16 +18,21 @@ public:
 	virtual ~ABall();
 
 	virtual void Update(float DeltaTime) override;
-	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const override;
+	virtual void Draw(const TSharedPtr<ARendererClass>& Renderer) const override;
 
 	virtual void OnCollisionEnter(const TSharedPtr<AObject>& Col) override;
 	virtual bool ShouldBeDestroyed() const  override { return bShouldBeDestroed; }
 
-	virtual void AttachTo(const TWeakPtr<AObject>& Parent)  override;
+	virtual void AttachTo(const TWeakPtr<AObject>& InParent);
+	virtual void Detach();
 
 private:
+	static constexpr FPoint UpDirection{ 0.0f, -1.0f };
+
+	TWeakPtr<AObject> Parent;
+
 	bool bShouldBeDestroed{ false };
-	FPoint Direction{0.0f, 1.0f};
+	FPoint Direction{ UpDirection };
 
 	const float Speed{ 600.0f };
 	const FColor BackGroundColor{ 100, 100, 100, 255 };

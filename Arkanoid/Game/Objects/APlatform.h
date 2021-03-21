@@ -10,6 +10,7 @@
 
 #include "AObject.h"
 
+
 class APlatform : public AObject
 {
 public:
@@ -19,14 +20,11 @@ public:
 	virtual void SetupPlayerInput(const TSharedPtr<class IInputHandler>& InputComponent) override;
 
 	virtual void Update(float DeltaTime) override;
-	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const override;
-
-	virtual void OnCollisionEnter(const TSharedPtr<AObject>& Col) override;
+	virtual void Draw(const TSharedPtr<ARendererClass>& Renderer) const override;
 
 protected:
-	void MoveLeft(EInputEvent KeyEvent);
-	void MoveRight(EInputEvent KeyEvent);
-	void ReleaseBall(EInputEvent KeyEvent);
+	void MoveLeft(EInputState KeyEvent);
+	void MoveRight(EInputState KeyEvent);
 
 private:
 	float MoveSpeed = 0.0f;

@@ -9,8 +9,6 @@
 #include "Screens/APauseScreen.h"
 #include "Screens/AScreensManager.h"
 
-#include "SDL_keycode.h"
-#include "SDL_log.h"
 
 APauseScreen::APauseScreen(const TWeakPtr<class AScreensManager>& InOwner) : AScreenState(InOwner)
 {
@@ -19,28 +17,28 @@ APauseScreen::APauseScreen(const TWeakPtr<class AScreensManager>& InOwner) : ASc
 
 APauseScreen::~APauseScreen()
 {
-	SDL_Log("~APauseScreen\n");
+	LOG("~APauseScreen\n");
 }
 
 void APauseScreen::Init()
 {
-	BindKey(SDLK_ESCAPE, std::bind(&APauseScreen::Close, this, _1));
-	BindKey(SDLK_RETURN, std::bind(&APauseScreen::Continue, this, _1));
+	BindKey(EInputKey::Escape, std::bind(&APauseScreen::Close, this, _1));
+	BindKey(EInputKey::Return, std::bind(&APauseScreen::Continue, this, _1));
 }
 
-void APauseScreen::Close(EInputEvent KeyEvent)
+void APauseScreen::Close(EInputState KeyEvent)
 {
-	if (KeyEvent == EInputEvent::Pressed)
+	if (KeyEvent == EInputState::Pressed)
 	{
-		RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::MainScreen));
+		RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::MainScreen), static_cast<int32>(GameConfig::EScreenRequestReason::Force));
 	}
 }
 
-void APauseScreen::Continue(EInputEvent KeyEvent)
+void APauseScreen::Continue(EInputState KeyEvent)
 {
-	if (KeyEvent == EInputEvent::Pressed)
+	if (KeyEvent == EInputState::Pressed)
 	{
-		RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::GameScreen));
+		RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::GameScreen), static_cast<int32>(GameConfig::EScreenRequestReason::Default));
 	}
 }
 
@@ -52,11 +50,11 @@ void APauseScreen::Draw(const TSharedPtr<ARendererClass>& Renderer) const
 	Renderer->FillRect({ 0.0f, 0.0f, GameConfig::WindowWidth, GameConfig::WindowHeight });
 
 	Renderer->SetFont(GameConfig::AncientFont, 200);
-	Renderer->DrawText("Game Pause", Center, ETextJustify::CenteredBottom, TextColor);
+	Renderer->DrawText("Game Pause", Center, EJustify::CenteredBottom, TextColor);
 
 	Renderer->SetFont(GameConfig::OpenSansFont, 20);
-	Renderer->DrawText("Press Enter to Continue", Center, ETextJustify::CenteredTop, TextColor);
+	Renderer->DrawText("Press Enter to Continue", Center, EJustify::CenteredTop, TextColor);
 
 	Center.Y += 30.0f;
-	Renderer->DrawText("Or Press Esc to Exit", Center, ETextJustify::CenteredTop, TextColor);
+	Renderer->DrawText("Or Press Esc to Exit", Center, EJustify::CenteredTop, TextColor);
 }

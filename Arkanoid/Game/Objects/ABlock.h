@@ -32,7 +32,7 @@ public:
 	ABlock(EBlockType Type);
 	virtual ~ABlock();
 
-	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const override;
+	virtual void Draw(const TSharedPtr<ARendererClass>& Renderer) const override;
 
 	virtual void OnCollisionEnter(const TSharedPtr<AObject>& Col) override;
 	virtual bool ShouldBeDestroyed() const override { return Settings.Healh == 0; }

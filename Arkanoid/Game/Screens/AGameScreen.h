@@ -32,8 +32,8 @@ protected:
 	TSharedPtr<class ALevel> CurrentLevel = nullptr;
 	
 private:
-	FRect Rect;
+	FRect UIRect;
 
-	void Pause(EInputEvent KeyEvent);
+	void Pause(EInputState KeyEvent);
 };
 

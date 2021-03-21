@@ -10,6 +10,7 @@
 
 #include <thread>
 
+
 AFixedFrameRate::AFixedFrameRate(int64 Rate)
 {
 	SetFixedRate(Rate);

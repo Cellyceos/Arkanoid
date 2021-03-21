@@ -8,13 +8,17 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Screens/AScreenState.h"
+
 
 struct IScreensCreator
 {
-    static constexpr int32 InvalidRequestId{ -1 };
+    static constexpr int32 InvalidScreenId{ -1 };
+    const int32 DefaultScreenId{ 0 };
 
-    virtual int32 GetScreensCount() const { return 0; }
-    virtual TSharedPtr<AScreenState> operator ()(const TWeakPtr<class AScreensManager>& Owner, int32 StateID) const { return nullptr; }
+    IScreensCreator(int32 DefaultId) : DefaultScreenId{DefaultId} { }
+    virtual ~IScreensCreator() = default;
+
+    virtual int32 GetScreensCount() const = 0;
+    virtual TSharedPtr<AScreenState> operator ()(const TWeakPtr<class AScreensManager>& Owner, int32 StateID) const = 0;
 };

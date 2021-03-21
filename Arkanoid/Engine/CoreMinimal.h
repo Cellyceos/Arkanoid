@@ -15,6 +15,8 @@
 #ifdef USE_SDL
 #include "SDL/SDLWindow.h"
 #include "SDL/SDLRenderer.h"
-
-#include "SDL_log.h"
+#include "SDL/SDLInputKeys.h"
 #endif // USE_SDL
+
+#include "Logging/Macros.h"
+#include "Input/InputEvents.h"

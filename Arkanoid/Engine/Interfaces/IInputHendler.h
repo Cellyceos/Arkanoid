@@ -8,16 +8,19 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "BasicTypes.h"
+#include "Input/InputEvents.h"
 
-class IInputHandler : public std::enable_shared_from_this<IInputHandler>
+
+using FInputDelegate = TFunction<void(EInputState)>;
+class IInputHandler
 {
 public:
 	IInputHandler() = default;
 	virtual ~IInputHandler() = default;
 
 	virtual bool HasBindings() const = 0;
-	virtual FInputDelegate GetDelegateBoundToKey(int32 KeyCode) const = 0;
+	virtual FInputDelegate GetDelegateBoundToKey(EInputKey KeyCode) const = 0;
 
-	virtual void BindKey(int32 KeyCode, FInputDelegate Func) = 0;
+	virtual void BindKey(EInputKey KeyCode, FInputDelegate Func) = 0;
 };

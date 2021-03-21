@@ -8,6 +8,7 @@
 
 #include "AObject.h"
 
+
 void AObject::SetRect(const FRect& Rect) 
 { 
 	SetSize({ Rect.Width, Rect.Height });
@@ -30,24 +31,4 @@ void AObject::SetCenterPoint(const FPoint& Point)
 { 
 	Position = { Point.X - Aabb.Radius[0], Point.Y - Aabb.Radius[1] };
 	Aabb.Center = Point;
-}
-
-void AObject::AttachTo(const TWeakPtr<AObject>& Parent)
-{
-	Parent.lock()->SetChild(weak_from_this());
-	SetParent(Parent);
-}
-
-void AObject::Detach()
-{
-	if (!Parent.expired())
-	{
-		Parent.lock()->FreeChild();
-		Parent.reset();
-	}
-}
-
-void AObject::FreeChild()
-{
-	Child.reset();
 }

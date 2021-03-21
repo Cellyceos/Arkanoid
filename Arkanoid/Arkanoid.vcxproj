@@ -75,7 +75,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;USE_SDL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;USE_SDL;USE_SDL_TTF;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/Arkanoid;$(SolutionDir)/Arkanoid/Engine;$(SolutionDir)/Arkanoid/Game</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -90,7 +90,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;USE_SDL;DEBUG_UI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;USE_SDL;DEBUG_UI;USE_SDL_TTF;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/Arkanoid;$(SolutionDir)/Arkanoid/Engine;$(SolutionDir)/Arkanoid/Game</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -107,7 +107,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;USE_SDL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;USE_SDL;USE_SDL_TTF;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/Arkanoid;$(SolutionDir)/Arkanoid/Engine;$(SolutionDir)/Arkanoid/Game</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -129,6 +129,8 @@
     <ClCompile Include="Engine\FixedFrameRate.cpp" />
     <ClCompile Include="Engine\Screens\AScreenState.cpp" />
     <ClCompile Include="Engine\Screens\AScreensManager.cpp" />
+    <ClCompile Include="Engine\SDL\SDLPalette.cpp" />
+    <ClCompile Include="Engine\SDL\SDLSurface.cpp" />
     <ClCompile Include="Game\AScoreManager.cpp" />
     <ClCompile Include="Game\Screens\FScreenCreator.cpp" />
     <ClCompile Include="Game\Objects\ABall.cpp" />
@@ -148,11 +150,14 @@
   <ItemGroup>
     <ClInclude Include="Engine\BasicTypes.h" />
     <ClInclude Include="Engine\FixedFrameRate.h" />
+    <ClInclude Include="Engine\Input\InputEvents.h" />
     <ClInclude Include="Engine\Interfaces\IInputHendler.h" />
     <ClInclude Include="Engine\Interfaces\IMessageHendler.h" />
     <ClInclude Include="Engine\Interfaces\IScreensCreator.h" />
     <ClInclude Include="Engine\Screens\AScreenState.h" />
     <ClInclude Include="Engine\Screens\AScreensManager.h" />
+    <ClInclude Include="Engine\SDL\SDLPalette.h" />
+    <ClInclude Include="Engine\SDL\SDLSurface.h" />
     <ClInclude Include="Game\ALevelManager.h" />
     <ClInclude Include="Game\AScoreManager.h" />
     <ClInclude Include="Game\Screens\FScreensCreator.h" />

@@ -12,8 +12,6 @@
 #include "AScoreManager.h"
 #include "Objects/ALevel.h"
 
-#include "SDL_keycode.h"
-
 
 AGameScreen::AGameScreen(const TWeakPtr<class AScreensManager>& InOwner) : AScreenState(InOwner)
 {
@@ -23,7 +21,7 @@ AGameScreen::AGameScreen(const TWeakPtr<class AScreensManager>& InOwner) : AScre
 AGameScreen::~AGameScreen()
 {
 	CurrentLevel = nullptr;
-	SDL_Log("~AGameScreen\n");
+	LOG("~AGameScreen\n");
 }
 
 void AGameScreen::Init()
@@ -32,13 +30,13 @@ void AGameScreen::Init()
 	CurrentLevel->SetRect({ GameConfig::BorderSize, GameConfig::BorderSize, LevelWidth,
 		GameConfig::WindowHeight - 2.0f * GameConfig::BorderSize });
 
-	Rect = { GameConfig::BorderSize + LevelWidth, GameConfig::BorderSize,
+	UIRect = { GameConfig::BorderSize + LevelWidth, GameConfig::BorderSize,
 		(GameConfig::WindowWidth - 2.0f * GameConfig::BorderSize) - LevelWidth,
 		GameConfig::WindowHeight - 2.0f * GameConfig::BorderSize };
 
 	CurrentLevel->SetupPlayerInput(shared_from_this());
 
-	BindKey(SDLK_ESCAPE, std::bind(&AGameScreen::Pause, this, _1));
+	BindKey(EInputKey::Escape, std::bind(&AGameScreen::Pause, this, _1));
 
 	AScoreManager::Get().StartGame();
 	CurrentLevel->StartGame();
@@ -47,15 +45,15 @@ void AGameScreen::Init()
 void AGameScreen::OnWindowsLostFocus()
 {
 #ifdef NDEBUG
-	RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::PauseScreen)); 
+	RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::PauseScreen), static_cast<int32>(GameConfig::EScreenRequestReason::Force));
 #endif // NDEBUG
 }
 
-void AGameScreen::Pause(EInputEvent KeyEvent)
+void AGameScreen::Pause(EInputState KeyEvent)
 {
-	if (KeyEvent == EInputEvent::Pressed)
+	if (KeyEvent == EInputState::Pressed)
 	{
-		RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::PauseScreen));
+		RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::PauseScreen), static_cast<int32>(GameConfig::EScreenRequestReason::Default));
 	}
 }
 
@@ -69,12 +67,12 @@ void AGameScreen::Update(float DeltaTime)
 		}
 		else if (!CurrentLevel->StartGame(CurrentLevel->GetCurrentLevel() + 1))
 		{
-			RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::ScoreScreen));
+			RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::ScoreScreen), static_cast<int32>(GameConfig::EScreenRequestReason::Default));
 		}
 	}
 	else
 	{
-		RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::ScoreScreen));
+		RequestTransition(static_cast<int32>(GameConfig::EScreenTypes::ScoreScreen), static_cast<int32>(GameConfig::EScreenRequestReason::Default));
 	}
 }
 
@@ -87,36 +85,36 @@ void AGameScreen::Draw(const TSharedPtr<ARendererClass>& Renderer) const
 	Renderer->DrawRect(Rect);
 #endif // DEBUG_UI
 
-	const float Halfheight = Rect.Height * 0.5f;
-	FPoint Center{ Rect.X + Rect.Width * 0.5f, Rect.Y };
+	const float Halfheight = UIRect.Height * 0.5f;
+	FPoint Center{ UIRect.X + UIRect.Width * 0.5f, UIRect.Y };
 	Renderer->SetFont(GameConfig::AncientFont, 70);
-	Renderer->DrawText("Arkanoid", Center, ETextJustify::CenteredTop, TextColor);
+	Renderer->DrawText("Arkanoid", Center, EJustify::CenteredTop, TextColor);
 
 	Center.Y += Halfheight;
 	Renderer->SetFont(GameConfig::OpenSansFont, 30);
-	Renderer->DrawText("Lives: " + std::to_string(CurrentLevel->GetLivesCount()), Center, ETextJustify::CenteredTop, TextColor);
+	Renderer->DrawText("Lives: " + std::to_string(CurrentLevel->GetLivesCount()), Center, EJustify::CenteredTop, TextColor);
 
 	const AScoreManager& ScoreManager = AScoreManager::Get();
 
 	Center.Y -= 100.0f;
 	Renderer->SetFont(GameConfig::AncientFont, 40);
-	Renderer->DrawText("Score", Center, ETextJustify::CenteredBottom, TextColor);
+	Renderer->DrawText("Score", Center, EJustify::CenteredBottom, TextColor);
 	Renderer->SetFont(GameConfig::OpenSansFont, 30);
-	Renderer->DrawText(std::to_string(ScoreManager.GetCurrentScore()), Center, ETextJustify::CenteredTop, TextColor);
+	Renderer->DrawText(std::to_string(ScoreManager.GetCurrentScore()), Center, EJustify::CenteredTop, TextColor);
 
 	Center.Y -= 100.0f;
 	Renderer->SetFont(GameConfig::AncientFont, 40);
-	Renderer->DrawText("Hight Score", Center, ETextJustify::CenteredBottom, TextColor);
+	Renderer->DrawText("Hight Score", Center, EJustify::CenteredBottom, TextColor);
 	Renderer->SetFont(GameConfig::OpenSansFont, 30);
-	Renderer->DrawText(std::to_string(ScoreManager.GetHightScore()), Center, ETextJustify::CenteredTop, TextColor);
+	Renderer->DrawText(std::to_string(ScoreManager.GetHightScore()), Center, EJustify::CenteredTop, TextColor);
 
-	Center.Y = Rect.Height + Rect.Y;
+	Center.Y = UIRect.Height + UIRect.Y;
 	Renderer->SetFont(GameConfig::OpenSansFont, 15);
-	Renderer->DrawText("Space -- Release Ball", Center, ETextJustify::CenteredBottom, TextColor);
+	Renderer->DrawText("Space -- Release Ball", Center, EJustify::CenteredBottom, TextColor);
 	Center.Y -= 20.0f;
-	Renderer->DrawText("Arrow Right -- Move Right", Center, ETextJustify::CenteredBottom, TextColor);
+	Renderer->DrawText("Arrow Right -- Move Right", Center, EJustify::CenteredBottom, TextColor);
 	Center.Y -= 20.0f;
-	Renderer->DrawText("Arrow Left -- Move Left", Center, ETextJustify::CenteredBottom, TextColor);
+	Renderer->DrawText("Arrow Left -- Move Left", Center, EJustify::CenteredBottom, TextColor);
 	Center.Y -= 20.0f;
-	Renderer->DrawText("Esc -- Game Pause", Center, ETextJustify::CenteredBottom, TextColor);
+	Renderer->DrawText("Esc -- Game Pause", Center, EJustify::CenteredBottom, TextColor);
 }

@@ -11,7 +11,6 @@
 #include "ALevel.h"
 #include "APlatform.h"
 
-#include "SDL_log.h"
 
 ABall::ABall()
 {
@@ -20,12 +19,17 @@ ABall::ABall()
 
 ABall::~ABall()
 {
-	SDL_Log("~ABall\n");
+	LOG("~ABall\n");
 }
 
 void ABall::Update(float DeltaTime)
 {
-	if (Parent.expired())
+	if (!Parent.expired())
+	{
+		const FAABB& ParentAabb = Parent.lock()->GetAABB();
+		SetCenterPoint({ ParentAabb.Center.X, ParentAabb.Center.Y - ParentAabb.Radius[1] - Aabb.Radius[1] - 1.0f });
+	}
+	else
 	{
 		SetPosition({ Position.X + Speed * Direction.X * DeltaTime, Position.Y + Speed * Direction.Y * DeltaTime });
 	}
@@ -33,7 +37,7 @@ void ABall::Update(float DeltaTime)
 
 void ABall::OnCollisionEnter(const TSharedPtr<AObject>& Col)
 {
-	SDL_Log("ABall::OnCollisionEnter %s\n", std::dynamic_pointer_cast<APlatform>(Col) ? "Platform" : (std::dynamic_pointer_cast<ALevel>(Col) ? "Level" : "Block"));
+	LOG("ABall::OnCollisionEnter %s\n", std::dynamic_pointer_cast<APlatform>(Col) ? "Platform" : (std::dynamic_pointer_cast<ALevel>(Col) ? "Level" : "Block"));
 	
 	if (!std::dynamic_pointer_cast<ALevel>(Col))
 	{
@@ -64,14 +68,20 @@ void ABall::OnCollisionEnter(const TSharedPtr<AObject>& Col)
 	}
 }
 
-void ABall::AttachTo(const TWeakPtr<AObject>& Parent)
+void ABall::AttachTo(const TWeakPtr<AObject>& InParent)
 {
-	AObject::AttachTo(Parent);
+	Parent = InParent;
+
 	bShouldBeDestroed = false;
-	Direction = { 0.0f, 1.0f };
+	Direction = UpDirection;
 }
 
-void ABall::Draw(const TSharedPtr<SDLRenderer>& Renderer) const
+void ABall::Detach()
+{
+	Parent.reset();
+}
+
+void ABall::Draw(const TSharedPtr<ARendererClass>& Renderer) const
 {
 	const float BallRadius = Aabb.Radius[0];
 

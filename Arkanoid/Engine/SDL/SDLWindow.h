@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "BasicTypes.h"
 
 
 class SDLWindow
@@ -33,6 +33,8 @@ public:
 	virtual TSharedPtr<const class SDLRenderer> GetRenderer() const { return Renderer; }
 
 	virtual void SetMessageHandler(const TSharedPtr<class IMessageHandler>& InMessageHandler) { MessageHandler = InMessageHandler; }
+
+	static void SendQuitMessage();
 
 private:
 	TSharedPtr<class IMessageHandler> MessageHandler = nullptr;

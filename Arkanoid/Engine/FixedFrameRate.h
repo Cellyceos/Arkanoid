@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "BasicTypes.h"
 
 #include <chrono>
 

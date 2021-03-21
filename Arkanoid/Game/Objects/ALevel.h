@@ -22,7 +22,7 @@ public:
 	virtual void SetupPlayerInput(const TSharedPtr<class IInputHandler>& InputComponent) override;
 
 	virtual void Update(float DeltaTime) override;
-	virtual void Draw(const TSharedPtr<class SDLRenderer>& Renderer) const override;
+	virtual void Draw(const TSharedPtr<ARendererClass>& Renderer) const override;
 
 	virtual void SetRect(const FRect& Rect) override;
 
@@ -35,6 +35,8 @@ protected:
 	TSharedPtr<class APlatform> Platform;
 
 	TFixedArray<TSharedPtr<class ABlock>, GameConfig::ColNum * GameConfig::RowNum> StaticObjects;
+
+	void ReleaseBall(EInputState KeyEvent);
 
 private:
 	int32 AliveBlocksCount{ 0 };

@@ -14,6 +14,8 @@
 #include "Game/AScoreManager.h"
 #include "Game/ALevelManager.h"
 
+#include "Engine/Interfaces/IInputHendler.h"
+
 
 ALevel::ALevel()
 {
@@ -24,6 +26,7 @@ ALevel::ALevel()
 ALevel::~ALevel()
 {
 	AScoreManager::Get().FinishGame();
+	LOG("~ALevel\n");
 }
 
 bool ALevel::StartGame(int32 InLevel /* = 1 */)
@@ -37,7 +40,6 @@ bool ALevel::StartGame(int32 InLevel /* = 1 */)
 	Level = InLevel;
 
 	Platform->SetCenterPoint({ Position.X + Aabb.Radius[0], Size.Height - Platform->GetHeight() });
-	Ball->SetCenterPoint({ Position.X + Aabb.Radius[0], Size.Height - Platform->GetHeight() - Ball->GetHeight() });
 	Ball->AttachTo(Platform);
 
 	const float Offset = 2.0;
@@ -54,7 +56,7 @@ bool ALevel::StartGame(int32 InLevel /* = 1 */)
 		{
 			auto Block = std::make_shared<ABlock>(BlockType);
 			Block->SetRect({ (X + (Idx % GameConfig::ColNum) * BrickWidth), (Y + (Idx / GameConfig::ColNum) * BrickHeight), BrickWidth - Offset, BrickHeight - Offset });
-			StaticObjects[Idx] = Block;
+			StaticObjects[Idx] = std::move(Block);
 			++AliveBlocksCount;
 		}
 	}
@@ -67,9 +69,18 @@ void ALevel::SetRect(const FRect& Rect)
 	AObject::SetRect({ Rect.X + BorderSize, Rect.Y + BorderSize, Rect.Width - 2.0f * BorderSize, Rect.Height - 2.0f * BorderSize });
 }
 
-void ALevel::SetupPlayerInput(const TSharedPtr<class IInputHandler>& InputHandler)
+void ALevel::SetupPlayerInput(const TSharedPtr<IInputHandler>& InputHandler)
 {
+	InputHandler->BindKey(EInputKey::Space, std::bind(&ALevel::ReleaseBall, this, _1));
 	Platform->SetupPlayerInput(InputHandler);
+}
+
+void ALevel::ReleaseBall(EInputState KeyEvent)
+{
+	if (KeyEvent == EInputState::Pressed)
+	{
+		Ball->Detach();
+	}
 }
 
 void ALevel::Update(float DeltaTime)
@@ -83,7 +94,6 @@ void ALevel::Update(float DeltaTime)
 	if (Ball->ShouldBeDestroyed())
 	{
 		Platform->SetCenterPoint({ Position.X + Aabb.Radius[0], Size.Height - Platform->GetHeight() });
-		Ball->SetCenterPoint({ Position.X + Aabb.Radius[0], Size.Height - Platform->GetHeight() - Ball->GetHeight() });
 		Ball->AttachTo(Platform);
 		--CurrentLives;
 	}
@@ -170,7 +180,7 @@ void ALevel::ShouldBeInside(const TSharedPtr<AObject>& Obj)
 }
 
 
-void ALevel::Draw(const TSharedPtr<SDLRenderer>& Renderer) const
+void ALevel::Draw(const TSharedPtr<ARendererClass>& Renderer) const
 {
 	Renderer->SetColor(BorderColor);
 	Renderer->FillRect({ Position.X - BorderSize, Position.Y - BorderSize, BorderSize, Size.Height + 2.0f * BorderSize });

@@ -13,6 +13,7 @@
 #include "Screens/AMainScreen.h"
 #include "Screens/AScoreScreen.h"
 
+
 int32 FScreensCreator::GetScreensCount() const
 {
 	return static_cast<int32>(GameConfig::EScreenTypes::ScoreScreen) + 1;

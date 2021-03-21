@@ -12,10 +12,6 @@
 #include "Engine/Interfaces/IInputHendler.h"
 
 
-
-#include "SDL_keycode.h"
-#include "SDL_log.h"
-
 APlatform::APlatform()
 {
 	SetSize({ 80.0f, 14.0f });
@@ -24,24 +20,23 @@ APlatform::APlatform()
 
 APlatform::~APlatform()
 {
-	SDL_Log("~APlatform\n");
+	LOG("~APlatform\n");
 }
 
 void APlatform::SetupPlayerInput(const TSharedPtr<IInputHandler>& InputHandler)
 {
-	InputHandler->BindKey(SDLK_LEFT, std::bind(&APlatform::MoveLeft, this, _1));
-	InputHandler->BindKey(SDLK_RIGHT, std::bind(&APlatform::MoveRight, this, _1));
-	InputHandler->BindKey(SDLK_SPACE, std::bind(&APlatform::ReleaseBall, this, _1));
+	InputHandler->BindKey(EInputKey::LeftArrow, std::bind(&APlatform::MoveLeft, this, _1));
+	InputHandler->BindKey(EInputKey::RightArrow, std::bind(&APlatform::MoveRight, this, _1));
 }
 
-void APlatform::MoveRight(EInputEvent KeyEvent)
+void APlatform::MoveRight(EInputState KeyEvent)
 {
 	switch (KeyEvent)
 	{
-	case EInputEvent::Pressed:
+	case EInputState::Pressed:
 		MoveSpeed = Speed;
 		break;
-	case EInputEvent::Released:
+	case EInputState::Released:
 		MoveSpeed = 0;
 		break;
 	default:
@@ -49,29 +44,18 @@ void APlatform::MoveRight(EInputEvent KeyEvent)
 	}
 }
 
-void APlatform::MoveLeft(EInputEvent KeyEvent)
+void APlatform::MoveLeft(EInputState KeyEvent)
 {
 	switch (KeyEvent)
 	{
-	case EInputEvent::Pressed:
+	case EInputState::Pressed:
 		MoveSpeed = -Speed;
 		break;
-	case EInputEvent::Released:
+	case EInputState::Released:
 		MoveSpeed = 0;
 		break;
 	default:
 		break;
-	}
-}
-
-void APlatform::ReleaseBall(EInputEvent KeyEvent)
-{
-	if (KeyEvent == EInputEvent::Pressed)
-	{
-		if (!Child.expired())
-		{
-			Child.lock()->Detach();
-		}
 	}
 }
 
@@ -80,34 +64,11 @@ void APlatform::Update(float DeltaTime)
 	if (MoveSpeed != 0.0f)
 	{
 		const float MoveDelta = MoveSpeed * DeltaTime;
-
-		if (!Child.expired())
-		{
-			const auto& LockedChild = Child.lock();
-			const FPoint& ChildPos = LockedChild->GetPosition();
-			LockedChild->SetPosition({ ChildPos.X + MoveDelta, ChildPos.Y });
-		}
-
 		SetPosition({ Position.X + MoveDelta, Position.Y });
 	}
 }
 
-void APlatform::OnCollisionEnter(const TSharedPtr<AObject>& Col)
-{
-	if (std::dynamic_pointer_cast<ALevel>(Col))
-	{
-		if (!Child.expired())
-		{
-			const auto& LockedChild = Child.lock();
-			FPoint ChildCenter = LockedChild->GetCenterPoint();
-			ChildCenter.X = Aabb.Center.X;
-
-			LockedChild->SetCenterPoint(ChildCenter);
-		}
-	}
-}
-
-void APlatform::Draw(const TSharedPtr<SDLRenderer>& Renderer) const
+void APlatform::Draw(const TSharedPtr<ARendererClass>& Renderer) const
 {
 	const float HalfHeight = Aabb.Radius[1];
 

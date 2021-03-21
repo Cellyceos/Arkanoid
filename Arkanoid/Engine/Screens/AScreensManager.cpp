@@ -8,23 +8,22 @@
 
 #include "Screens/AScreensManager.h"
 
-#include "SDL_events.h"
-#include "SDL_log.h"
 
-
-AScreensManager::AScreensManager(const TSharedPtr<IScreensCreator>& InScreensCreator) : ScreensCreator(InScreensCreator)
+AScreensManager::AScreensManager(TUniquePtr<IScreensCreator>&& InScreensCreator, TUniquePtr<IScreenRequestSolver>&& InScreenRequestSolver /* = nullptr */) : 
+	ScreensCreator(std::move(InScreensCreator)), ScreenRequestSolver(std::move(InScreenRequestSolver))
 {
-	ActiveScreens.reserve(ScreensCreator->GetScreensCount());
+	ActiveScreens.reserve(ScreensCreator->GetScreensCount());	
+	RequestScreenId = ScreensCreator->DefaultScreenId;
 }
 
 AScreensManager::~AScreensManager()
 {
-	SDL_Log("~AScreensManager\n");
+	LOG("~AScreensManager\n");
 }
 
 void AScreensManager::Update(float DeltaTime)
 {
-	if (RequestScreenId != IScreensCreator::InvalidRequestId)
+	if (RequestScreenId != IScreensCreator::InvalidScreenId)
 	{
 		TransitState();
 	}
@@ -56,6 +55,18 @@ void AScreensManager::Draw(const TSharedPtr<ARendererClass>& Renderer) const
 	Renderer->Present();
 }
 
+void AScreensManager::RequestScreenTransition(const TSharedPtr<AScreenState>& Requester, int32 ScreenId, int32 Reason /* = IScreenRequestSolver::Default */)
+{ 
+	if (ActiveScreens.size() > 0)
+	{
+		auto& ActiveScreen = ActiveScreens.front();
+		if (ActiveScreen->GetId() == Requester->GetId() || (ScreenRequestSolver && (*ScreenRequestSolver)(Requester, ScreenId, Reason)))
+		{
+			RequestScreenId = ScreenId;
+		}
+	}
+}
+
 void AScreensManager::TransitState()
 {
 	auto EndIter = ActiveScreens.begin();
@@ -76,26 +87,24 @@ void AScreensManager::TransitState()
 		ActiveScreens.erase(ActiveScreens.begin(), EndIter);
 	}
 
-	RequestScreenId = IScreensCreator::InvalidRequestId;
+	RequestScreenId = IScreensCreator::InvalidScreenId;
 }
 
 void AScreensManager::RequestToQuit()
 {
-	SDL_Event exitEvent = { SDL_QUIT };
-	SDL_PushEvent(&exitEvent);
+	AWindowClass::SendQuitMessage();
 }
 
 /// Begin IMessageHandler
-void AScreensManager::OnKeyDown(const SDL_KeyboardEvent& Event)
+void AScreensManager::OnKeyDown(const FKeyboardEvent& Event)
 {
-	SDL_Log("Keyboard event: Key = %s, IsRepeat = %d, State = %s", SDL_GetKeyName(Event.keysym.sym), Event.repeat > 0, "PRESSED");
 	for (const auto& Screen : ActiveScreens)
 	{
 		if (Screen->HasBindings())
 		{
-			if (const auto& KeyDelegate = Screen->GetDelegateBoundToKey(Event.keysym.sym))
+			if (const auto& KeyDelegate = Screen->GetDelegateBoundToKey(Event.Key))
 			{
-				KeyDelegate(static_cast<EInputEvent>(Event.state));
+				KeyDelegate(Event.State);
 			}
 		}
 
@@ -104,16 +113,15 @@ void AScreensManager::OnKeyDown(const SDL_KeyboardEvent& Event)
 	}
 }
 
-void AScreensManager::OnKeyUp(const SDL_KeyboardEvent& Event)
+void AScreensManager::OnKeyUp(const FKeyboardEvent& Event)
 {
-	SDL_Log("Keyboard event: Key = %s, IsRepeat = %d, State = %s", SDL_GetKeyName(Event.keysym.sym), Event.repeat > 0, "RELEASED");
 	for (const auto& Screen : ActiveScreens)
 	{
 		if (Screen->HasBindings())
 		{
-			if (const auto& KeyDelegate = Screen->GetDelegateBoundToKey(Event.keysym.sym))
+			if (const auto& KeyDelegate = Screen->GetDelegateBoundToKey(Event.Key))
 			{
-				KeyDelegate(static_cast<EInputEvent>(Event.state));
+				KeyDelegate(Event.State);
 			}
 		}
 
@@ -122,19 +130,19 @@ void AScreensManager::OnKeyUp(const SDL_KeyboardEvent& Event)
 	}
 }
 
-void AScreensManager::OnMouseButtonDown(const SDL_MouseButtonEvent& Event)
+void AScreensManager::OnMouseButtonDown(const FMouseButtonEvent& Event)
 {
-	SDL_Log("Mouse Button event: Button = %d, Clicks = %d, State = %s", Event.button, Event.clicks, "PRESSED");
+
 }
 
-void AScreensManager::OnMouseButtonUp(const SDL_MouseButtonEvent& Event)
+void AScreensManager::OnMouseButtonUp(const FMouseButtonEvent& Event)
 {
-	SDL_Log("Mouse Button event: Button = %d, Clicks = %d, State = %s", Event.button, Event.clicks, "RELEASED");
+
 }
 
-void AScreensManager::OnMouseMotion(const SDL_MouseMotionEvent& Event)
+void AScreensManager::OnMouseMotion(const FMouseMotionEvent& Event)
 {
-	SDL_Log("Mouse Motion event: X = %d, Y = %d, State = %d", Event.x, Event.y, Event.state);
+
 }
 
 void AScreensManager::OnWindowsFocusGained()
@@ -147,7 +155,7 @@ void AScreensManager::OnWindowsFocusGained()
 		}
 	}
 
-	SDL_Log("Windows Focus Gained");
+	LOG("Windows Focus Gained\n");
 }
 
 void AScreensManager::OnWindowsFocusLost()
@@ -160,6 +168,6 @@ void AScreensManager::OnWindowsFocusLost()
 		}
 	}
 
-	SDL_Log("Windows Focus Lost");
+	LOG("Windows Focus Lost\n");
 }
 /// End IMessageHandler

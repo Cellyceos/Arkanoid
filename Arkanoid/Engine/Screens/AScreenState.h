@@ -8,10 +8,10 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "BasicTypes.h"
 #include "Interfaces/IInputHendler.h"
 
-class AScreenState : public IInputHandler
+class AScreenState : public IInputHandler, public std::enable_shared_from_this<AScreenState>
 {
 public:
 	AScreenState(const TWeakPtr<class AScreensManager>& InOwner) : Owner(InOwner) { }
@@ -31,7 +31,7 @@ public:
 	virtual void OnWindowsGainFocus() {}
 	virtual void OnWindowsLostFocus() {}
 
-	virtual void RequestTransition(int32 ScreenId);
+	virtual void RequestTransition(int32 ScreenId, int32 Reason);
 
 protected:
 	TWeakPtr<class AScreensManager> Owner;
@@ -40,12 +40,12 @@ protected:
 /// Begin IInputHandler
 public:
 	virtual bool HasBindings() const override { return KeyBindings.size() > 0; }
-	virtual FInputDelegate GetDelegateBoundToKey(int32 KeyCode) const override;
+	virtual FInputDelegate GetDelegateBoundToKey(EInputKey KeyCode) const override;
 
 protected:
-	virtual void BindKey(int32 KeyCode, FInputDelegate Func) override;
+	virtual void BindKey(EInputKey KeyCode, FInputDelegate Func) override;
 
 private:
-	TUnorderedMap<int32, FInputDelegate> KeyBindings;
+	TUnorderedMap<EInputKey, FInputDelegate> KeyBindings;
 /// End IInputHandler
 };

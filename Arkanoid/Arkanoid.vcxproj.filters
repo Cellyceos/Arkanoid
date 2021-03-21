@@ -33,6 +33,9 @@
     <Filter Include="Source Files\Engine\Screens">
       <UniqueIdentifier>{78be42b1-4ee3-4bfb-b5bc-bb61231aa5c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Input">
+      <UniqueIdentifier>{1848c016-97f7-43a0-86e4-69d466944aa3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -97,6 +100,12 @@
     </ClCompile>
     <ClCompile Include="ALevelManager.cpp">
       <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SDL\SDLPalette.cpp">
+      <Filter>Source Files\Engine\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SDL\SDLSurface.cpp">
+      <Filter>Source Files\Engine\SDL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +183,15 @@
     </ClInclude>
     <ClInclude Include="Game\ALevelManager.h">
       <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\InputEvents.h">
+      <Filter>Source Files\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDL\SDLPalette.h">
+      <Filter>Source Files\Engine\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDL\SDLSurface.h">
+      <Filter>Source Files\Engine\SDL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

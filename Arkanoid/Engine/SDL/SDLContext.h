@@ -8,6 +8,7 @@
 
 #pragma once
 
+#ifdef USE_SDL
 class SDLContext
 {
 public:
@@ -19,3 +20,4 @@ private:
 
 	static SDLContext Context;
 };
+#endif // USE_SDL

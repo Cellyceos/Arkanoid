@@ -32,12 +32,12 @@ AScoreManager::AScoreManager()
 
 AScoreManager::~AScoreManager()
 {
-	SDL_Log("~AScoreManager");
 	std::ofstream FileStream(FileName, std::ios::binary);
 	if (FileStream.is_open())
 	{
 		FileStream << HightScore;
 	}
+	LOG("~AScoreManager");
 }
 
 void AScoreManager::StartGame()

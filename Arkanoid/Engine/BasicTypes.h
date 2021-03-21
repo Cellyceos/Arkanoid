@@ -101,11 +101,3 @@ struct FAABB
 		return true;
 	}
 };
-
-enum class EInputEvent
-{
-	Released,
-	Pressed
-};
-
-using FInputDelegate = TFunction<void(EInputEvent)>;

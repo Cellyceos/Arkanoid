@@ -40,7 +40,7 @@ ALevelManager::ALevelManager()
 
 ALevelManager::~ALevelManager()
 {
-	SDL_Log("~ALevelManager");
+	LOG("~ALevelManager");
 }
 
 TFixedArray<uint16, GameConfig::ColNum* GameConfig::RowNum> ALevelManager::GetLevelSchema(int32 Level)
