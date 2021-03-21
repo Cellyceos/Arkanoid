@@ -15,7 +15,7 @@
 
 ABall::ABall()
 {
-	SetSize({ 20.0f, 20.0f });
+	SetSize({ 14.0f, 14.0f });
 }
 
 ABall::~ABall()
@@ -79,8 +79,8 @@ void ABall::Draw(const TSharedPtr<SDLRenderer>& Renderer) const
 	Renderer->FillCircle( Aabb.Center, BallRadius);
 
 	Renderer->SetColor(MiddleColor);
-	Renderer->FillCircle({ Aabb.Center.X - 3.0f, Aabb.Center.Y - 3.0f }, BallRadius * 0.5f);
+	Renderer->FillCircle({ Aabb.Center.X - 2.0f, Aabb.Center.Y - 2.5f }, BallRadius * 0.5f);
 
 	Renderer->SetColor(ForegroundColor);
-	Renderer->FillCircle({ Aabb.Center.X - 5.0f, Aabb.Center.Y - 4.0f }, BallRadius * 0.25f);
+	Renderer->FillCircle({ Aabb.Center.X - 4.0f, Aabb.Center.Y - 3.0f }, BallRadius * 0.25f);
 }
